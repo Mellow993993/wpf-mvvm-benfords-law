@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BenfordSet.ViewModel
 {
@@ -27,18 +28,28 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
+        private DelegateCommand _quitCommand;
         
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
+        public DelegateCommand QuitCommand { get => _quitCommand; } 
 
         public MainWindowViewModel()
         {
+            _selectCommand = new DelegateCommand(Select, CanSelect);
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
             _saveCommand = new DelegateCommand(Save, CanSave);
-            _selectCommand = new DelegateCommand(Select, CanSelect);
+            _quitCommand = new DelegateCommand(Quit, CanQuit);
         }
 
+        private bool CanQuit() => true;
+      
+
+        private void Quit()
+        {
+            MessageBox.Show("quit");
+        }
 
         private void Select()
         {
@@ -50,12 +61,12 @@ namespace BenfordSet.ViewModel
 
         private void Save()
         {
-            throw new NotImplementedException();
+            MessageBox.Show("save");
         }
 
         private void Analyse()
         {
-
+            MessageBox.Show("analyse");
         }
 
         #region CanExecute mehtods

@@ -14,6 +14,8 @@
         <TextBox Text="{Binding Filepath}" HorizontalAlignment="Left" Margin="35,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
         <Button Content="Select" Command="{Binding SelectCommand}" HorizontalAlignment="Left" Margin="350,77,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198"/>
         <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Left" Margin="195,217,0,0" VerticalAlignment="Top"/>
+        <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Left" Margin="60,142,0,0" VerticalAlignment="Top"/>
+        <Button Content="Quit" Command="{Binding QuitCommand}" HorizontalAlignment="Left" Margin="175,162,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
