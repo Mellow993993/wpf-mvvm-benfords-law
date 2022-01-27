@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
+    <PackageReference Include="PdfPig" Version="0.1.5" />
   </ItemGroup>
 
 </Project>
