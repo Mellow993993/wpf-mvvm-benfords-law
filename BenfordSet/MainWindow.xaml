@@ -1,15 +1,19 @@
-﻿<Window x:Class="BenfordSet.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BenfordSet"
+        xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="300" Width="400">
+    <Window.DataContext>
+        <ViewModel:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="35,79,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="220"/>
-        <Button Content="Select" HorizontalAlignment="Left" Margin="360,88,0,0" VerticalAlignment="Top"/>
-        <Button Content="Analyse" HorizontalAlignment="Left" Margin="195,217,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Filepath}" HorizontalAlignment="Left" Margin="35,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+        <Button Content="Select" Command="{Binding SelectCommand}" HorizontalAlignment="Left" Margin="350,77,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198"/>
+        <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Left" Margin="195,217,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
