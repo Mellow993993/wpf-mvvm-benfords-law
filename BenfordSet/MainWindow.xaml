@@ -4,14 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BenfordSet"
-        xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" x:Class="BenfordSet.MainWindow"
+        xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" d:DataContext="{d:DesignInstance Type=ViewModel:MainWindowViewModel}" x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="400">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBox Text="{Binding Filepath}" HorizontalAlignment="Left" Margin="35,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+        <TextBox Text="{Binding Filepath}" IsReadOnly="True" HorizontalAlignment="Left" MaxLines="1" Margin="20,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="315"/>
         <Button Content="Select" Command="{Binding SelectCommand}" HorizontalAlignment="Left" Margin="350,77,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198"/>
         <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Left" Margin="195,217,0,0" VerticalAlignment="Top"/>
 

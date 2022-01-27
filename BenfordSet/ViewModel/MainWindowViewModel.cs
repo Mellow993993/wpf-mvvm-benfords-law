@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BenfordSet.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -18,7 +19,7 @@ namespace BenfordSet.ViewModel
                 if(_filepath != value)
                 {
                     _filepath = value;
-                    OnPropertyChanged(Filepath);
+                    OnPropertyChanged(nameof(Filepath));
                 }
             }
         }
@@ -39,10 +40,11 @@ namespace BenfordSet.ViewModel
         }
 
 
-
         private void Select()
         {
-            throw new NotImplementedException();
+            SelectFile selectfile = new SelectFile();
+            Filepath = selectfile.OpenDialog();
+            RaisePropertyChanged();        
         }
 
 
@@ -57,8 +59,8 @@ namespace BenfordSet.ViewModel
         }
 
         #region CanExecute mehtods
-        private bool CanAnalyse()
-            => true;
+        private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath) ? true : false;
+   
         private bool CanSelect()
             => true;
         private bool CanSave()

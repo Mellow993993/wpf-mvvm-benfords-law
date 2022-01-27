@@ -5,11 +5,12 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	<UseWindowsForms>true</UseWindowsForms>
+
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Model\" />
-    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>
