@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BenfordSet.ViewModel
 {
-    internal class MainWindowViewModel
+    internal class MainWindowViewModel : ViewModelBase
     {
-<<<<<<< HEAD
-=======
         private string _filepath;
         public string Filepath
         {
@@ -74,6 +73,5 @@ namespace BenfordSet.ViewModel
             ((DelegateCommand)SaveCommand).OnExecuteChanged();
             ((DelegateCommand)SelectCommand).OnExecuteChanged();
         }
->>>>>>> develop
     }
 }
