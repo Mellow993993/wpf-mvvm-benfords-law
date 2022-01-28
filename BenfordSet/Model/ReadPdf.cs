@@ -27,16 +27,17 @@ namespace BenfordSet.Model
         {
             using PdfDocument document = PdfDocument.Open(Filename);
             foreach (var page in document.GetPages())
-                FetchSinglePage(page); 
+                FetchSinglePage(page);
         }
+        
 
-        private void FetchSinglePage(Page p)
+        private void FetchSinglePage(Page page)
         {
-            if (p == null)
+            if (page == null)
                 throw new ArgumentNullException();
 
-            Content = p.Text;
-            PageNumbers = p.Number;
+            Content += page.Text;
+            PageNumbers = page.Number;
         }
     }
 }

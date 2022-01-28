@@ -19,16 +19,20 @@ namespace BenfordSet.ViewModel
             get => _filepath;
             set
             {
-                if(_filepath != value)
+                if (_filepath != value)
                 {
-                    _filepath = value;
+                    _filepath = value; 
                     OnPropertyChanged(nameof(Filepath));
                 }
+                
             }
         }
 
         private string _content;
         public string Content { get => _content; set => _content = value; }
+
+        private ReadPdf _readPdf;
+        public  ReadPdf ReadPdf { get => _readPdf; set => _readPdf = value;}
 
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
@@ -65,18 +69,13 @@ namespace BenfordSet.ViewModel
 
         private void Analyse()
         {
-            var readfile = new ReadPdf(Filepath);
-            PrepareRead(readfile);
-            readfile.GetFileContent();
-            CountNumbers countnumbers = new CountNumbers(readfile);
-            countnumbers.ShowAllNumbers();
+            ReadPdf _readPdf = new ReadPdf(Filepath);
+            _readPdf.GetFileContent();
+
+            CountNumbers countnumbers = new CountNumbers(_readPdf);
+            countnumbers.SumUpAllNumbers();
         }
 
-        private void PrepareRead(ReadPdf readfile)
-        {
-            readfile.GetFileContent();
-            RaisePropertyChanged();
-        }
         private void Quit() => Application.Current.Shutdown();
       
         #endregion
