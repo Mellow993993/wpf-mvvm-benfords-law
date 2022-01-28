@@ -67,6 +67,8 @@ namespace BenfordSet.ViewModel
         {
             var readfile = new ReadPdf(Filepath);
             PrepareRead(readfile);
+            readfile.GetFileContent();
+            readfile.PageNumbers();
         }
 
         private void PrepareRead(ReadPdf readfile)

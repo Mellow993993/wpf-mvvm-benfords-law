@@ -25,10 +25,8 @@ namespace BenfordSet.Model
             using PdfDocument document = PdfDocument.Open(Filename);
             foreach (var page in document.GetPages())
             {
-                //Content += p.Text;
-                FetchSinglePage(page); // += readFilesCompleted;
+                FetchSinglePage(page); 
             }
-            //Task.WaitAll(GetFileContent());
         }
 
         private void FetchSinglePage(Page p)
@@ -36,8 +34,14 @@ namespace BenfordSet.Model
             if (p == null)
                 throw new ArgumentNullException();
 
-            Content += p.Text;
-            PageNumber += p.Number;
+            Content = p.Text;
+            PageNumber = p.Number;
+        }
+
+        public void PageNumbers()
+        {
+            MessageBox.Show(PageNumber.ToString());
+            MessageBox.Show(Content);
         }
     }
 }
