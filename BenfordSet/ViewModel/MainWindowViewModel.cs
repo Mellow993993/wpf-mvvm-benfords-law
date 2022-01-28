@@ -13,6 +13,20 @@ namespace BenfordSet.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
         #region Fields and properties
+
+        private int _threshold = 1;
+        public int Threshold 
+        { 
+            get => _threshold;
+            set
+            {
+                if(_threshold != value && (_threshold > 1 || _threshold < 10))
+                {
+                    _threshold = value;
+                }
+            }
+        }
+
         private string _filepath;
         public string Filepath
         {
@@ -38,7 +52,7 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
         private DelegateCommand _quitCommand;
-        
+
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
@@ -47,10 +61,11 @@ namespace BenfordSet.ViewModel
 
         public MainWindowViewModel()
         {
-            _selectCommand = new DelegateCommand(Select);
+            _selectCommand = new DelegateCommand(SelectFile);
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
             _saveCommand = new DelegateCommand(SaveResults, CanSave);
             _quitCommand = new DelegateCommand(Quit);
+            this.Threshold = (int)mySlider.Value;
             // select destination
             //UserSettings usersettings = new UserSettings();
             // save destination   Destination = usersettings.ReadRegistry();
@@ -59,9 +74,9 @@ namespace BenfordSet.ViewModel
 
 
         #region Button logic
-        private void Select()
+        private void SelectFile()
         {
-            SelectFile selectfile = new SelectFile();
+            Select selectfile = new Select();
             Filepath = selectfile.OpenDialog();
             RaisePropertyChanged();        
         }
@@ -70,20 +85,7 @@ namespace BenfordSet.ViewModel
         {
             Save save = new Save();
             save.OpenSaveDialog();
-            //Save saveTimeKeeping = new Save(WorkTimeMeasurementModelInstance, saveFileDialog.FileName);
-            //if (!String.IsNullOrEmpty(saveFileDialog.FileName))
-            //{
-            //    Destination = saveFileDialog.FileName;
-            //    UserSettings su = new UserSettings(saveFileDialog.FileName);
-            //    su.SetRegistry();
-            //    if (saveTimeKeeping.SaveFile())
-            //    {
-            //        RaiseSave();
-            //        OnPropertyChanged(nameof(Destination));
-            //    }
-            //}
-            //else
-            //    RaiseNoSave();
+
         }
 
         private void Analyse()
