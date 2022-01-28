@@ -44,6 +44,24 @@ namespace BenfordSet.Common
 
         public bool SaveFile()
         {
+
+            //if (!String.IsNullOrEmpty(saveFileDialog.FileName))
+            //{
+            //    Destination = saveFileDialog.FileName;
+            //    UserSettings su = new UserSettings(saveFileDialog.FileName);
+            //    su.SetRegistry();
+            //    if (saveTimeKeeping.SaveFile())
+            //    {
+            //        RaiseSave();
+            //        OnPropertyChanged(nameof(Destination));
+            //    }
+            //}
+            //else
+            //    RaiseNoSave();
+
+
+
+
             DirectoryInfo directoryinfo = new DirectoryInfo(Path.GetDirectoryName(Destination));
             if (directoryinfo.Exists)
             {

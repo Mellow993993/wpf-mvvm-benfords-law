@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace BenfordSet.Common
 {
-    internal class SelectFile
+    internal class Select
     {
         private string _filepath = String.Empty;
         public string OpenDialog()
