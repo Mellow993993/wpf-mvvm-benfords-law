@@ -10,23 +10,24 @@ using UglyToad.PdfPig.Content;
 
 namespace BenfordSet.Model
 {
-    internal class ReadPdf
+    internal class FileAttributes
     {
-        public string Filename { get; set; }
-        public int PageNumber { get; set; }
-        public string Content { get; set; }
-        public ReadPdf(string filename)
-        {
-            Filename = filename;
-        }
+        private string _filename = string.Empty;
+        private string _content = string.Empty;
+        private int _pageNumbers = 0;
+        public string? Filename { get => _filename; set => _filename = value; }
+        public int PageNumbers { get => _pageNumbers; set => _pageNumbers = value; }
+        public string? Content { get => _content; set => _content = value; }
+    }
 
+    internal class ReadPdf : FileAttributes
+    {
+        public ReadPdf(string filename) { Filename = filename; }
         public void GetFileContent()
         {
             using PdfDocument document = PdfDocument.Open(Filename);
             foreach (var page in document.GetPages())
-            {
                 FetchSinglePage(page); 
-            }
         }
 
         private void FetchSinglePage(Page p)
@@ -35,13 +36,7 @@ namespace BenfordSet.Model
                 throw new ArgumentNullException();
 
             Content = p.Text;
-            PageNumber = p.Number;
-        }
-
-        public void PageNumbers()
-        {
-            MessageBox.Show(PageNumber.ToString());
-            MessageBox.Show(Content);
+            PageNumbers = p.Number;
         }
     }
 }
