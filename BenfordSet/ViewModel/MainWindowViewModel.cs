@@ -49,8 +49,12 @@ namespace BenfordSet.ViewModel
         {
             _selectCommand = new DelegateCommand(Select);
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
-            _saveCommand = new DelegateCommand(Save, CanSave);
+            _saveCommand = new DelegateCommand(SaveResults, CanSave);
             _quitCommand = new DelegateCommand(Quit);
+            // select destination
+            //UserSettings usersettings = new UserSettings();
+            // save destination   Destination = usersettings.ReadRegistry();
+
         }
 
 
@@ -62,9 +66,24 @@ namespace BenfordSet.ViewModel
             RaisePropertyChanged();        
         }
 
-        private void Save()
+        private void SaveResults()
         {
-            MessageBox.Show("save");
+            Save save = new Save();
+            save.OpenSaveDialog();
+            //Save saveTimeKeeping = new Save(WorkTimeMeasurementModelInstance, saveFileDialog.FileName);
+            //if (!String.IsNullOrEmpty(saveFileDialog.FileName))
+            //{
+            //    Destination = saveFileDialog.FileName;
+            //    UserSettings su = new UserSettings(saveFileDialog.FileName);
+            //    su.SetRegistry();
+            //    if (saveTimeKeeping.SaveFile())
+            //    {
+            //        RaiseSave();
+            //        OnPropertyChanged(nameof(Destination));
+            //    }
+            //}
+            //else
+            //    RaiseNoSave();
         }
 
         private void Analyse()
@@ -83,7 +102,7 @@ namespace BenfordSet.ViewModel
 
         #region CanExecute mehtods
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
-        private bool CanSave() => !String.IsNullOrEmpty(Filepath) && !String.IsNullOrEmpty(Content);
+        private bool CanSave() => true; //!String.IsNullOrEmpty(Filepath) && !String.IsNullOrEmpty(Content);
 
         #endregion
 
