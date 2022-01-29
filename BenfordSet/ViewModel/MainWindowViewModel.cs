@@ -14,7 +14,7 @@ namespace BenfordSet.ViewModel
     {
         #region Fields and properties
 
-        private int _threshold = 1;
+        private int _threshold;
         public int Threshold 
         { 
             get => _threshold;
@@ -65,11 +65,9 @@ namespace BenfordSet.ViewModel
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
             _saveCommand = new DelegateCommand(SaveResults, CanSave);
             _quitCommand = new DelegateCommand(Quit);
-            this.Threshold = (int)mySlider.Value;
             // select destination
             //UserSettings usersettings = new UserSettings();
             // save destination   Destination = usersettings.ReadRegistry();
-
         }
 
 
@@ -85,7 +83,6 @@ namespace BenfordSet.ViewModel
         {
             Save save = new Save();
             save.OpenSaveDialog();
-
         }
 
         private void Analyse()
@@ -95,10 +92,12 @@ namespace BenfordSet.ViewModel
 
             CountNumbers countnumbers = new CountNumbers(_readPdf);
             countnumbers.SumUpAllNumbers();
+
+            Calculation calculate = new Calculation(countnumbers);
+            calculate.StartCalculation();
         }
 
         private void Quit() => Application.Current.Shutdown();
-      
         #endregion
 
 
