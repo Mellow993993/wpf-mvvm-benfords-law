@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:BenfordSet"
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="630">
+        Title="Pdf analyser with the benford set" Height="450" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="AppStarting" MinWidth="698" MinHeight="450">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBox Text="{Binding Filepath}" HorizontalAlignment="Left" Margin="30,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="465"/>
-        <Button Content="Select" Command="{Binding SelectCommand}" HorizontalAlignment="Left" Margin="529,19,10,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198" Width="60"/>
-        <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Left" Margin="529,58,10,0" VerticalAlignment="Top" Width="60"/>
-        <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Left" Margin="451,239,10,0" VerticalAlignment="Top" Width="60"/>
-        <Button Content="Quit" Command="{Binding QuitCommand}" HorizontalAlignment="Left" Margin="529,239,10,0" VerticalAlignment="Top" RenderTransformOrigin="10.444,4.862" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="38,242,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="406">
+        <TextBox Text="{Binding Filepath}" HorizontalAlignment="Left" Margin="30,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="414"/>
+        <Button Content="Select" Command="{Binding SelectCommand}" HorizontalAlignment="Right" Margin="0,18,90,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198" Width="60"/>
+        <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Right" Margin="0,18,10,0" VerticalAlignment="Top" Width="60"/>
+        <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Margin="0,0,80,10" VerticalAlignment="Bottom" Width="60"/>
+        <Button Content="Quit" Command="{Binding QuitCommand}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="10.444,4.862" Width="60"/>
+        <TextBox HorizontalAlignment="Left" Margin="38,0,0,10" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" Width="406">
             <TextBox.SelectionTextBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -24,8 +24,7 @@
                 </LinearGradientBrush>
             </TextBox.SelectionTextBrush>
         </TextBox>
-        <Label Content="Threshold" HorizontalAlignment="Left" Margin="454,53,0,0" VerticalAlignment="Top"/>
-
-        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Left" Margin="50,99,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="120" Width="539" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFE21919"/>
+        <Label Content="Threshold" HorizontalAlignment="Left" Margin="451,18,0,0" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Height="330" Width="650" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
     </Grid>
 </Window>
