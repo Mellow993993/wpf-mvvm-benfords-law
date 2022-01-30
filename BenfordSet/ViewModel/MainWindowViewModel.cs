@@ -65,7 +65,6 @@ namespace BenfordSet.ViewModel
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
             _saveCommand = new DelegateCommand(SaveResults, CanSave);
             _quitCommand = new DelegateCommand(Quit);
-            this.Threshold = (int)mySlider.Value;
             // select destination
             //UserSettings usersettings = new UserSettings();
             // save destination   Destination = usersettings.ReadRegistry();
