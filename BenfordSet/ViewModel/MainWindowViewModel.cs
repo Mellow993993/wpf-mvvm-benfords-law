@@ -67,10 +67,12 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
         private DelegateCommand _quitCommand;
+        private DelegateCommand _infoCommand;
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
         public DelegateCommand QuitCommand { get => _quitCommand; } 
+        public DelegateCommand InfoCommand { get => _infoCommand; }
         #endregion
 
         public MainWindowViewModel()
@@ -78,6 +80,7 @@ namespace BenfordSet.ViewModel
             _selectCommand = new DelegateCommand(SelectFile);
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
             _saveCommand = new DelegateCommand(SaveFile, CanSave);
+            _infoCommand = new DelegateCommand(Info);
             _quitCommand = new DelegateCommand(Quit);
             // select destination
             //UserSettings usersettings = new UserSettings();
@@ -86,6 +89,11 @@ namespace BenfordSet.ViewModel
 
 
         #region Button logic
+        private void Info()
+        {
+            MessageBox.Show("give me infos");
+        }
+
         private void SelectFile()
         {
             Select selectfile = new Select();
