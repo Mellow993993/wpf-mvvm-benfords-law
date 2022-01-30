@@ -26,6 +26,6 @@
         </TextBox>
         <Label Content="Threshold" HorizontalAlignment="Left" Margin="454,53,0,0" VerticalAlignment="Top"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="50,99,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="120" Width="539" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFE21919"/>
+        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Left" Margin="50,99,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="120" Width="539" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFE21919"/>
     </Grid>
 </Window>
