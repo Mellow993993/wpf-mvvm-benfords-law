@@ -11,7 +11,7 @@
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBox Text="{Binding Filepath}" HorizontalAlignment="Left" Margin="30,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="414"/>
+        <TextBox Text="{Binding Filepath}" HorizontalAlignment="Left" Margin="30,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" MaxLines="1"/>
         <Button Content="Select" Command="{Binding SelectCommand}" HorizontalAlignment="Right" Margin="0,18,90,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198" Width="60"/>
         <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Right" Margin="0,18,10,0" VerticalAlignment="Top" Width="60"/>
         <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Margin="0,0,80,10" VerticalAlignment="Bottom" Width="60"/>
@@ -25,6 +25,6 @@
             </TextBox.SelectionTextBrush>
         </TextBox>
         <Label Content="Threshold" HorizontalAlignment="Left" Margin="451,18,0,0" VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Height="330" Width="650" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
+        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Height="330" Width="650" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
     </Grid>
 </Window>
