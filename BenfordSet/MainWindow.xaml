@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BenfordSet"
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser with the benford set" Height="450" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="AppStarting" MinWidth="698" MinHeight="450">
+        Title="Pdf analyser with the benford set" Height="650" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="AppStarting" MinWidth="698" MinHeight="450">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
@@ -16,7 +16,7 @@
         <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Right" Margin="0,18,10,0" VerticalAlignment="Top" Width="60"/>
         <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Margin="0,0,80,10" VerticalAlignment="Bottom" Width="60"/>
         <Button Content="Quit" Command="{Binding QuitCommand}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="10.444,4.862" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="38,0,0,10" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" Width="406">
+        <TextBox Text="{Binding SavePath, Mode=TwoWay}" HorizontalAlignment="Left" Margin="38,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="406">
             <TextBox.SelectionTextBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -25,6 +25,6 @@
             </TextBox.SelectionTextBrush>
         </TextBox>
         <Label Content="Threshold" HorizontalAlignment="Left" Margin="451,18,0,0" VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Height="330" Width="650" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
+        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Height="530" Width="650" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
     </Grid>
 </Window>
