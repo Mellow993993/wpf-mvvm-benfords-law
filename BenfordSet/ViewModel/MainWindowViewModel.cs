@@ -22,9 +22,7 @@ namespace BenfordSet.ViewModel
             private set 
             { 
                 if(_calculationResults != value)
-                {
                     _calculationResults = value; OnPropertyChanged(nameof(CalculationResults));
-                }
             }
         }
 
@@ -37,10 +35,7 @@ namespace BenfordSet.ViewModel
             set
             {
                 if(_threshold != value && (_threshold > 1 || _threshold < 10))
-                {
-                    _threshold = value;
-                    OnPropertyChanged(nameof(Threshold));
-                }
+                    _threshold = value; OnPropertyChanged(nameof(Threshold));
             }
         }
 
@@ -51,10 +46,7 @@ namespace BenfordSet.ViewModel
             set
             {
                 if (_filepath != value)
-                {
-                    _filepath = value; 
-                    OnPropertyChanged(nameof(Filepath));
-                }
+                    _filepath = value; OnPropertyChanged(nameof(Filepath));
                 
             }
         }
@@ -62,8 +54,6 @@ namespace BenfordSet.ViewModel
         private string _content;
         public string Content { get => _content; set => _content = value; }
 
-        private ReadPdf _readPdf;
-        public  ReadPdf ReadPdf { get => _readPdf; set => _readPdf = value;}
 
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
@@ -79,7 +69,7 @@ namespace BenfordSet.ViewModel
         {
             _selectCommand = new DelegateCommand(SelectFile);
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
-            _saveCommand = new DelegateCommand(SaveResults, CanSave);
+            _saveCommand = new DelegateCommand(SaveFile, CanSave);
             _quitCommand = new DelegateCommand(Quit);
             // select destination
             //UserSettings usersettings = new UserSettings();
@@ -95,11 +85,7 @@ namespace BenfordSet.ViewModel
             RaisePropertyChanged();        
         }
 
-        private void SaveResults()
-        {
-            Save save = new Save();
-            save.OpenSaveDialog();
-        }
+        private void SaveFile() { Save save = new Save(); save.OpenSaveDialog(); }
 
         private void Analyse()
         {

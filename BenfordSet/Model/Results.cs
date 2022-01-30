@@ -18,9 +18,9 @@ namespace BenfordSet.Model
         public string BuildResultString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("huhu ");
-            sb.Append("huhu ");
-            sb.Append(Deviation);
+            sb.Append(new string('#', 60));
+            sb.Append("\nResults of the benford analysis.\n");
+            sb.Append(new string('#', 60));
             return sb.ToString();
 
         }
