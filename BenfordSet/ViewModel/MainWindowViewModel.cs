@@ -13,12 +13,20 @@ namespace BenfordSet.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
         #region Fields and properties
-
+        private string _savePath;
+        public string SavePath 
+        { 
+            get => _savePath;
+            set
+            {
+                if(_savePath != value)
+                    _savePath = value; OnPropertyChanged(nameof(SavePath));
+            }
+        }
         private string _calculationResults;
         public string CalculationResults
         {
             get => _calculationResults;
-
             private set 
             { 
                 if(_calculationResults != value)
@@ -89,10 +97,10 @@ namespace BenfordSet.ViewModel
 
         private void Analyse()
         {
-            ReadPdf _readPdf = new ReadPdf(Filepath);
-            _readPdf.GetFileContent();
+            ReadPdf readPdf = new ReadPdf(Filepath);
+            readPdf.GetFileContent();
 
-            CountNumbers countnumbers = new CountNumbers(_readPdf);
+            CountNumbers countnumbers = new CountNumbers(readPdf);
             countnumbers.SumUpAllNumbers();
 
             Calculation calculate = new Calculation(countnumbers);
@@ -103,13 +111,13 @@ namespace BenfordSet.ViewModel
         }
 
         private void Quit() => Application.Current.Shutdown();
-      
         #endregion
 
 
         #region CanExecute mehtods
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
         private bool CanSave() => true; //!String.IsNullOrEmpty(Filepath) && !String.IsNullOrEmpty(Content);
+        // implement if obj != null then enable save button
 
         #endregion
 
