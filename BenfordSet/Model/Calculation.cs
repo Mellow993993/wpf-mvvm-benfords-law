@@ -11,7 +11,6 @@ namespace BenfordSet.Model
     {
         #region "Private Fields"
         private int _countDeviations;
-
         public int NumberInFiles { get; set; }
         #endregion
 
@@ -22,11 +21,11 @@ namespace BenfordSet.Model
         public double[] BenfordNumbers { get; } = { 30.1, 17.6, 12.5, 9.7, 7.9, 6.7, 5.8, 5.1, 4.6 };
         public double[] Digits { get; private set; } = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public double[] Difference { get; private set; } = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public List<double> ListOfDigits { get; private set; }
-        public List<double> ListOfBenfordNumbers { get; private set; }
-        public List<double> ListOfDifferance { get; private set; }
+        //public List<double> ListOfDigits { get; private set; }
+        //public List<double> ListOfBenfordNumbers { get; private set; }
+        //public List<double> ListOfDifferance { get; private set; }
         #endregion
-
+        public Calculation() { }
         public Calculation(CountNumbers countObj)
         {
             NumberInFiles = countObj.NumbersInFile;
@@ -40,15 +39,16 @@ namespace BenfordSet.Model
             CalculateDistribution();
             Deviation();
             ClassifyResults();
-            CreateLists();
+            var output = GetOutput();
+            //CreateLists();
         }
 
-        private void CreateLists()
-        {
-            ListOfDigits = new List<double>(Digits);
-            ListOfBenfordNumbers = new List<double>(BenfordNumbers);
-            ListOfDifferance = new List<double>(Difference);
-        }
+        //private void CreateLists()
+        //{
+        //    ListOfDigits = new List<double>(Digits);
+        //    ListOfBenfordNumbers = new List<double>(BenfordNumbers);
+        //    ListOfDifferance = new List<double>(Difference);
+        //}
 
         private void CalculateDistribution()
         {
@@ -69,5 +69,35 @@ namespace BenfordSet.Model
                 if (Difference[i] > Threshold)
                     CountDeviations += 1;
         }
+
+        private string GetOutput()
+        {
+            Output output = new Output();
+            return output.BuildAnalyseResult();
+        }
+
+    }
+
+     class Output : Calculation
+     {
+        public Output() { }
+        internal string BuildAnalyseResult()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (var i = 0; i < CountedNumbers.Length; i++)
+            {
+                if (Difference[i] < Threshold)
+                    sb.AppendLine(CombineOutput(i));
+                    //string? res1 = CombineOutput(i);
+                    //sb.AppendLine(res1);
+                else
+                    sb.AppendLine(CombineOutput(i));
+                    //string? res2 = CombineOutput(i);
+                    //sb.AppendLine(res2);
+            }
+            return sb.ToString();
+        }
+        private string CombineOutput(int i)
+            => (i + 1, BenfordNumbers[i], i + 1, Digits[i] + " %", i + 1, Difference[i] + " %").ToString();
     }
 }
