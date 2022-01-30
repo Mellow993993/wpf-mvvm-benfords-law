@@ -33,9 +33,6 @@ namespace BenfordSet.Model
 
         private void FetchSinglePage(Page page)
         {
-            if (page == null)
-                throw new ArgumentNullException();
-
             Content += page.Text;
             PageNumbers = page.Number;
         }
