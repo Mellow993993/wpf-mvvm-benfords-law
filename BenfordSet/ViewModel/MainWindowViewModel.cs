@@ -14,6 +14,22 @@ namespace BenfordSet.ViewModel
     {
         #region Fields and properties
 
+        private string _calculationResults;
+        public string CalculationResults
+        {
+            get => _calculationResults;
+
+            private set 
+            { 
+                if(_calculationResults != value)
+                {
+                    _calculationResults = value; OnPropertyChanged(nameof(CalculationResults));
+                }
+            }
+        }
+
+        private Results _results;
+        public Results Results { get => _results; set => _results = value; }
         private int _threshold = 1;
         public int Threshold 
         { 
@@ -23,6 +39,7 @@ namespace BenfordSet.ViewModel
                 if(_threshold != value && (_threshold > 1 || _threshold < 10))
                 {
                     _threshold = value;
+                    OnPropertyChanged(nameof(Threshold));
                 }
             }
         }
@@ -52,7 +69,6 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
         private DelegateCommand _quitCommand;
-
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
@@ -68,7 +84,6 @@ namespace BenfordSet.ViewModel
             // select destination
             //UserSettings usersettings = new UserSettings();
             // save destination   Destination = usersettings.ReadRegistry();
-
         }
 
 
@@ -84,7 +99,6 @@ namespace BenfordSet.ViewModel
         {
             Save save = new Save();
             save.OpenSaveDialog();
-
         }
 
         private void Analyse()
@@ -98,6 +112,8 @@ namespace BenfordSet.ViewModel
             Calculation calculate = new Calculation(countnumbers);
             calculate.StartCalculation();
 
+            Results result = new Results(calculate);
+            CalculationResults =  result.BuildResultString();
         }
 
         private void Quit() => Application.Current.Shutdown();
