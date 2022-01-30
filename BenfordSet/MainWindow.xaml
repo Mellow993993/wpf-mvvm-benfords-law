@@ -16,7 +16,7 @@
         <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Left" Margin="529,58,10,0" VerticalAlignment="Top" Width="60"/>
         <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Left" Margin="451,239,10,0" VerticalAlignment="Top" Width="60"/>
         <Button Content="Quit" Command="{Binding QuitCommand}" HorizontalAlignment="Left" Margin="529,239,10,0" VerticalAlignment="Top" RenderTransformOrigin="10.444,4.862" Width="60"/>
-        <TextBox HorizontalAlignment="Left" Margin="38,242,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="406">
+        <TextBox HorizontalAlignment="Left" Margin="38,242,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="406">
             <TextBox.SelectionTextBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -25,6 +25,7 @@
             </TextBox.SelectionTextBrush>
         </TextBox>
         <Label Content="Threshold" HorizontalAlignment="Left" Margin="454,53,0,0" VerticalAlignment="Top"/>
+        <Slider Name="mySlider" ValueChanged="SliderValueChanged" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" HorizontalAlignment="Left" Margin="324,57,0,0" VerticalAlignment="Top" Width="120" Minimum="1" SmallChange="0" Value="-1"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="50,99,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="120" Width="539" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFE21919"/>
     </Grid>
