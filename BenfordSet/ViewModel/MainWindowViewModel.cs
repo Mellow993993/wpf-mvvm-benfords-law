@@ -94,6 +94,9 @@ namespace BenfordSet.ViewModel
 
             CountNumbers countnumbers = new CountNumbers(_readPdf);
             countnumbers.SumUpAllNumbers();
+
+            Calculation calculate = new Calculation(countnumbers);
+            calculate.StartCalculation();
         }
 
         private void Quit() => Application.Current.Shutdown();
