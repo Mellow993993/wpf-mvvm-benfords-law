@@ -97,6 +97,7 @@ namespace BenfordSet.ViewModel
 
             Calculation calculate = new Calculation(countnumbers);
             calculate.StartCalculation();
+
         }
 
         private void Quit() => Application.Current.Shutdown();

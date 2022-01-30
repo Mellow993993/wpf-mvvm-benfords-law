@@ -11,25 +11,22 @@ namespace BenfordSet.Model
     {
         #region "Private Fields"
         private int _countDeviations;
-        private double _threshold;
-        private int _numberInFiles;
 
-        public int NumberInFiles { get => _numberInFiles; set => _numberInFiles = value; }
+        public int NumberInFiles { get; set; }
         #endregion
 
         #region "Properties"
         public int CountDeviations { get { return _countDeviations; } private set { _countDeviations = value; } }
         public int[] CountedNumbers { get; private set; }
-        public double Threshold { get => _threshold; set => _threshold = value; }
+        public double Threshold { get; set; }
         public double[] BenfordNumbers { get; } = { 30.1, 17.6, 12.5, 9.7, 7.9, 6.7, 5.8, 5.1, 4.6 };
         public double[] Digits { get; private set; } = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public double[] Difference { get; private set; } = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public List<double> ListOfDigits { get; private set; }
+        public List<double> ListOfBenfordNumbers { get; private set; }
+        public List<double> ListOfDifferance { get; private set; }
         #endregion
 
-
-        public Calculation() { }
-        // Threshold
-        // NumberInFiles
         public Calculation(CountNumbers countObj)
         {
             NumberInFiles = countObj.NumbersInFile;
@@ -43,11 +40,14 @@ namespace BenfordSet.Model
             CalculateDistribution();
             Deviation();
             ClassifyResults();
+            CreateLists();
         }
 
         private void CreateLists()
         {
-
+            ListOfDigits = new List<double>(Digits);
+            ListOfBenfordNumbers = new List<double>(BenfordNumbers);
+            ListOfDifferance = new List<double>(Difference);
         }
 
         private void CalculateDistribution()
