@@ -25,7 +25,6 @@
             </TextBox.SelectionTextBrush>
         </TextBox>
         <Label Content="Threshold" HorizontalAlignment="Left" Margin="454,53,0,0" VerticalAlignment="Top"/>
-        <Slider Name="mySlider" ValueChanged="SliderValueChanged" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" HorizontalAlignment="Left" Margin="324,57,0,0" VerticalAlignment="Top" Width="120" Minimum="1" SmallChange="0" Value="-1"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="50,99,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="120" Width="539" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFE21919"/>
     </Grid>
