@@ -11,9 +11,9 @@
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBox Text="{Binding Filepath}" HorizontalAlignment="Left" Margin="30,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" MaxLines="1"/>
+        <TextBox Text="{Binding Filepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="30,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" MaxLines="1"/>
         <Button Content="Select" Command="{Binding SelectCommand}" HorizontalAlignment="Right" Margin="0,18,90,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198" Width="60"/>
-        <Button Content="Analyse" Command="{Binding AnalyseCommand}" HorizontalAlignment="Right" Margin="0,18,10,0" VerticalAlignment="Top" Width="60"/>
+        <Button Content="Analyse" Command="{Binding AnalyseCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,18,10,0" VerticalAlignment="Top" Width="60"/>
         <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Margin="0,0,80,10" VerticalAlignment="Bottom" Width="60"/>
         <Button Content="Quit" Command="{Binding QuitCommand}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="10.444,4.862" Width="60"/>
         <TextBox Text="{Binding SavePath, Mode=TwoWay}" HorizontalAlignment="Left" Margin="38,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="406">
@@ -25,7 +25,8 @@
             </TextBox.SelectionTextBrush>
         </TextBox>
         <Label Content="Threshold" HorizontalAlignment="Left" Margin="451,18,0,0" VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Height="530" Width="650" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
+        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Height="480" Width="650" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
         <Button Command="{Binding InfoCommand}" Content="Info" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="60" Cursor="AppStarting"/>
+        <TextBox HorizontalAlignment="Left" Margin="550,43,0,0" TextWrapping="Wrap" Text="{Binding Threshold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLines="1" MaxLength="2" VerticalAlignment="Top" Width="31" RenderTransformOrigin="2.226,0.559"/>
     </Grid>
 </Window>
