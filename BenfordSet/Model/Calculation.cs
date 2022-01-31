@@ -11,7 +11,7 @@ namespace BenfordSet.Model
     {
         public int NumberInFiles { get; set; }
         public int CountDeviations { get; private set; }
-        public int[] CountedNumbers { get; private set; }
+        public int[] CountedNumbers { get; protected set; }
         public double Threshold { get; set; }
         public double[] BenfordNumbers { get; } = { 30.1, 17.6, 12.5, 9.7, 7.9, 6.7, 5.8, 5.1, 4.6 };
         public double[] Digits { get; protected set; } = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -19,12 +19,12 @@ namespace BenfordSet.Model
         public string CalculationResult { get; set; }
 
         public Calculation() { }
-        public Calculation(CountNumbers countObj)
+        public Calculation(CountNumbers countObj, double threshold)
         {
             NumberInFiles = countObj.NumbersInFile;
             Content = countObj.Content;
             CountedNumbers = countObj.FoundNumbers;
-            Threshold = 1.5;
+            Threshold = threshold;
         }
 
         public void StartCalculation()
@@ -60,7 +60,7 @@ namespace BenfordSet.Model
 
         private void GetOutput()
         {
-            Output output = new Output(CountedNumbers.Length, Digits, Difference, Threshold);
+            Output output = new Output(CountedNumbers, Digits, Difference, Threshold);
             CalculationResult = output.BuildAnalyseResult();
         }
 
@@ -68,10 +68,9 @@ namespace BenfordSet.Model
 
      class Output : Calculation
      {
-        private int _length;
-        public Output(int length, double[] digits, double[] difference, double threshold) 
+        public Output(int[] countedNumbers, double[] digits, double[] difference, double threshold) 
         {
-            _length = length;
+            CountedNumbers = countedNumbers;
             Digits = digits;
             Difference = difference;
             Threshold = threshold;
@@ -79,12 +78,12 @@ namespace BenfordSet.Model
         internal string BuildAnalyseResult()
         {
             StringBuilder sb = new StringBuilder();
-            for (var i = 0; i < _length; i++)
+            for (var i = 0; i < CountedNumbers.Length; i++)
             {
                 if (Difference[i] < Threshold)
                     sb.AppendLine(CombineOutput(i));
                 else
-                    sb.AppendLine(CombineOutput(i));
+                    sb.AppendLine(CombineOutput(i) + "\t####");
             }
             return sb.ToString();
         }
