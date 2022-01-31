@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BenfordSet"
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser with the benford set" Height="650" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="AppStarting" MinWidth="698" MinHeight="450">
+        Title="Pdf analyser" Height="650" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="AppStarting" MinWidth="698" MinHeight="450">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
