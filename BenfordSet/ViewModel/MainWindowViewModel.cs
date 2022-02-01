@@ -90,10 +90,7 @@ namespace BenfordSet.ViewModel
 
         #region Button logic
         private void Info()
-        {
-            MessageBox.Show("give me infos");
-        }
-
+            => Process.Start(new ProcessStartInfo { FileName = "https://en.wikipedia.org/wiki/Benford%27s_law", UseShellExecute = true });
         private void SelectFile()
         {
             Select selectfile = new Select();
