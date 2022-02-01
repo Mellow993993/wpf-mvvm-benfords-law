@@ -6,22 +6,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UglyToad.PdfPig;
+using UglyToad.PdfPig.DocumentLayoutAnalysis.TextExtractor;
+using UglyToad.PdfPig.Content;
+using UglyToad.PdfPig;
+
 
 namespace BenfordSet.Common
 {
     internal class Save
     {
         #region Fields & properties
-        private string _initialDirectory = @"C:\";
+        private string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory); //@"C:\";
         private string _allowedFiles = "Text file (*.txt)|*.txt";
 
         public Results Results { get; set; }
         private string Destination { get; set; }
         public StringBuilder Content { get; set; }
 
+        public string OutputResult { get; set; }
+
         #endregion
 
         #region Constructor
+        public Save(string outputresults) { OutputResult = outputresults; }
+
         public Save() { }
         public Save(Results results, string destination)
         {
@@ -79,31 +88,23 @@ namespace BenfordSet.Common
         {
             StringBuilder Content = new StringBuilder();
             Content.Append("hallo welt");
-            //_ = Content.Append("\nAktueller Tag\t" + Results + "\n");
-
-            //("Threshold:\t {0} %", calcObj.Threshold);
-            //("Filename:\t {0}", calcObj.Filename);
-            //("Counted Numbers: {0}", calcObj.NumbersInFile);
-            //("\nBenford Distribution \t Your Distribution \t Difference ");
-
-            //for (var i = 0; i < calcObj.CountedNumbers.Length; i++)
-            //{
-            //    if (calcObj.Difference[i] < calcObj.Threshold)
-            //    {
-            //        Console.ForegroundColor = ConsoleColor.Green;
-            //        Console.WriteLine("{0}: {1} % \t\t {2}: {3} %  \t\t {4}: {5} %", i + 1, calcObj.BenfordNumbers[i], i + 1, calcObj.Digits[i], i + 1, calcObj.Difference[i]);
-            //    }
-            //    else
-            //    {
-            //        Console.ForegroundColor = ConsoleColor.Red;
-            //        Console.WriteLine("{0}: {1} % \t\t {2}: {3} %  \t\t {4}: {5} %", i + 1, calcObj.BenfordNumbers[i], i + 1, calcObj.Digits[i], i + 1, calcObj.Difference[i]);
-            //    }
-            //}
-            //Console.ForegroundColor = ConsoleColor.Gray;
-            //PrintDeviation(calcObj.CountDeviations);
-
             return Content.ToString();
         }
         #endregion
+
+
+        private void SaveAsPdf()
+        { 
+        
+        }
+
+        public void SaveAsText()
+        {
+            var documentpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            using (StreamWriter fs = new StreamWriter(Path.Combine(documentpath, "BenfordAnalyse.txt")))
+            {
+                fs.Write(OutputResult);
+            }
+        }
     }
 }
