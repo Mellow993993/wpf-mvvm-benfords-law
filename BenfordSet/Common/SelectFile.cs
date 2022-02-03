@@ -26,7 +26,7 @@ namespace BenfordSet.Common
             {
                 openFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
                 openFileDialog.Title = "Select a file";
-                openFileDialog.InitialDirectory = @"C:\Users\Lenovo\Desktop\bb\"; //@"C:\Users\
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
                 ShowDialog(openFileDialog);
             }
         }
