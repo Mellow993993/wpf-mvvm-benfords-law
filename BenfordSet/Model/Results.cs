@@ -3,43 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace BenfordSet.Model
 {
     internal class Results : FileAttributes
     {
-
         public string CalculationResult { get; set; }
         public double Threshold { get; set; }
-        
-        private int _countDeviation;
         public int CountDeviation { get; set; }
-
         public int AllNumbersInFile { get; set; }
 
-        public Results(Calculation calcObj)
+        public Results(Calculation calcObj, ReadPdf readpdf)
         {
             Threshold = calcObj.Threshold;
             CalculationResult = calcObj.CalculationResult;
             CountDeviation = calcObj.CountDeviations;
             AllNumbersInFile = calcObj.NumberInFiles;
+            Filename = readpdf.OnlyFileName;
+            NumberOfPages = readpdf.NumberOfPages;
+
         }
 
         public string BuildResultString()
-            => BuildHeader() + CalculationResult;
+            => PrintHeadLine() + PrintMetaInfos() + CalculationResult;
 
 
-        private string BuildHeader()
+        private string PrintHeadLine()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(new string('#', 60));
             sb.AppendLine("Results of the benford analysis.");
             sb.AppendLine(new string('#', 60));
-            sb.AppendLine("Filename:\t");
-            sb.AppendLine("All numbers:\t " + AllNumbersInFile);
-            sb.AppendLine("Deviation:\t " + CountDeviation);
-            sb.AppendLine("Threshold:\t " + Threshold + " %\n");
-            sb.AppendLine("Benford Distribution \t Your Distribution \t\t Difference");
+            return sb.ToString();
+        }
+
+        private string PrintMetaInfos()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Filename:\t\t" + Filename);
+            sb.AppendLine("Number of pages:\t" + NumberOfPages);
+            sb.AppendLine("All numbers in file:\t" + AllNumbersInFile);
+            sb.AppendLine("Number of Deviation:\t" + CountDeviation);
+            sb.AppendLine("Threshold:\t\t" + Threshold + " %\n");
+            sb.AppendLine("Benford Distribution\tYour Distribution\t\tDifference");
             return sb.ToString();
         }
     }
