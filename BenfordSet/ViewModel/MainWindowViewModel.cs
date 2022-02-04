@@ -2,6 +2,7 @@
 using BenfordSet.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -36,14 +37,20 @@ namespace BenfordSet.ViewModel
 
         private Results _results;
         public Results Results { get => _results; set => _results = value; }
-        private int _threshold = 1;
-        public int Threshold 
+        private double _threshold;
+        public double Threshold 
         { 
             get => _threshold;
             set
             {
-                if(_threshold != value && (_threshold > 1 || _threshold < 10))
-                    _threshold = value; OnPropertyChanged(nameof(Threshold));
+                if (_threshold != value && (_threshold > 1 || _threshold < 10))
+                {
+                    _threshold = value;
+                    OnPropertyChanged(nameof(Threshold));
+                    CanAnalyse();
+                }
+                else
+                    throw new ArgumentException("Der Wert muss zwischen 1 und 10 liegen");
             }
         }
 
@@ -54,7 +61,7 @@ namespace BenfordSet.ViewModel
             set
             {
                 if (_filepath != value)
-                    _filepath = value; OnPropertyChanged(nameof(Filepath));
+                    _filepath = value; OnPropertyChanged(nameof(Filepath)); CanAnalyse();
                 
             }
         }
@@ -91,6 +98,7 @@ namespace BenfordSet.ViewModel
         #region Button logic
         private void Info()
             => Process.Start(new ProcessStartInfo { FileName = "https://en.wikipedia.org/wiki/Benford%27s_law", UseShellExecute = true });
+        
         private void SelectFile()
         {
             Select selectfile = new Select();
@@ -98,7 +106,17 @@ namespace BenfordSet.ViewModel
             RaisePropertyChanged();        
         }
 
-        private void SaveFile() { Save save = new Save(); save.OpenSaveDialog(); }
+        private void SaveFile()
+        {
+            Save save = GetSave();
+            save.OpenSaveDialog();
+            //save.SaveAsText();
+        }
+
+        private Save GetSave()
+        {
+            return new Save(CalculationResults);
+        }
 
         private void Analyse()
         {
@@ -108,10 +126,10 @@ namespace BenfordSet.ViewModel
             CountNumbers countnumbers = new CountNumbers(readPdf);
             countnumbers.SumUpAllNumbers();
 
-            Calculation calculate = new Calculation(countnumbers);
+            Calculation calculate = new Calculation(countnumbers, Threshold);
             calculate.StartCalculation();
 
-            Results result = new Results(calculate);
+            Results result = new Results(calculate, readPdf);
             CalculationResults =  result.BuildResultString();
         }
 
@@ -120,7 +138,8 @@ namespace BenfordSet.ViewModel
 
 
         #region CanExecute mehtods
-        private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
+        private bool CanAnalyse()
+            => !string.IsNullOrWhiteSpace(Filepath); // && Threshold > 0;
         private bool CanSave() => true; //!String.IsNullOrEmpty(Filepath) && !String.IsNullOrEmpty(Content);
         // implement if obj != null then enable save button
 
