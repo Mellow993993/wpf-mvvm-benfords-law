@@ -14,14 +14,14 @@ namespace BenfordSet.Model
         public int CountDeviation { get; set; }
         public int AllNumbersInFile { get; set; }
 
-        public Results(Calculation calcObj, ReadPdf readpdf)
+        public Results(Calculation calcObj, string filename, int numberOfPages)
         {
             Threshold = calcObj.Threshold;
             CalculationResult = calcObj.CalculationResult;
             CountDeviation = calcObj.CountDeviations;
             AllNumbersInFile = calcObj.NumberInFiles;
-            Filename = readpdf.OnlyFileName;
-            NumberOfPages = readpdf.NumberOfPages;
+            Filename = filename;
+            NumberOfPages = numberOfPages;
 
         }
 
