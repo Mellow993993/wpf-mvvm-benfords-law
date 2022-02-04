@@ -37,7 +37,7 @@ namespace BenfordSet.ViewModel
 
         private Results _results;
         public Results Results { get => _results; set => _results = value; }
-        private double _threshold;
+        private double _threshold = 5;
         public double Threshold 
         { 
             get => _threshold;
@@ -62,12 +62,17 @@ namespace BenfordSet.ViewModel
             {
                 if (_filepath != value)
                     _filepath = value; OnPropertyChanged(nameof(Filepath)); CanAnalyse();
-                
             }
         }
 
+        private string _fileName = string.Empty;
+        public string Filename { get => _fileName; set => _fileName = value; }
+
+        private int _numberOfPages = 0;
+        public int NumberOfPages { get => _numberOfPages; set => _numberOfPages = value; }
+
         private string _content;
-        public string Content { get => _content; set => _content = value; }
+        public string Content { get => _content; private set => _content = value; }
 
 
         private DelegateCommand _analyseCommand;
@@ -75,6 +80,8 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _selectCommand;
         private DelegateCommand _quitCommand;
         private DelegateCommand _infoCommand;
+        private object readpdf;
+
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
@@ -114,23 +121,35 @@ namespace BenfordSet.ViewModel
         }
 
         private Save GetSave()
-        {
-            return new Save(CalculationResults);
-        }
+            => new Save(CalculationResults);
 
         private void Analyse()
         {
             ReadPdf readPdf = new ReadPdf(Filepath);
-            readPdf.GetFileContent();
+            readPdf.GetFileContent(); 
+            Filename = readPdf.OnlyFileName;
+            NumberOfPages = readPdf.NumberOfPages;
 
             CountNumbers countnumbers = new CountNumbers(readPdf);
+
+            DisposeReadObject(readPdf);
+
             countnumbers.SumUpAllNumbers();
 
             Calculation calculate = new Calculation(countnumbers, Threshold);
             calculate.StartCalculation();
 
-            Results result = new Results(calculate, readPdf);
+            Results result = new Results(calculate, Filename, NumberOfPages );
             CalculationResults =  result.BuildResultString();
+        }
+
+        private void DisposeReadObject(ReadPdf readpdf)
+        {
+            if (readpdf != null)
+            {
+                readpdf = null;
+                GC.Collect();
+            }
         }
 
         private void Quit() => Application.Current.Shutdown();
