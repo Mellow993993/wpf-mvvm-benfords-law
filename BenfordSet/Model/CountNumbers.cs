@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows;
 
 namespace BenfordSet.Model
 {

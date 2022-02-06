@@ -1,15 +1,8 @@
 ﻿using BenfordSet.Model;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using UglyToad.PdfPig;
-using UglyToad.PdfPig.DocumentLayoutAnalysis.TextExtractor;
-using UglyToad.PdfPig.Content;
-using UglyToad.PdfPig;
 
 
 namespace BenfordSet.Common
