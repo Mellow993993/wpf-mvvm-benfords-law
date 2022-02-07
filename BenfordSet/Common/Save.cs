@@ -13,26 +13,16 @@ namespace BenfordSet.Common
         private string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory); //@"C:\";
         private string _allowedFiles = "Text file (*.txt)|*.txt";
 
-        public Results Results { get; set; }
-        private string Destination { get; set; }
-        public StringBuilder Content { get; set; }
-
+        public bool IsPdf { get; set; }
+        public string Destination { get; set; }
         public string OutputResult { get; set; }
-
         #endregion
 
-        #region Constructor
-        public Save(string outputresults) { OutputResult = outputresults; }
-
-        public Save() { }
-        public Save(Results results, string destination)
-        {
-            Results = results;
-            Destination = destination;
+        public Save(string outputresults, bool ispdf) 
+        { 
+            OutputResult = outputresults; IsPdf = ispdf;  
         }
-        #endregion
 
-        #region Public methods (SaveFile)
 
         public void OpenSaveDialog()
         {
@@ -41,60 +31,25 @@ namespace BenfordSet.Common
             saveFileDialog.Filter = _allowedFiles;
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                _ = saveFileDialog.FileName;
+                Destination = saveFileDialog.FileName;
         }
 
-        public bool SaveFile()
+        public void SaveFile()
         {
-
-            //if (!String.IsNullOrEmpty(saveFileDialog.FileName))
-            //{
-            //    Destination = saveFileDialog.FileName;
-            //    UserSettings su = new UserSettings(saveFileDialog.FileName);
-            //    su.SetRegistry();
-            //    if (saveTimeKeeping.SaveFile())
-            //    {
-            //        RaiseSave();
-            //        OnPropertyChanged(nameof(Destination));
-            //    }
-            //}
-            //else
-            //    RaiseNoSave();
-
-
-
-
-            DirectoryInfo directoryinfo = new DirectoryInfo(Path.GetDirectoryName(Destination));
-            if (directoryinfo.Exists)
-            {
-                PrepareOutput();
-                return true;
-            }
+            if (!IsPdf)
+                SaveAsText();
             else
-                return false;
+                SaveAsPdf();
         }
-        #endregion
-
-        #region Private methods (Stringbuilder)
-        private void PrepareOutput() => File.AppendAllText(Destination, BuildInformation());
-        private string BuildInformation()
-        {
-            StringBuilder Content = new StringBuilder();
-            Content.Append("hallo welt");
-            return Content.ToString();
-        }
-        #endregion
-
 
         private void SaveAsPdf()
-        { 
-        
-        }
+            => throw new NotImplementedException();
 
-        public void SaveAsText()
+
+        private void SaveAsText()
         {
-            var documentpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            using (StreamWriter fs = new StreamWriter(Path.Combine(documentpath, "BenfordAnalyse.txt")))
+            //var documentpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            using (StreamWriter fs = new StreamWriter(Destination))
             {
                 fs.Write(OutputResult);
             }

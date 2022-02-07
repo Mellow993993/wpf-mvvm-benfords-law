@@ -39,7 +39,7 @@ namespace BenfordSet.Model
             sb.AppendLine("Filename:\t\t" + Filename);
             sb.AppendLine("Number of pages:\t" + NumberOfPages);
             sb.AppendLine("All numbers in file:\t" + AllNumbersInFile);
-            sb.AppendLine("Number of Deviation:\t" + CountDeviation);
+            sb.AppendLine("Number of issues:\t" + CountDeviation);
             sb.AppendLine("Threshold:\t\t" + Threshold + " %\n");
             sb.AppendLine("Benford Distribution\tYour Distribution\t\tDifference");
             return sb.ToString();

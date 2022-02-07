@@ -10,7 +10,29 @@ namespace BenfordSet.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
         #region Fields and properties
+        private bool _isPdf = false;
         private string _savePath;
+        private string _calculationResults;
+        private double _threshold = 5;
+        private string _filepath;
+        private string _fileName = string.Empty;
+        private int _numberOfPages = 0;
+        private Results _results;
+        private DelegateCommand _analyseCommand;
+        private DelegateCommand _saveCommand;
+        private DelegateCommand _selectCommand;
+        private DelegateCommand _quitCommand;
+        private DelegateCommand _infoCommand;
+
+        public bool IsPdf
+        {
+            get => _isPdf;
+            set
+            {
+                if(_isPdf != value)
+                    _isPdf = value; OnPropertyChanged(nameof(IsPdf)); 
+            }
+        }
         public string SavePath 
         { 
             get => _savePath;
@@ -20,7 +42,6 @@ namespace BenfordSet.ViewModel
                     _savePath = value; OnPropertyChanged(nameof(SavePath));
             }
         }
-        private string _calculationResults;
         public string CalculationResults
         {
             get => _calculationResults;
@@ -30,27 +51,16 @@ namespace BenfordSet.ViewModel
                     _calculationResults = value; OnPropertyChanged(nameof(CalculationResults));
             }
         }
-
-        private Results _results;
         public Results Results { get => _results; set => _results = value; }
-        private double _threshold = 5;
         public double Threshold 
         { 
             get => _threshold;
             set
             {
                 if (_threshold != value && (_threshold > 1 || _threshold < 10))
-                {
-                    _threshold = value;
-                    OnPropertyChanged(nameof(Threshold));
-                    CanAnalyse();
-                }
-                else
-                    throw new ArgumentException("Der Wert muss zwischen 1 und 10 liegen");
+                    _threshold = value; OnPropertyChanged(nameof(Threshold)); CanAnalyse();
             }
         }
-
-        private string _filepath;
         public string Filepath
         {
             get => _filepath;
@@ -60,23 +70,8 @@ namespace BenfordSet.ViewModel
                     _filepath = value; OnPropertyChanged(nameof(Filepath)); CanAnalyse();
             }
         }
-
-        private string _fileName = string.Empty;
         public string Filename { get => _fileName; set => _fileName = value; }
-
-        private int _numberOfPages = 0;
         public int NumberOfPages { get => _numberOfPages; set => _numberOfPages = value; }
-
-        private string _content;
-        public string Content { get => _content; private set => _content = value; }
-
-
-        private DelegateCommand _analyseCommand;
-        private DelegateCommand _saveCommand;
-        private DelegateCommand _selectCommand;
-        private DelegateCommand _quitCommand;
-        private DelegateCommand _infoCommand;
-        private object readpdf;
 
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
@@ -92,9 +87,6 @@ namespace BenfordSet.ViewModel
             _saveCommand = new DelegateCommand(SaveFile, CanSave);
             _infoCommand = new DelegateCommand(Info);
             _quitCommand = new DelegateCommand(Quit);
-            // select destination
-            //UserSettings usersettings = new UserSettings();
-            // save destination   Destination = usersettings.ReadRegistry();
         }
 
 
@@ -113,11 +105,10 @@ namespace BenfordSet.ViewModel
         {
             Save save = GetSave();
             save.OpenSaveDialog();
-            //save.SaveAsText();
+            save.SaveFile();
         }
 
-        private Save GetSave()
-            => new Save(CalculationResults);
+        private Save GetSave() => new Save(CalculationResults, IsPdf);
 
         private void Analyse()
         {
@@ -125,16 +116,11 @@ namespace BenfordSet.ViewModel
             readPdf.GetFileContent(); 
             Filename = readPdf.OnlyFileName;
             NumberOfPages = readPdf.NumberOfPages;
-
             CountNumbers countnumbers = new CountNumbers(readPdf);
-
             DisposeReadObject(readPdf);
-
             countnumbers.SumUpAllNumbers();
-
             Calculation calculate = new Calculation(countnumbers, Threshold);
             calculate.StartCalculation();
-
             Results result = new Results(calculate, Filename, NumberOfPages );
             CalculationResults =  result.BuildResultString();
         }
@@ -142,10 +128,7 @@ namespace BenfordSet.ViewModel
         private void DisposeReadObject(ReadPdf readpdf)
         {
             if (readpdf != null)
-            {
-                readpdf = null;
-                GC.Collect();
-            }
+                readpdf = null; GC.Collect();
         }
 
         private void Quit() => Application.Current.Shutdown();
@@ -153,11 +136,8 @@ namespace BenfordSet.ViewModel
 
 
         #region CanExecute mehtods
-        private bool CanAnalyse()
-            => !string.IsNullOrWhiteSpace(Filepath); // && Threshold > 0;
-        private bool CanSave() => true; //!String.IsNullOrEmpty(Filepath) && !String.IsNullOrEmpty(Content);
-        // implement if obj != null then enable save button
-
+        private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
+        private bool CanSave() => true; 
         #endregion
 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
