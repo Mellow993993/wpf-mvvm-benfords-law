@@ -1,6 +1,7 @@
 ﻿using UglyToad.PdfPig;
 using UglyToad.PdfPig.Content;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace BenfordSet.Model
 {
@@ -19,15 +20,32 @@ namespace BenfordSet.Model
     internal class ReadPdf : FileAttributes
     {
         public ReadPdf(string filename) { Filename = filename; }
-        public void GetFileContent()
+        //public void GetFileContent()
+        //{
+        //    using PdfDocument document = PdfDocument.Open(Filename);
+        //    {
+        //        foreach (var page in document.GetPages())
+        //            FetchSinglePage(page);
+        //    }
+        //}
+
+
+        public async Task<string> GetFileContent()
         {
-            using PdfDocument document = PdfDocument.Open(Filename);
+            Task<string> readfile = Task<string>.Factory.StartNew(() =>
             {
-                foreach (var page in document.GetPages())
-                    FetchSinglePage(page);
-            }
+                using PdfDocument document = PdfDocument.Open(Filename);
+                {
+                    foreach (var page in document.GetPages())
+                        FetchSinglePage(page);
+                }
+                return Content;
+            });
+            var t = await readfile;
+            return t;
         }
-        
+
+
         private void FetchSinglePage(Page page)
         {
             Content += page.Text;
