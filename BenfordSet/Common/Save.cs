@@ -9,18 +9,16 @@ namespace BenfordSet.Common
 {
     internal class Save
     {
-        #region Fields & properties
-        private string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory); //@"C:\";
+        private string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private string _allowedFiles = "Text file (*.txt)|*.txt";
 
-        public bool IsPdf { get; set; }
+        public bool IsText { get; set; }
         public string Destination { get; set; }
         public string OutputResult { get; set; }
-        #endregion
 
-        public Save(string outputresults, bool ispdf) 
+        public Save(string outputresults, bool istext) 
         { 
-            OutputResult = outputresults; IsPdf = ispdf;  
+            OutputResult = outputresults; IsText = istext;  
         }
 
 
@@ -36,22 +34,24 @@ namespace BenfordSet.Common
 
         public void SaveFile()
         {
-            if (!IsPdf)
+            if (IsText)
                 SaveAsText();
             else
                 SaveAsPdf();
         }
 
         private void SaveAsPdf()
-            => throw new NotImplementedException();
+            => MessageBox.Show("print as pdf");
 
 
         private void SaveAsText()
         {
-            //var documentpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            using (StreamWriter fs = new StreamWriter(Destination))
+            if(!string.IsNullOrEmpty(Destination))
             {
-                fs.Write(OutputResult);
+                using (StreamWriter fs = new StreamWriter(Destination))
+                {
+                    fs.Write(OutputResult);
+                }
             }
         }
     }
