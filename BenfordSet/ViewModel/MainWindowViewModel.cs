@@ -10,7 +10,7 @@ namespace BenfordSet.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
         #region Fields and properties
-        private bool _isPdf = false;
+        private bool _isText;
         private string _savePath;
         private string _calculationResults;
         private double _threshold = 5;
@@ -24,13 +24,13 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _quitCommand;
         private DelegateCommand _infoCommand;
 
-        public bool IsPdf
+        public bool IsText
         {
-            get => _isPdf;
+            get => _isText;
             set
             {
-                if(_isPdf != value)
-                    _isPdf = value; OnPropertyChanged(nameof(IsPdf)); 
+                if(_isText != value)
+                    _isText = value; OnPropertyChanged(nameof(IsText)); 
             }
         }
         public string SavePath 
@@ -45,10 +45,10 @@ namespace BenfordSet.ViewModel
         public string CalculationResults
         {
             get => _calculationResults;
-            private set 
+            set 
             { 
                 if(_calculationResults != value)
-                    _calculationResults = value; OnPropertyChanged(nameof(CalculationResults));
+                    _calculationResults = value; OnPropertyChanged(nameof(CalculationResults)); CanSave();
             }
         }
         public Results Results { get => _results; set => _results = value; }
@@ -82,6 +82,7 @@ namespace BenfordSet.ViewModel
 
         public MainWindowViewModel()
         {
+            _isText = true;
             _selectCommand = new DelegateCommand(SelectFile);
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
             _saveCommand = new DelegateCommand(SaveFile, CanSave);
@@ -92,8 +93,11 @@ namespace BenfordSet.ViewModel
 
         #region Button logic
         private void Info()
-            => Process.Start(new ProcessStartInfo { FileName = "https://en.wikipedia.org/wiki/Benford%27s_law", UseShellExecute = true });
-        
+        {
+            MessageBox.Show(IsText.ToString());
+            //Process.Start(new ProcessStartInfo { FileName = "https://en.wikipedia.org/wiki/Benford%27s_law", UseShellExecute = true });
+        }
+
         private void SelectFile()
         {
             Select selectfile = new Select();
@@ -103,17 +107,15 @@ namespace BenfordSet.ViewModel
 
         private void SaveFile()
         {
-            Save save = GetSave();
+            Save save = new Save(CalculationResults, IsText);
             save.OpenSaveDialog();
             save.SaveFile();
         }
 
-        private Save GetSave() => new Save(CalculationResults, IsPdf);
-
-        private void Analyse()
+        private async void Analyse()
         {
             ReadPdf readPdf = new ReadPdf(Filepath);
-            readPdf.GetFileContent(); 
+            await readPdf.GetFileContent();
             Filename = readPdf.OnlyFileName;
             NumberOfPages = readPdf.NumberOfPages;
             CountNumbers countnumbers = new CountNumbers(readPdf);
@@ -121,11 +123,11 @@ namespace BenfordSet.ViewModel
             countnumbers.SumUpAllNumbers();
             Calculation calculate = new Calculation(countnumbers, Threshold);
             calculate.StartCalculation();
-            Results result = new Results(calculate, Filename, NumberOfPages );
+            Results result = new Results(calculate, Filename, NumberOfPages);
             CalculationResults =  result.BuildResultString();
         }
 
-        private void DisposeReadObject(ReadPdf readpdf)
+        private void DisposeReadObject(ReadPdf? readpdf)
         {
             if (readpdf != null)
                 readpdf = null; GC.Collect();
@@ -134,10 +136,9 @@ namespace BenfordSet.ViewModel
         private void Quit() => Application.Current.Shutdown();
         #endregion
 
-
         #region CanExecute mehtods
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
-        private bool CanSave() => true; 
+        private bool CanSave() => true; //!string.IsNullOrEmpty(CalculationResults); 
         #endregion
 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")

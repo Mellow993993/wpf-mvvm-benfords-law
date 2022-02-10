@@ -4,9 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BenfordSet"
-        xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" x:Class="BenfordSet.MainWindow"
+        xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" 
+        xmlns:converters="clr-namespace:BenfordSet.Common"
+        x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser" Height="650" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="AppStarting" MinWidth="698" MinHeight="450">
+        Title="Pdf analyser" Height="650" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="698" MinHeight="450">
+
+    <Window.Resources>
+        <converters:ConvertStringToBool x:Key="StringToBool"></converters:ConvertStringToBool>
+    </Window.Resources>
+
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
@@ -25,9 +32,11 @@
             </TextBox.SelectionTextBrush>
         </TextBox>
         <Label Content="Threshold" HorizontalAlignment="Left" Margin="451,18,0,0" VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Center" Height="480" Width="650" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
+        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center" Height="454" Width="650" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
         <Button Command="{Binding InfoCommand}" Content="Info" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="60" Cursor="AppStarting"/>
         <TextBox HorizontalAlignment="Left" Margin="550,43,0,0" TextWrapping="Wrap" Text="{Binding Threshold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLines="1" MaxLength="2" VerticalAlignment="Top" Width="31" RenderTransformOrigin="2.226,0.559"/>
-        <Label Content="Save as" HorizontalAlignment="Left" Margin="38,563,0,0" VerticalAlignment="Top"/>
+        <Label Content="Save as" HorizontalAlignment="Left" Margin="38,559,0,0" VerticalAlignment="Top"/>
+        <RadioButton IsChecked="{Binding IsText}" Content="Textfile" HorizontalAlignment="Left" Margin="104,565,0,0" VerticalAlignment="Top"/>
+        <RadioButton IsChecked="False" Content="Pdf" HorizontalAlignment="Left" Margin="175,565,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
