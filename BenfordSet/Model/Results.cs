@@ -17,7 +17,6 @@ namespace BenfordSet.Model
             AllNumbersInFile = calcObj.NumberInFiles;
             Filename = filename;
             NumberOfPages = numberOfPages;
-
         }
 
         public string BuildResultString()
