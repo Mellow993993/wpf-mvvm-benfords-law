@@ -20,17 +20,8 @@ namespace BenfordSet.Model
     internal class ReadPdf : FileAttributes
     {
         public ReadPdf(string filename) { Filename = filename; }
-        //public void GetFileContent()
-        //{
-        //    using PdfDocument document = PdfDocument.Open(Filename);
-        //    {
-        //        foreach (var page in document.GetPages())
-        //            FetchSinglePage(page);
-        //    }
-        //}
 
-
-        public async Task<string> GetFileContent()
+        public async Task GetFileContent()
         {
             Task<string> readfile = Task<string>.Factory.StartNew(() =>
             {
@@ -42,7 +33,7 @@ namespace BenfordSet.Model
                 return Content;
             });
             var t = await readfile;
-            return t;
+            //return t;
         }
 
 
