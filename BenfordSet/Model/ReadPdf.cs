@@ -24,7 +24,7 @@ namespace BenfordSet.Model
 
     internal class ReadPdf : FileAttributes
     {
-        private int _endReadingProcess = 10; //1000 * 120; // abort reading process after 120 seconds
+        private int _endReadingProcess = 1000 * 120; // abort reading process after 120 seconds
         private ProgrammEvents _programmEvents;
 
         public ProgrammEvents ProgrammEvents { get => _programmEvents; set => _programmEvents = value; }
