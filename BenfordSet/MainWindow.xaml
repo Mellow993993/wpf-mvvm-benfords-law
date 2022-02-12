@@ -10,10 +10,6 @@
         mc:Ignorable="d"
         Title="Pdf analyser" Height="650" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="698" MinHeight="450">
 
-    <Window.Resources>
-        <converters:ConvertStringToBool x:Key="StringToBool"></converters:ConvertStringToBool>
-    </Window.Resources>
-
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
