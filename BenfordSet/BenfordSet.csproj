@@ -10,7 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="WindowIcon.png" />
+    <None Remove="WindowIcon.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ceTe.DynamicPDF.CoreSuite.NET" Version="11.25.0" />
     <PackageReference Include="PdfPig" Version="0.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="WindowIcon.png" />
+    <Resource Include="WindowIcon.svg" />
   </ItemGroup>
 
 </Project>

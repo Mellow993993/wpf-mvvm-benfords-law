@@ -4,6 +4,10 @@ using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
+using ceTe.DynamicPDF;
+using ceTe.DynamicPDF.Text;
+using ceTe.DynamicPDF.Forms;
+using ceTe.DynamicPDF.PageElements;
 
 
 namespace BenfordSet.Common
@@ -11,7 +15,7 @@ namespace BenfordSet.Common
     internal class Save
     {
         private string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        private string _allowedFiles = "Text file (*.txt)|*.txt";
+        private string _allowedFiles = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 
         private ProgrammEvents _programmEvents;
         public ProgrammEvents ProgrammEvents { get => _programmEvents; set => _programmEvents = value; }
@@ -49,15 +53,21 @@ namespace BenfordSet.Common
             else
             {
                 SaveAsPdf();
-                _programmEvents.OnSaveNotSuccessful();
                 _programmEvents.OnSaveSuccessful();
             }
         }
 
         private void SaveAsPdf() 
         {
-            System.Windows.MessageBox.Show("print as pdf");
+            Document doc = new Document();
+            Page page = new Page(PageSize.A4, PageOrientation.Landscape);
+            doc.Pages.Add(page);
 
+            ceTe.DynamicPDF.PageElements.Label label = new 
+                ceTe.DynamicPDF.PageElements.Label(OutputResult, 0, 0, 504, 100, Font.Helvetica, 10, TextAlign.Left);
+
+            page.Elements.Add(label);
+            doc.Draw(Destination);
         }
 
 
@@ -83,7 +93,6 @@ namespace BenfordSet.Common
         {
             System.Windows.MessageBox.Show("File has not been saved.",
                   "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
-
         }
     }
 }
