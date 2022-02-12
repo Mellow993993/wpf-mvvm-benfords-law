@@ -8,18 +8,34 @@
         xmlns:converters="clr-namespace:BenfordSet.Common"
         x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser" Height="650" Width="700" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="698" MinHeight="450">
+        Title="Pdf analyser" Height="648" Width="1000" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="698" MinHeight="450" Icon="/WindowIcon.png" UseLayoutRounding="False" >
 
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBox Text="{Binding Filepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="30,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" MaxLines="1"/>
-        <Button Content="Select" Command="{Binding SelectCommand}" HorizontalAlignment="Right" Margin="0,18,90,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198" Width="60"/>
-        <Button Content="Analyse" Command="{Binding AnalyseCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,18,10,0" VerticalAlignment="Top" Width="60"/>
-        <Button Content="Save" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Margin="0,0,80,10" VerticalAlignment="Bottom" Width="60"/>
-        <Button Content="Quit" Command="{Binding QuitCommand}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="10.444,4.862" Width="60"/>
-        <TextBox Text="{Binding SavePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="38,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="406">
+
+        <TextBox Text="{Binding Filepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="255,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="570" MaxLines="1" ToolTip="Path to your file" FontSize="16"/>
+        <Button Command="{Binding SelectCommand}" HorizontalAlignment="Right" Margin="0,36,93,0" VerticalAlignment="Top" RenderTransformOrigin="-1.27,-0.198" Width="62" ToolTip="Select your file" Height="62">
+            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\SelectIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+
+        </Button>
+
+
+        <Button  Command="{Binding AnalyseCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,36,18,0" VerticalAlignment="Top" Width="62" ToolTip="Start the PDF analysing" Height="62">
+            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\AnalyseIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+        </Button>
+
+
+        <Button Command="{Binding SaveCommand}" HorizontalAlignment="Left" Margin="87,0,0,538" VerticalAlignment="Bottom" Width="62" ToolTip="Save your results as PDF or textfile" Height="62">
+            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\SaveIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+
+        </Button>
+        <Button Command="{Binding QuitCommand}" HorizontalAlignment="Left" Margin="10,0,0,539" VerticalAlignment="Bottom" RenderTransformOrigin="10.444,4.862" Width="62" ToolTip="Quit the PDF analyser" Height="62">
+            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\ExitIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+
+        </Button>
+        <TextBox Text="{Binding SavePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="255,0,0,493" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="570" ToolTip="Path to save your file" FontSize="16">
             <TextBox.SelectionTextBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black"/>
@@ -27,12 +43,16 @@
                 </LinearGradientBrush>
             </TextBox.SelectionTextBrush>
         </TextBox>
-        <Label Content="Threshold" HorizontalAlignment="Left" Margin="451,18,0,0" VerticalAlignment="Top"/>
-        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Center" Height="454" Width="650" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16"/>
-        <Button Command="{Binding InfoCommand}" Content="Info" HorizontalAlignment="Right" Margin="0,0,160,10" VerticalAlignment="Bottom" Width="60" Cursor="AppStarting"/>
-        <TextBox HorizontalAlignment="Left" Margin="550,43,0,0" TextWrapping="Wrap" Text="{Binding Threshold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLines="1" MaxLength="2" VerticalAlignment="Top" Width="31" RenderTransformOrigin="2.226,0.559"/>
-        <Label Content="Save as" HorizontalAlignment="Left" Margin="38,559,0,0" VerticalAlignment="Top"/>
-        <RadioButton IsChecked="{Binding IsText}" Content="Textfile" HorizontalAlignment="Left" Margin="104,565,0,0" VerticalAlignment="Top"/>
-        <RadioButton IsChecked="False" Content="Pdf" HorizontalAlignment="Left" Margin="175,565,0,0" VerticalAlignment="Top"/>
+        <Label Content="Threshold" HorizontalAlignment="Left" Margin="845,105,0,0" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Top" Height="430" Width="902" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16" Margin="0,154,0,0"/>
+        <Button Command="{Binding InfoCommand}" HorizontalAlignment="Left" Margin="175,0,0,538" VerticalAlignment="Bottom" Width="62" Cursor="AppStarting" ToolTip="Get more information about the Benford set" Height="62">
+            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\QuestionIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+
+        </Button>
+
+        <TextBox HorizontalAlignment="Left" Margin="936,109,0,0" TextWrapping="Wrap" Text="{Binding Threshold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLines="1" MaxLength="2" VerticalAlignment="Top" Width="30" RenderTransformOrigin="2.226,0.559" ToolTip="Defines the precession of the analyse process"/>
+        <Label Content="Save as" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <RadioButton IsChecked="{Binding IsText}" Content="Textfile" HorizontalAlignment="Left" Margin="87,101,0,0" VerticalAlignment="Top" ToolTip="Save file as textfile" FontSize="14"/>
+        <RadioButton IsChecked="False" Content="Pdf" HorizontalAlignment="Left" Margin="175,101,0,0" VerticalAlignment="Top" ToolTip="Save file as PDF" FontSize="14"/>
     </Grid>
 </Window>
