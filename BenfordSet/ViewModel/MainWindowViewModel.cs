@@ -1,6 +1,7 @@
 ﻿using BenfordSet.Common;
 using BenfordSet.Model;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -17,6 +18,7 @@ namespace BenfordSet.ViewModel
         private string _filepath;
         private string _fileName = string.Empty;
         private int _numberOfPages = 0;
+        private int _currentProgress;
         private Results _results;
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
@@ -24,6 +26,15 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _quitCommand;
         private DelegateCommand _infoCommand;
 
+        public int CurrentProgress
+        {
+            get => _currentProgress;
+            set
+            {
+                if(_currentProgress != value)
+                    _currentProgress = value; OnPropertyChanged(nameof(CurrentProgress));
+            }
+        }
         public bool IsText
         {
             get => _isText;
@@ -78,6 +89,7 @@ namespace BenfordSet.ViewModel
         public DelegateCommand SelectCommand { get => _selectCommand; } 
         public DelegateCommand QuitCommand { get => _quitCommand; } 
         public DelegateCommand InfoCommand { get => _infoCommand; }
+        public object ProgressBarStatus { get; private set; }
         #endregion
 
         public MainWindowViewModel()
@@ -88,10 +100,27 @@ namespace BenfordSet.ViewModel
             _saveCommand = new DelegateCommand(SaveFile, CanSave);
             _infoCommand = new DelegateCommand(Info);
             _quitCommand = new DelegateCommand(Quit);
+
+            /*** ***/
+            BackgroundWorker backgroundworker = new BackgroundWorker();
+            backgroundworker.WorkerReportsProgress = true;
+            //backgroundworker.DoWork += GetFileContent;
+            //backgroundworker.ProgressChanged += worker_ProgressChanged;
         }
 
 
         #region Button logic
+
+        private void DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            CurrentProgress = e.ProgressPercentage;
+        }
+
         private void Info()
         {
             Process.Start(new ProcessStartInfo { FileName = "https://en.wikipedia.org/wiki/Benford%27s_law", UseShellExecute = true });
