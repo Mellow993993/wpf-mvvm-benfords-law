@@ -3,67 +3,63 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BenfordSet"
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" 
-        xmlns:converters="clr-namespace:BenfordSet.Common"
         x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser" Height="648" Width="1000" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="698" MinHeight="450" Icon="/WindowIcon.png" UseLayoutRounding="False" >
+        Title="Pdf analyser" Height="624" Width="654" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="698" MinHeight="450" Icon="/WindowIcon.png" UseLayoutRounding="False" >
 
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="auto" MinHeight="135"></RowDefinition>
+            <RowDefinition Height="auto" MinHeight="492"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="4*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="auto" MinWidth="410"></ColumnDefinition>
+            <ColumnDefinition Width="auto" MinWidth="385"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="82" Width="410">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="5,10,5,10"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Command="{Binding QuitCommand}" Width="62" ToolTip="Quit the PDF analyser" Height="62" HorizontalAlignment="Left">
+                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\ExitIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+            </Button>
 
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Filepath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="520" MaxLines="1" ToolTip="Path to your file" FontSize="16"/>
-        <Button Grid.Column="2" Grid.Row="0" Command="{Binding SelectCommand}" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="-1.27,-0.198" Width="62" ToolTip="Select your file" Height="62">
-            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\SelectIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
-        </Button>
+            <Button Command="{Binding SelectCommand}" RenderTransformOrigin="-1.27,-0.198" Width="62" ToolTip="Select your file" Height="62">
+                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\SelectIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+            </Button>
 
+            <Button Command="{Binding AnalyseCommand, UpdateSourceTrigger=PropertyChanged}" Width="62" ToolTip="Start the PDF analysing" Height="62">
+                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\AnalyseIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+            </Button>
+            <Button Command="{Binding SaveCommand}" Width="62" ToolTip="Save your results as PDF or textfile" Height="62">
+                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\SaveIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
 
-        <Button Grid.Column="2" Grid.Row="0" Command="{Binding AnalyseCommand, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="62" ToolTip="Start the PDF analysing" Height="62">
-            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\AnalyseIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
-        </Button>
+            </Button>
+            <Button Command="{Binding InfoCommand}" Width="62" Cursor="AppStarting" ToolTip="Get more information about the Benford set" Height="62">
+                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\QuestionIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+            </Button>
+            <Label Content="Threshold" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Grid.Column="2" Height="0" Grid.Row="1" Width="0"/>
 
+        </StackPanel>
 
-        <Button Grid.Column="0" Grid.Row="0" Command="{Binding SaveCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="62" ToolTip="Save your results as PDF or textfile" Height="62">
-            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\SaveIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+        <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Width="290" Margin="0,0,0,10">
+            <Label Grid.Column="1" Content="Threshold" HorizontalAlignment="Left" Margin="10,10,0,0" Width="90" Height="31" FontSize="16" FontWeight="Bold"/>
+            <Label Grid.Column="1" Content="Save as" FontSize="14" Height="28" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
+            <RadioButton IsChecked="{Binding IsText}" Content="Textfile" ToolTip="Save file as textfile" FontSize="14" Height="18" Width="68"/>
+            <RadioButton IsChecked="False" Content="Pdf" ToolTip="Save file as PDF" FontSize="14" Height="13" Width="51"/>
+            <Slider Value="{Binding Threshold}" HorizontalAlignment="Left" Width="90" Height="25" SelectionStart="1" SelectionEnd="10" Minimum="1" SmallChange="1" AutomationProperties.HelpText="Chose the precession of the analyse process" AutoToolTipPlacement="TopLeft" Grid.Column="1"/>
 
-        </Button>
-        <Button Grid.Column="0" Grid.Row="0" Command="{Binding QuitCommand}" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="10.444,4.862" Width="62" ToolTip="Quit the PDF analyser" Height="62">
-            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\ExitIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+        </StackPanel>
 
-        </Button>
-        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SavePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="520" ToolTip="Path to save your file" FontSize="16">
-            <TextBox.SelectionTextBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </TextBox.SelectionTextBrush>
-        </TextBox>
-        <Label Content="Threshold" HorizontalAlignment="Left" Margin="814,116,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Center" TextWrapping="Wrap"  VerticalAlignment="Top" Height="320" Width="902" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16" Margin="0,164,0,0"/>
-        <Button Grid.Column="0" Grid.Row="0" Command="{Binding InfoCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="62" Cursor="AppStarting" ToolTip="Get more information about the Benford set" Height="62">
-            <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\QuestionIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+        <TextBlock Grid.ColumnSpan="2" Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Height="422" Width="630" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16" Margin="10,3,0,0" Grid.Row="1"/>
 
-        </Button>
+        <ProgressBar Value="{Binding CurrentProgress}" Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="False" HorizontalAlignment="Left" Height="30" Margin="10,436,0,0" VerticalAlignment="Top" Width="630" Grid.ColumnSpan="2" Grid.Row="1"/>
 
-        <!--<TextBox HorizontalAlignment="Left" Margin="936,109,0,0" TextWrapping="Wrap" Text="{Binding Threshold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLines="1" MaxLength="2" VerticalAlignment="Top" Width="30" RenderTransformOrigin="2.226,0.559" ToolTip="Defines the precession of the analyse process"/> -->
-        <Label Content="Save as" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <RadioButton IsChecked="{Binding IsText}" Content="Textfile" HorizontalAlignment="Left" Margin="87,101,0,0" VerticalAlignment="Top" ToolTip="Save file as textfile" FontSize="14"/>
-        <RadioButton IsChecked="False" Content="Pdf" HorizontalAlignment="Left" Margin="175,101,0,0" VerticalAlignment="Top" ToolTip="Save file as PDF" FontSize="14"/>
-        <Slider Value="{Binding Threshold}" HorizontalAlignment="Left" Margin="892,118,0,0" VerticalAlignment="Top" Width="90" Height="25" SelectionStart="1" SelectionEnd="10" Minimum="1" SmallChange="1" AutomationProperties.HelpText="Chose the precession of the analyse process" AutoToolTipPlacement="TopLeft"/>
-        <ProgressBar Value="{Binding CurrentProgress}" Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="False" HorizontalAlignment="Left" Height="30" Margin="118,559,0,0" VerticalAlignment="Top" Width="527"/>
     </Grid>
 </Window>
