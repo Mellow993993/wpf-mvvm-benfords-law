@@ -6,7 +6,7 @@
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" 
         x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser" Height="624" Width="654" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="698" MinHeight="450" Icon="/WindowIcon.png" UseLayoutRounding="False" >
+        Title="Pdf analyser" Height="599" Width="654" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="698" MinHeight="450" Icon="/WindowIcon.png" UseLayoutRounding="False" ResizeMode="CanMinimize" >
 
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
@@ -23,7 +23,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="82" Width="410">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="5,10,5,10"/>
+                    <Setter Property="Margin" Value="5,-50,5,0"/>
                 </Style>
             </StackPanel.Resources>
             <Button Command="{Binding QuitCommand}" Width="62" ToolTip="Quit the PDF analyser" Height="62" HorizontalAlignment="Left">
@@ -50,16 +50,16 @@
 
         <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Width="290" Margin="0,0,0,10">
             <Label Grid.Column="1" Content="Threshold" HorizontalAlignment="Left" Margin="10,10,0,0" Width="90" Height="31" FontSize="16" FontWeight="Bold"/>
-            <Label Grid.Column="1" Content="Save as" FontSize="14" Height="28" Width="55" HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
+            <Label Grid.Column="1" Content="Save results as" FontSize="16" Height="28" Width="116" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" FontWeight="Bold"/>
             <RadioButton IsChecked="{Binding IsText}" Content="Textfile" ToolTip="Save file as textfile" FontSize="14" Height="18" Width="68"/>
             <RadioButton IsChecked="False" Content="Pdf" ToolTip="Save file as PDF" FontSize="14" Height="13" Width="51"/>
             <Slider Value="{Binding Threshold}" HorizontalAlignment="Left" Width="90" Height="25" SelectionStart="1" SelectionEnd="10" Minimum="1" SmallChange="1" AutomationProperties.HelpText="Chose the precession of the analyse process" AutoToolTipPlacement="TopLeft" Grid.Column="1"/>
 
         </StackPanel>
 
-        <TextBlock Grid.ColumnSpan="2" Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Height="422" Width="630" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16" Margin="10,3,0,0" Grid.Row="1"/>
+        <TextBlock Grid.ColumnSpan="2" Text="{Binding CalculationResults, Mode=OneWay}" HorizontalAlignment="Left" TextWrapping="Wrap"  VerticalAlignment="Top" Height="371" Width="630" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" Foreground="#FFE21919" FontSize="16" Margin="10,3,0,0" Grid.Row="1"/>
 
-        <ProgressBar Value="{Binding CurrentProgress}" Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="False" HorizontalAlignment="Left" Height="30" Margin="10,436,0,0" VerticalAlignment="Top" Width="630" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <ProgressBar Value="{Binding CurrentProgress}" Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="False" HorizontalAlignment="Left" Height="30" Margin="10,383,0,0" VerticalAlignment="Top" Width="630" Grid.ColumnSpan="2" Grid.Row="1"/>
 
     </Grid>
 </Window>

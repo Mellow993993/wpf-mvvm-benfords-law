@@ -20,6 +20,8 @@ namespace BenfordSet.Common
         public event EventHandler ReadingAborted;
         public event EventHandler SaveSuccessful;
         public event EventHandler SaveNotSuccessful;
+        public event EventHandler FileSelected;
+        public event EventHandler NoFileSelected;
 
         public void OnSaveNotSuccessful()
         {
@@ -32,11 +34,28 @@ namespace BenfordSet.Common
         public void OnSaveSuccessful()
             => SaveSuccessful?.Invoke(this, EventArgs.Empty);
 
+        public void OnFileSelected()
+            => FileSelected?.Invoke(this, EventArgs.Empty);
+        public void OnNoFileSelected()
+            => NoFileSelected?.Invoke(this, EventArgs.Empty); 
+
         //public void CancelReading(object sender, EventArgs e)
         //{
         //    MessageBox.Show("Reading process has been aborted.", "Fehler", 
         //        MessageBoxButton.OK, MessageBoxImage.Error);
         //}
+
+        public void FileHasBeenSelected(object sender, EventArgs e)
+        {
+            MessageBox.Show("PDF file has been selected", "Info",
+            MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        public void FileHasNotBeenSelected(object sender, EventArgs e)
+        {
+            MessageBox.Show("No PDF file has been selected", "Warning",
+            MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
     }
 
    

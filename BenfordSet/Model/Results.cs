@@ -26,9 +26,7 @@ namespace BenfordSet.Model
         private string PrintHeadLine()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(new string('#', 60));
-            sb.AppendLine("Results of the benford analysis.");
-            sb.AppendLine(new string('#', 60));
+            sb.AppendLine("Results of the Benford analysis.");
             return sb.ToString();
         }
 

@@ -24,6 +24,7 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
         private DelegateCommand _quitCommand;
+        private ProgrammEvents _events;
         private DelegateCommand _infoCommand;
 
         public int CurrentProgress
@@ -50,7 +51,7 @@ namespace BenfordSet.ViewModel
             set
             {
                 if(_savePath != value)
-                    _savePath = value; OnPropertyChanged(nameof(SavePath));
+                    _savePath = value; // OnPropertyChanged(nameof(SavePath));
             }
         }
         public string CalculationResults
@@ -78,12 +79,11 @@ namespace BenfordSet.ViewModel
             set
             {
                 if (_filepath != value)
-                    _filepath = value; OnPropertyChanged(nameof(Filepath)); CanAnalyse();
+                    _filepath = value; // OnPropertyChanged(nameof(Filepath)); CanAnalyse();
             }
         }
         public string Filename { get => _fileName; set => _fileName = value; }
         public int NumberOfPages { get => _numberOfPages; set => _numberOfPages = value; }
-
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
@@ -100,8 +100,9 @@ namespace BenfordSet.ViewModel
             _saveCommand = new DelegateCommand(SaveFile, CanSave);
             _infoCommand = new DelegateCommand(Info);
             _quitCommand = new DelegateCommand(Quit);
-
-            /*** ***/
+            _events = new ProgrammEvents();
+            _events.FileSelected += _events.FileHasBeenSelected;
+            _events.NoFileSelected += _events.FileHasNotBeenSelected;
             BackgroundWorker backgroundworker = new BackgroundWorker();
             backgroundworker.WorkerReportsProgress = true;
             //backgroundworker.DoWork += GetFileContent;
@@ -109,12 +110,7 @@ namespace BenfordSet.ViewModel
         }
 
 
-        #region Button logic
-
-        private void DoWork(object sender, DoWorkEventArgs e)
-        {
-
-        }
+        private void DoWork(object sender, DoWorkEventArgs e) { }
 
         private void ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -123,14 +119,24 @@ namespace BenfordSet.ViewModel
 
         private void Info()
         {
-            Process.Start(new ProcessStartInfo { FileName = "https://en.wikipedia.org/wiki/Benford%27s_law", UseShellExecute = true });
+            Process.Start(new ProcessStartInfo 
+            { FileName = "https://en.wikipedia.org/wiki/Benford%27s_law", UseShellExecute = true });
         }
 
         private void SelectFile()
         {
             Select selectfile = new Select();
             Filepath = selectfile.OpenDialog();
-            RaisePropertyChanged();        
+            if (!string.IsNullOrEmpty(Filepath))
+            {
+                _events.OnFileSelected();
+                RaisePropertyChanged();
+            }
+            else
+            {
+                _events.OnNoFileSelected();
+                RaisePropertyChanged();
+            }
         }
 
         private void SaveFile()
@@ -153,6 +159,7 @@ namespace BenfordSet.ViewModel
             calculate.StartCalculation();
             Results result = new Results(calculate, Filename, NumberOfPages);
             CalculationResults =  result.BuildResultString();
+            RaisePropertyChanged();
         }
 
         private void DisposeReadObject(ReadPdf? readpdf)
@@ -160,15 +167,9 @@ namespace BenfordSet.ViewModel
             if (readpdf != null)
                 readpdf = null; GC.Collect();
         }
-
         private void Quit() => Application.Current.Shutdown();
-        #endregion
-
-        #region CanExecute mehtods
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
-        private bool CanSave() => true; //!string.IsNullOrEmpty(CalculationResults); 
-        #endregion
-
+        private bool CanSave() => !string.IsNullOrEmpty(CalculationResults); 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
         {
             SelectCommand.OnExecuteChanged();
