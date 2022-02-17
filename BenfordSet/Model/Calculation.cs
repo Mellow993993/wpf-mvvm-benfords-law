@@ -1,9 +1,11 @@
-﻿using System;
+﻿using BenfordSet.Common;
+using System;
 
 namespace BenfordSet.Model
 {
     internal class Calculation : FileAttributes
     {
+        private ProgrammEvents _events;
         public int NumberInFiles { get; set; }
         public int CountDeviations { get; private set; }
         public int[] CountedNumbers { get; protected set; }
@@ -20,6 +22,9 @@ namespace BenfordSet.Model
             Content = countObj.Content;
             CountedNumbers = countObj.FoundNumbers;
             Threshold = threshold;
+            _events = new ProgrammEvents();
+            _events.CheckRequired += _events.CheckFileRequired;
+            _events.NoCheckRequired += _events.NoCheckFileRequred;
         }
 
         public void StartCalculation()
@@ -51,6 +56,11 @@ namespace BenfordSet.Model
             for (int i = 0; i <= BenfordNumbers.Length - 1; i++)
                 if (Difference[i] > Threshold)
                     CountDeviations += 1;
+            if (CountDeviations > 3)
+                _events.OnCheckRequired();
+
+            else
+                _events.OnNoCheckRequred();
         }
 
         private void GetOutput()

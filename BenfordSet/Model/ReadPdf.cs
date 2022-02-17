@@ -24,22 +24,21 @@ namespace BenfordSet.Model
 
     internal class ReadPdf : FileAttributes
     {
-        private int _endReadingProcess = 1000 * 180; // abort reading process after 120 seconds
-        private ProgrammEvents _programmEvents;
+        private int _endReadingProcess = 1000 * 180; // abort reading process after 180 seconds
+        private ProgrammEvents _events;
 
-        public ProgrammEvents ProgrammEvents { get => _programmEvents; set => _programmEvents = value; }
         public ReadPdf(string filename) 
         { 
             Filename = filename;
-            _programmEvents = new ProgrammEvents();
-            _programmEvents.ReadingAborted += CancelReading;
+            _events = new ProgrammEvents();
+            _events.ReadingAborted += _events.CancelReading;
         }
 
         public async Task GetFileContent()
         {
             CancellationTokenSource src = new CancellationTokenSource();
             CancellationToken ct = src.Token;
-            ct.Register(() => ProgrammEvents.OnReadingAborted());
+            ct.Register(() => _events.OnReadingAborted());
 
             Task readfile = Task.Factory.StartNew(() =>
             {
@@ -52,8 +51,9 @@ namespace BenfordSet.Model
                         if (ct.IsCancellationRequested)
                             return;
                     }
-                 }
+                }
             }, ct);
+            _events.ReadingAborted -= _events.CancelReading;
             await readfile;
         }
 
@@ -63,12 +63,5 @@ namespace BenfordSet.Model
             Content += page.Text;
             NumberOfPages = page.Number;
         }
-
-        private void CancelReading(object sender, EventArgs e)
-        {
-            MessageBox.Show("Reading process has been aborted.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-
     }
 }

@@ -17,8 +17,8 @@ namespace BenfordSet.Common
         private string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private string _allowedFiles = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 
-        private ProgrammEvents _programmEvents;
-        public ProgrammEvents ProgrammEvents { get => _programmEvents; set => _programmEvents = value; }
+        private ProgrammEvents _events;
+        public ProgrammEvents ProgrammEvents { get => _events; set => _events = value; }
 
         public bool IsText { get; set; }
         public string Destination { get; set; }
@@ -27,9 +27,9 @@ namespace BenfordSet.Common
         public Save(string outputresults, bool istext)
         { 
             OutputResult = outputresults; IsText = istext;
-            _programmEvents = new ProgrammEvents();
-            _programmEvents.SaveSuccessful += SaveSuccessful;
-            _programmEvents.SaveNotSuccessful += SaveNotSuccessful;
+            _events = new ProgrammEvents();
+            _events.SaveSuccessful += _events.FileHasBeenSaved;
+            _events.SaveNotSuccessful += _events.FileHasNotBeenSaved;
         }       
 
 
@@ -45,17 +45,22 @@ namespace BenfordSet.Common
 
         public void SaveFile()
         {
-            if (IsText)
+            if(IsText && CheckDestination())
             {
                 SaveAsText();
-                _programmEvents.OnSaveSuccessful();
+                _events.OnSaveSuccessful();
             }
-            else
+
+            else if(!IsText && CheckDestination())
             {
                 SaveAsPdf();
-                _programmEvents.OnSaveSuccessful();
+                _events.OnSaveSuccessful();
             }
+            else
+                _events.OnSaveNotSuccessful();
         }
+
+        private bool CheckDestination() => !string.IsNullOrEmpty(Destination);
 
         private void SaveAsPdf() 
         {
@@ -70,29 +75,12 @@ namespace BenfordSet.Common
             doc.Draw(Destination);
         }
 
-
         private void SaveAsText()
         {
-            if(!string.IsNullOrEmpty(Destination))
+            using (StreamWriter fs = new StreamWriter(Destination))
             {
-                using (StreamWriter fs = new StreamWriter(Destination))
-                {
-                    fs.Write(OutputResult);
-                }
+                fs.Write(OutputResult);
             }
-        }
-
-
-        private void SaveSuccessful(object sender, EventArgs e)
-        {
-            System.Windows.MessageBox.Show("File has been saved successfully.", 
-                "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void SaveNotSuccessful(object sender, EventArgs e)
-        {
-            System.Windows.MessageBox.Show("File has not been saved.",
-                  "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }
