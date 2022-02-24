@@ -44,7 +44,7 @@ namespace BenfordSet.ViewModel
             set
             {
                 if(_savePath != value)
-                    _savePath = value; // OnPropertyChanged(nameof(SavePath));
+                    _savePath = value;
             }
         }
         public string CalculationResults
@@ -72,7 +72,7 @@ namespace BenfordSet.ViewModel
             set
             {
                 if (_filepath != value)
-                    _filepath = value; // OnPropertyChanged(nameof(Filepath)); CanAnalyse();
+                    _filepath = value;
             }
         }
         public string Filename { get => _fileName; set => _fileName = value; }
@@ -86,10 +86,7 @@ namespace BenfordSet.ViewModel
         #endregion
 
         private ReadPdf readPdf;
-        public ReadPdf ReadPdf
-        {
-            get => readPdf; set => readPdf = value;
-        }
+        public ReadPdf ReadPdf { get => readPdf; set => readPdf = value; }
 
         public MainWindowViewModel()
         {
@@ -99,7 +96,7 @@ namespace BenfordSet.ViewModel
             _saveCommand = new DelegateCommand(SaveFile, CanSave);
             _infoCommand = new DelegateCommand(Info);
             _quitCommand = new DelegateCommand(Quit);
-            _cancelCommand = new DelegateCommand(Cancel);
+            _cancelCommand = new DelegateCommand(Cancel, CanCancel);
 
             _events = new ProgrammEvents();
             _events.FileSelected += _events.FileHasBeenSelected;
@@ -167,6 +164,10 @@ namespace BenfordSet.ViewModel
         private void Quit() => Application.Current.Shutdown();
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
         private bool CanSave() => !string.IsNullOrEmpty(CalculationResults); 
+        private bool CanCancel()
+        {
+            return true;
+        }
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
         {
             SelectCommand.OnExecuteChanged();
