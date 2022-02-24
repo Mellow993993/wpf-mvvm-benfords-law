@@ -26,7 +26,12 @@ namespace BenfordSet.Model
     {
         private int _endReadingProcess = 1000 * 180; // abort reading process after 180 seconds
         private ProgrammEvents _events;
-
+        private bool _cancelReading;
+        public bool CancelReading
+        {
+            get => _cancelReading;
+            set => _cancelReading = value; 
+        }
         public ReadPdf(string filename) 
         { 
             Filename = filename;
@@ -38,6 +43,7 @@ namespace BenfordSet.Model
         {
             CancellationTokenSource src = new CancellationTokenSource();
             CancellationToken ct = src.Token;
+
             ct.Register(() => _events.OnReadingAborted());
 
             Task readfile = Task.Factory.StartNew(() =>
@@ -48,7 +54,7 @@ namespace BenfordSet.Model
                     {
                         src.CancelAfter(_endReadingProcess);
                         FetchSinglePage(page);
-                        if (ct.IsCancellationRequested)
+                        if (ct.IsCancellationRequested || CancelReading)
                             return;
                     }
                 }

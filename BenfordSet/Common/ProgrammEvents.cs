@@ -18,7 +18,10 @@ namespace BenfordSet.Common
         public event EventHandler NoFileSelected;
         public event EventHandler CheckRequired;
         public event EventHandler NoCheckRequired;
+        public event EventHandler IsCanceld;
 
+        public void OnCancel()
+            => IsCanceld?.Invoke(this, EventArgs.Empty);
         public void OnSaveNotSuccessful()
             => SaveNotSuccessful.Invoke(this, EventArgs.Empty);
         public void OnReadingAborted()
@@ -34,6 +37,10 @@ namespace BenfordSet.Common
         public void OnNoCheckRequred()
             => NoCheckRequired?.Invoke(this, EventArgs.Empty);
 
+        public void CancelProcess(object sender, EventArgs e)
+        {
+            MessageBox.Show("Cancel that process");
+        }
 
         public void NoCheckFileRequred(object sender, EventArgs e)
         {

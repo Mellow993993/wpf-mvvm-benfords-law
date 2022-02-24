@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 
 namespace BenfordSet.ViewModel
 {
@@ -18,7 +19,6 @@ namespace BenfordSet.ViewModel
         private string _filepath;
         private string _fileName = string.Empty;
         private int _numberOfPages = 0;
-        private int _currentProgress;
         private Results _results;
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
@@ -26,16 +26,9 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _quitCommand;
         private ProgrammEvents _events;
         private DelegateCommand _infoCommand;
+        private DelegateCommand _startProgressbar;
+        private DelegateCommand _cancelCommand;
 
-        public int CurrentProgress
-        {
-            get => _currentProgress;
-            set
-            {
-                if(_currentProgress != value)
-                    _currentProgress = value; OnPropertyChanged(nameof(CurrentProgress));
-            }
-        }
         public bool IsText
         {
             get => _isText;
@@ -69,7 +62,7 @@ namespace BenfordSet.ViewModel
             get => _threshold;
             set
             {
-                if (_threshold != value && (_threshold > 1 || _threshold < 10))
+                if (_threshold != value)
                     _threshold = value; OnPropertyChanged(nameof(Threshold)); CanAnalyse();
             }
         }
@@ -89,8 +82,14 @@ namespace BenfordSet.ViewModel
         public DelegateCommand SelectCommand { get => _selectCommand; } 
         public DelegateCommand QuitCommand { get => _quitCommand; } 
         public DelegateCommand InfoCommand { get => _infoCommand; }
-        public object ProgressBarStatus { get; private set; }
+        public DelegateCommand CancelCommand { get => _cancelCommand; }
         #endregion
+
+        private ReadPdf readPdf;
+        public ReadPdf ReadPdf
+        {
+            get => readPdf; set => readPdf = value;
+        }
 
         public MainWindowViewModel()
         {
@@ -100,21 +99,19 @@ namespace BenfordSet.ViewModel
             _saveCommand = new DelegateCommand(SaveFile, CanSave);
             _infoCommand = new DelegateCommand(Info);
             _quitCommand = new DelegateCommand(Quit);
+            _cancelCommand = new DelegateCommand(Cancel);
+
             _events = new ProgrammEvents();
             _events.FileSelected += _events.FileHasBeenSelected;
             _events.NoFileSelected += _events.FileHasNotBeenSelected;
-            BackgroundWorker backgroundworker = new BackgroundWorker();
-            backgroundworker.WorkerReportsProgress = true;
-            //backgroundworker.DoWork += GetFileContent;
-            //backgroundworker.ProgressChanged += worker_ProgressChanged;
+            _events.IsCanceld += _events.CancelProcess;
+
         }
 
-
-        private void DoWork(object sender, DoWorkEventArgs e) { }
-
-        private void ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Cancel()
         {
-            CurrentProgress = e.ProgressPercentage;
+            readPdf.CancelReading = true;
+            _events.OnCancel();
         }
 
         private void Info()
@@ -148,7 +145,7 @@ namespace BenfordSet.ViewModel
 
         private async void Analyse()
         {
-            ReadPdf readPdf = new ReadPdf(Filepath);
+            readPdf = new ReadPdf(Filepath);
             await readPdf.GetFileContent();
             Filename = readPdf.OnlyFileName;
             NumberOfPages = readPdf.NumberOfPages;
@@ -175,6 +172,7 @@ namespace BenfordSet.ViewModel
             SelectCommand.OnExecuteChanged();
             AnalyseCommand.OnExecuteChanged();
             SaveCommand.OnExecuteChanged();
+            CancelCommand.OnExecuteChanged();
             QuitCommand.OnExecuteChanged();
         }
     }
