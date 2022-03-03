@@ -108,6 +108,7 @@ namespace BenfordSet.ViewModel
         private void Cancel()
         {
             readPdf.CancelReading = true;
+            DisposeReadObject(ReadPdf);
             _events.OnCancel();
         }
 

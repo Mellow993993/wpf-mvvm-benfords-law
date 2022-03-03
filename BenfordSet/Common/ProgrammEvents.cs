@@ -39,7 +39,8 @@ namespace BenfordSet.Common
 
         public void CancelProcess(object sender, EventArgs e)
         {
-            MessageBox.Show("Cancel that process");
+            MessageBox.Show("The process has been cancled", "Info",
+                MessageBoxButton.OK, MessageBoxImage.Stop);
         }
 
         public void NoCheckFileRequred(object sender, EventArgs e)
