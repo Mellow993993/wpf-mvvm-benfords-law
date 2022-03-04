@@ -19,7 +19,9 @@ namespace BenfordSet.ViewModel
         private string _filepath;
         private string _fileName = string.Empty;
         private int _numberOfPages = 0;
+        private bool _isIndeterminate = true;
         private Results _results;
+        private Clean _clean;
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
@@ -28,6 +30,28 @@ namespace BenfordSet.ViewModel
         private DelegateCommand _infoCommand;
         private DelegateCommand _startProgressbar;
         private DelegateCommand _cancelCommand;
+
+        public Clean Clean
+        {
+            get => _clean;
+            set
+            {
+                _clean = value;
+            }
+        }
+
+        public bool IsIndeterminate
+        {
+            get => _isIndeterminate;
+            set
+            {
+                if(_isIndeterminate != value)
+                {
+                    _isIndeterminate = value;
+                    OnPropertyChanged(nameof(IsIndeterminate));
+                }
+            }
+        }
 
         public bool IsText
         {
@@ -98,6 +122,7 @@ namespace BenfordSet.ViewModel
             _quitCommand = new DelegateCommand(Quit);
             _cancelCommand = new DelegateCommand(Cancel, CanCancel);
 
+            _clean = new Clean();
             _events = new ProgrammEvents();
             _events.FileSelected += _events.FileHasBeenSelected;
             _events.NoFileSelected += _events.FileHasNotBeenSelected;
@@ -108,7 +133,7 @@ namespace BenfordSet.ViewModel
         private void Cancel()
         {
             readPdf.CancelReading = true;
-            DisposeReadObject(ReadPdf);
+            _clean.DisposeReadObject(ReadPdf);
             _events.OnCancel();
         }
 
@@ -144,23 +169,20 @@ namespace BenfordSet.ViewModel
         private async void Analyse()
         {
             readPdf = new ReadPdf(Filepath);
+            IsIndeterminate = true;
             await readPdf.GetFileContent();
+            // invoke progressbar thread and stop it, when GetFileContent is ready
+            IsIndeterminate = false;
             Filename = readPdf.OnlyFileName;
             NumberOfPages = readPdf.NumberOfPages;
             CountNumbers countnumbers = new CountNumbers(readPdf);
-            DisposeReadObject(readPdf);
+            _clean.DisposeReadObject(readPdf);
             countnumbers.SumUpAllNumbers();
             Calculation calculate = new Calculation(countnumbers, Threshold);
             calculate.StartCalculation();
             Results result = new Results(calculate, Filename, NumberOfPages);
             CalculationResults =  result.BuildResultString();
             RaisePropertyChanged();
-        }
-
-        private void DisposeReadObject(ReadPdf? readpdf)
-        {
-            if (readpdf != null)
-                readpdf = null; GC.Collect();
         }
         private void Quit() => Application.Current.Shutdown();
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
