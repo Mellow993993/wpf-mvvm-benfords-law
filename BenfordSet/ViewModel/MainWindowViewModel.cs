@@ -13,32 +13,23 @@ namespace BenfordSet.ViewModel
     {
         #region Fields and properties
         private bool _isText;
-        private string _savePath;
-        private string _calculationResults;
+        private string _savePath = string.Empty;
+        private string _calculationResults = string.Empty;
         private double _threshold = 5;
-        private string _filepath;
+        private string _filepath = string.Empty;
         private string _fileName = string.Empty;
         private int _numberOfPages = 0;
         private bool _isIndeterminate = true;
         private Results _results;
         private Clean _clean;
+        private ReadPdf readPdf;
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
         private DelegateCommand _quitCommand;
         private ProgrammEvents _events;
         private DelegateCommand _infoCommand;
-        private DelegateCommand _startProgressbar;
         private DelegateCommand _cancelCommand;
-
-        public Clean Clean
-        {
-            get => _clean;
-            set
-            {
-                _clean = value;
-            }
-        }
 
         public bool IsIndeterminate
         {
@@ -52,7 +43,6 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
-
         public bool IsText
         {
             get => _isText;
@@ -80,7 +70,6 @@ namespace BenfordSet.ViewModel
                     _calculationResults = value; OnPropertyChanged(nameof(CalculationResults)); CanSave();
             }
         }
-        public Results Results { get => _results; set => _results = value; }
         public double Threshold 
         { 
             get => _threshold;
@@ -101,6 +90,13 @@ namespace BenfordSet.ViewModel
         }
         public string Filename { get => _fileName; set => _fileName = value; }
         public int NumberOfPages { get => _numberOfPages; set => _numberOfPages = value; }
+        public Clean Clean
+        {
+            get => _clean;
+            set => _clean = value;
+        }
+        public ReadPdf ReadPdf { get => readPdf; set => readPdf = value; }
+        public Results Results { get => _results; set => _results = value; }
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
@@ -109,8 +105,6 @@ namespace BenfordSet.ViewModel
         public DelegateCommand CancelCommand { get => _cancelCommand; }
         #endregion
 
-        private ReadPdf readPdf;
-        public ReadPdf ReadPdf { get => readPdf; set => readPdf = value; }
 
         public MainWindowViewModel()
         {
@@ -139,8 +133,11 @@ namespace BenfordSet.ViewModel
 
         private void Info()
         {
-            Process.Start(new ProcessStartInfo 
-            { FileName = "https://en.wikipedia.org/wiki/Benford%27s_law", UseShellExecute = true });
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://en.wikipedia.org/wiki/Benford%27s_law",
+                UseShellExecute = true
+            });
         }
 
         private void SelectFile()
@@ -186,11 +183,9 @@ namespace BenfordSet.ViewModel
         }
         private void Quit() => Application.Current.Shutdown();
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
-        private bool CanSave() => !string.IsNullOrEmpty(CalculationResults); 
-        private bool CanCancel()
-        {
-            return true;
-        }
+        private bool CanSave() => !string.IsNullOrEmpty(CalculationResults);
+        private bool CanCancel() => readPdf != null;
+    
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
         {
             SelectCommand.OnExecuteChanged();
