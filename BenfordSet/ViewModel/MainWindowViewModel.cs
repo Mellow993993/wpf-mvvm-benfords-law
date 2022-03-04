@@ -115,20 +115,19 @@ namespace BenfordSet.ViewModel
             _infoCommand = new DelegateCommand(Info);
             _quitCommand = new DelegateCommand(Quit);
             _cancelCommand = new DelegateCommand(Cancel, CanCancel);
-
             _clean = new Clean();
             _events = new ProgrammEvents();
             _events.FileSelected += _events.FileHasBeenSelected;
             _events.NoFileSelected += _events.FileHasNotBeenSelected;
             _events.IsCanceld += _events.CancelProcess;
-
         }
 
         private void Cancel()
         {
             readPdf.CancelReading = true;
-            _clean.DisposeReadObject(ReadPdf);
+            _clean.DisposeReadObject(ref readPdf);
             _events.OnCancel();
+            RaisePropertyChanged();
         }
 
         private void Info()
@@ -166,20 +165,15 @@ namespace BenfordSet.ViewModel
         private async void Analyse()
         {
             readPdf = new ReadPdf(Filepath);
+            RaisePropertyChanged();
             IsIndeterminate = true;
             await readPdf.GetFileContent();
             // invoke progressbar thread and stop it, when GetFileContent is ready
-            IsIndeterminate = false;
-            Filename = readPdf.OnlyFileName;
-            NumberOfPages = readPdf.NumberOfPages;
-            CountNumbers countnumbers = new CountNumbers(readPdf);
-            _clean.DisposeReadObject(readPdf);
-            countnumbers.SumUpAllNumbers();
-            Calculation calculate = new Calculation(countnumbers, Threshold);
-            calculate.StartCalculation();
-            Results result = new Results(calculate, Filename, NumberOfPages);
-            CalculationResults =  result.BuildResultString();
-            RaisePropertyChanged();
+            if(readPdf != null)
+            {
+                StartAnalyseProcess();
+            }
+            // stop progressbar
         }
         private void Quit() => Application.Current.Shutdown();
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
@@ -193,6 +187,21 @@ namespace BenfordSet.ViewModel
             SaveCommand.OnExecuteChanged();
             CancelCommand.OnExecuteChanged();
             QuitCommand.OnExecuteChanged();
+        }
+
+        private void StartAnalyseProcess()
+        {
+            IsIndeterminate = false;
+            Filename = readPdf.OnlyFileName;
+            NumberOfPages = readPdf.NumberOfPages;
+            CountNumbers countnumbers = new CountNumbers(readPdf);
+            _clean.DisposeReadObject(ref readPdf);
+            countnumbers.SumUpAllNumbers();
+            Calculation calculate = new Calculation(countnumbers, Threshold);
+            calculate.StartCalculation();
+            Results result = new Results(calculate, Filename, NumberOfPages);
+            CalculationResults = result.BuildResultString();
+            RaisePropertyChanged();
         }
     }
 }
