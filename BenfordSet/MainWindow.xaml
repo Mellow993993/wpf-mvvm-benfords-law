@@ -27,27 +27,27 @@
                 </Style>
             </StackPanel.Resources>
             <Button Command="{Binding QuitCommand}" Width="62" ToolTip="Quit the PDF analyser" Height="62" HorizontalAlignment="Left">
-                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\ExitIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+                <Image HorizontalAlignment="Left" Source=".\Icons\ExitIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
             </Button>
 
 
             <Button Command="{Binding SelectCommand}" RenderTransformOrigin="-1.27,-0.198" Width="62" ToolTip="Select your file" Height="62">
-                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\SelectIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+                <Image HorizontalAlignment="Left" Source=".\Icons\SelectIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
             </Button>
 
             <Button Command="{Binding AnalyseCommand, UpdateSourceTrigger=PropertyChanged}" Width="62" ToolTip="Start the PDF analysing" Height="62">
-                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\AnalyseIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+                <Image HorizontalAlignment="Left" Source=".\Icons\AnalyseIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
             </Button>
             <Button Command="{Binding SaveCommand}" Width="62" ToolTip="Save your results as PDF or textfile" Height="62">
-                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\SaveIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+                <Image HorizontalAlignment="Left" Source=".\Icons\SaveIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
 
             </Button>
             <Button Command="{Binding InfoCommand}" Width="62" Cursor="AppStarting" ToolTip="Get more information about the Benford set" Height="62">
-                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\QuestionIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+                <Image HorizontalAlignment="Left" Source=".\Icons\QuestionIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
             </Button>
             <Label Content="Threshold" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Grid.Column="2" Height="0" Grid.Row="1" Width="0"/>
             <Button Command="{Binding CancelCommand}" ToolTip="Cancel your process" Width="65" Height="62">
-                <Image HorizontalAlignment="Left" Source="C:\Users\Lenovo\source\repos\BenfordSet\BenfordSet\Icons\CancelIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
+                <Image HorizontalAlignment="Left" Source=".\Icons\CancelIcon.png" Height="40" Width="38" RenderTransformOrigin="0.589,0.529" />
 
             </Button>
 
