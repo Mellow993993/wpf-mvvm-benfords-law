@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AnalyseIcon.png" />
+    <None Remove="CancelIcon.png" />
+    <None Remove="ExitIcon.png" />
+    <None Remove="QuestionIcon.png" />
+    <None Remove="SaveIcon.png" />
+    <None Remove="SelectIcon.png" />
     <None Remove="WindowIcon.png" />
     <None Remove="WindowIcon.svg" />
   </ItemGroup>
@@ -20,6 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="AnalyseIcon.png" />
+    <Resource Include="CancelIcon.png" />
+    <Resource Include="ExitIcon.png" />
+    <Resource Include="QuestionIcon.png" />
+    <Resource Include="SaveIcon.png" />
+    <Resource Include="SelectIcon.png" />
     <Resource Include="WindowIcon.png" />
     <Resource Include="WindowIcon.svg" />
   </ItemGroup>
