@@ -11,10 +11,10 @@ namespace BenfordSet.Model
 
         public Results(Calculation calcObj, string filename, int numberOfPages)
         {
-            Threshold = calcObj.Threshold;
-            CalculationResult = calcObj.CalculationResult;
-            CountDeviation = calcObj.CountDeviations;
-            AllNumbersInFile = calcObj.NumberInFiles;
+            //Threshold = calcObj.Threshold;
+            //CalculationResult = calcObj.CalculationResult;
+            //CountDeviation = calcObj.CountDeviations;
+            //AllNumbersInFile = calcObj.NumberInFiles;
             Filename = filename;
             NumberOfPages = numberOfPages;
         }

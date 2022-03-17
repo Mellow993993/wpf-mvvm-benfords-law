@@ -3,18 +3,19 @@ using System.Text.RegularExpressions;
 
 namespace BenfordSet.Model
 {
-    internal class CountNumbers : FileAttributes
+    internal class CountNumbers //: FileAttributes
     {
         private int _numberInFile = 0;
-        public int NumbersInFile { get => _numberInFile; set => _numberInFile = value; }
-        public int[] FoundNumbers { get; set; } = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-        public CountNumbers(ReadPdf file) => Content = file.Content; 
+        public int[] FoundNumbers = new int[9];
+        public int NumbersInFile { get => _numberInFile; set => _numberInFile = value; }
+        public ReadPdf ReadPdf { get; set; }
+        public CountNumbers(ReadPdf readPdf) => ReadPdf = readPdf; 
 
         public void SumUpAllNumbers()
         {
             Regex regex = new Regex(@"[1-9]*[1-9]"); 
-            foreach (Match match in regex.Matches(Content))
+            foreach (Match match in regex.Matches(ReadPdf.Content))
                 AssignNumbers(match);
         }
 

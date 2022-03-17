@@ -19,30 +19,15 @@ namespace BenfordSet.ViewModel
         private string _filepath = string.Empty;
         private string _fileName = string.Empty;
         private int _numberOfPages = 0;
-        private bool _isIndeterminate = true;
-        private Results _results;
-        private Clean _clean;
+        private Results ?_results;
         private ReadPdf readPdf;
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
         private DelegateCommand _quitCommand;
-        private ProgrammEvents _events;
         private DelegateCommand _infoCommand;
         private DelegateCommand _cancelCommand;
 
-        public bool IsIndeterminate
-        {
-            get => _isIndeterminate;
-            set
-            {
-                if(_isIndeterminate != value)
-                {
-                    _isIndeterminate = value;
-                    OnPropertyChanged(nameof(IsIndeterminate));
-                }
-            }
-        }
         public bool IsText
         {
             get => _isText;
@@ -90,43 +75,115 @@ namespace BenfordSet.ViewModel
         }
         public string Filename { get => _fileName; set => _fileName = value; }
         public int NumberOfPages { get => _numberOfPages; set => _numberOfPages = value; }
-        public Clean Clean
-        {
-            get => _clean;
-            set => _clean = value;
-        }
-        public ReadPdf ReadPdf { get => readPdf; set => readPdf = value; }
-        public Results Results { get => _results; set => _results = value; }
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
         public DelegateCommand QuitCommand { get => _quitCommand; } 
         public DelegateCommand InfoCommand { get => _infoCommand; }
         public DelegateCommand CancelCommand { get => _cancelCommand; }
+        public Clean Clean { get; set; }
+        internal Messages? Messages { get; set; }
         #endregion
 
+        public event EventHandler? FileSelected;
+        public event EventHandler? NoFileSelected;
+        public event EventHandler? IsCanceld;
 
         public MainWindowViewModel()
         {
+            InitializeFields();
+            DecleareDelegateCommands();
+            CreateObjects();
+            RegisterEvents();
+        }
+
+        private void InitializeFields()
+        {
             _isText = true;
+        }
+
+        private void DecleareDelegateCommands()
+        {
             _selectCommand = new DelegateCommand(SelectFile);
             _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
             _saveCommand = new DelegateCommand(SaveFile, CanSave);
+            _cancelCommand = new DelegateCommand(Cancel, CanCancel);
             _infoCommand = new DelegateCommand(Info);
             _quitCommand = new DelegateCommand(Quit);
-            _cancelCommand = new DelegateCommand(Cancel, CanCancel);
-            _clean = new Clean();
-            _events = new ProgrammEvents();
-            _events.FileSelected += _events.FileHasBeenSelected;
-            _events.NoFileSelected += _events.FileHasNotBeenSelected;
-            _events.IsCanceld += _events.CancelProcess;
+        }
+
+        private void CreateObjects()
+        {
+            Clean = new Clean();
+            Messages = new Messages();
+        }
+
+        private void RegisterEvents()
+        {
+            NoFileSelected += Messages.FileHasNotBeenSelected;
+            FileSelected += Messages.FileHasBeenSelected;
+            IsCanceld += Messages.CancelProcess;
+        }
+
+
+        private void SelectFile()
+        {
+            Select selectfile = new Select();
+            Filepath = selectfile.OpenDialog();
+
+            if (!string.IsNullOrEmpty(Filepath))
+            {
+                FileSelected?.Invoke(this, EventArgs.Empty);
+                RaisePropertyChanged();
+            }
+            else
+            {
+                NoFileSelected?.Invoke(this, EventArgs.Empty);
+                RaisePropertyChanged();
+            }
+        }
+
+        private async void Analyse()
+        {
+            ReadPdf ReadPdf = new(Filepath);
+            RaisePropertyChanged();
+            await ReadPdf.GetFileContent();
+
+            if(ReadPdf != null)
+            {
+                StartAnalyseProcess(ReadPdf);
+            }
+        }
+
+        private void StartAnalyseProcess(ReadPdf ReadPdf)
+        {
+            Filename = ReadPdf.OnlyFileName;
+            NumberOfPages = ReadPdf.NumberOfPages;
+
+            CountNumbers countnumbers = new(ReadPdf);
+            Clean.DisposeReadObject(ref readPdf);
+            countnumbers.SumUpAllNumbers();
+
+            Calculation calculate = new Calculation(countnumbers, Threshold);
+            calculate.StartCalculation();
+
+            Results result = new Results(calculate, Filename, NumberOfPages); // pass ReadPdf object instead of properties
+            CalculationResults = result.BuildResultString();
+            RaisePropertyChanged();
+        }
+
+        private void SaveFile()
+        {
+            Save save = new Save(CalculationResults, IsText);
+            save.OpenSaveDialog();
+            save.SaveFile();
         }
 
         private void Cancel()
         {
             readPdf.CancelReading = true;
-            _clean.DisposeReadObject(ref readPdf);
-            _events.OnCancel();
+            Clean.DisposeReadObject(ref readPdf);
+            IsCanceld?.Invoke(this, EventArgs.Empty);
             RaisePropertyChanged();
         }
 
@@ -139,47 +196,7 @@ namespace BenfordSet.ViewModel
             });
         }
 
-        private void SelectFile()
-        {
-            Select selectfile = new Select();
-            Filepath = selectfile.OpenDialog();
-            if (!string.IsNullOrEmpty(Filepath))
-            {
-                _events.OnFileSelected();
-                RaisePropertyChanged();
-            }
-            else
-            {
-                _events.OnNoFileSelected();
-                RaisePropertyChanged();
-            }
-        }
 
-        private void SaveFile()
-        {
-            Save save = new Save(CalculationResults, IsText);
-            save.OpenSaveDialog();
-            save.SaveFile();
-        }
-
-        private async void Analyse()
-        {
-            readPdf = new ReadPdf(Filepath);
-            RaisePropertyChanged();
-            IsIndeterminate = true;
-            await readPdf.GetFileContent();
-            // invoke progressbar thread and stop it, when GetFileContent is ready
-            if(readPdf != null)
-            {
-                StartAnalyseProcess();
-            }
-            // stop progressbar
-        }
-        private void Quit() => Application.Current.Shutdown();
-        private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
-        private bool CanSave() => !string.IsNullOrEmpty(CalculationResults);
-        private bool CanCancel() => readPdf != null;
-    
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
         {
             SelectCommand.OnExecuteChanged();
@@ -189,19 +206,9 @@ namespace BenfordSet.ViewModel
             QuitCommand.OnExecuteChanged();
         }
 
-        private void StartAnalyseProcess()
-        {
-            IsIndeterminate = false;
-            Filename = readPdf.OnlyFileName;
-            NumberOfPages = readPdf.NumberOfPages;
-            CountNumbers countnumbers = new CountNumbers(readPdf);
-            _clean.DisposeReadObject(ref readPdf);
-            countnumbers.SumUpAllNumbers();
-            Calculation calculate = new Calculation(countnumbers, Threshold);
-            calculate.StartCalculation();
-            Results result = new Results(calculate, Filename, NumberOfPages);
-            CalculationResults = result.BuildResultString();
-            RaisePropertyChanged();
-        }
+        private void Quit() => Application.Current.Shutdown();
+        private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
+        private bool CanSave() => !string.IsNullOrEmpty(CalculationResults);
+        private bool CanCancel() => readPdf != null;
     }
 }

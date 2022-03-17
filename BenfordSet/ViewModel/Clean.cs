@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace BenfordSet.ViewModel
 {
-    public class Clean
+    internal class Clean
     {
         internal void DisposeReadObject(ref ReadPdf? readpdf)
         {
             if (readpdf != null)
-                readpdf = null; GC.Collect();
+            {
+                readpdf = null; 
+                GC.Collect();
+            }
         }
     }
 }

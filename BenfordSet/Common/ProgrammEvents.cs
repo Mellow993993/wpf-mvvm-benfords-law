@@ -20,6 +20,16 @@ namespace BenfordSet.Common
         public event EventHandler NoCheckRequired;
         public event EventHandler IsCanceld;
 
+        //public event EventHandler? CheckFileRequired;
+        //public event EventHandler? NoCheckFileRequired;
+
+        public ProgrammEvents()
+        {
+            var calculation = new Calculation();
+            //calculation.CheckFileRequired += CheckFileRequired;
+            FileSelected += FileHasBeenSelected;
+        }
+
         public void OnCancel()
             => IsCanceld?.Invoke(this, EventArgs.Empty);
         public void OnSaveNotSuccessful()
@@ -69,18 +79,18 @@ namespace BenfordSet.Common
 
         public void FileHasBeenSaved(object sender, EventArgs e)
         {
-            System.Windows.MessageBox.Show("File has been saved successfully.", "Info", 
+            MessageBox.Show("File has been saved successfully.", "Info",
             MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public void FileHasNotBeenSaved(object sender, EventArgs e)
         {
-            System.Windows.MessageBox.Show("File has not been saved.","Info", 
-             MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("File has not been saved.", "Info",
+            MessageBoxButton.OK, MessageBoxImage.Warning);
         }
         public void CancelReading(object sender, EventArgs e)
         {
-            MessageBox.Show("Reading process has been aborted.", "Fehler", 
+            MessageBox.Show("Reading process has been aborted.", "Fehler",
             MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
