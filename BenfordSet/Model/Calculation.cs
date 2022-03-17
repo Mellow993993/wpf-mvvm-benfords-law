@@ -5,17 +5,19 @@ using BenfordSet.Common;
 
 namespace BenfordSet.Model
 {
-    internal class Calculation : FileAttributes
+    internal class Calculation //: FileAttributes
     {
         public event EventHandler? CheckRequired;
         public event EventHandler? NoCheckRequired;
 
         private int _countDeviations;
-        internal double _threshold;
+        private double _threshold;
         internal readonly double[] _BenfordNumbers = { 30.1, 17.6, 12.5, 9.7, 7.9, 6.7, 5.8, 5.1, 4.6 };
         internal double[] Digits = new double[9];
         internal double[] Difference = new double[9];
         //public Dictionary<int, int> CountedNumbers { get; protected set; }
+        internal double Threshold { get; set; }
+        public int CountDeviations { get; set; }
         public string CalculationResult { get; set; } = String.Empty;
         public CountNumbers CounterObject { get; private set; }
         internal Messages Messages { get; set; }

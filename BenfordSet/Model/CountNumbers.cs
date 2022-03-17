@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace BenfordSet.Model
 {
-    internal class CountNumbers //: FileAttributes
+    internal class CountNumbers 
     {
-        private int _numberInFile = 0;
+        private int _numberInFile;
 
         public int[] FoundNumbers = new int[9];
         public int NumbersInFile { get => _numberInFile; set => _numberInFile = value; }
@@ -17,6 +18,7 @@ namespace BenfordSet.Model
             Regex regex = new Regex(@"[1-9]*[1-9]"); 
             foreach (Match match in regex.Matches(ReadPdf.Content))
                 AssignNumbers(match);
+            MessageBox.Show(NumbersInFile.ToString());
         }
 
         private void AssignNumbers(Match match)

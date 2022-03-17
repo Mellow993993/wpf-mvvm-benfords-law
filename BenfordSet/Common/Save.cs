@@ -27,7 +27,7 @@ namespace BenfordSet.Common
         public Messages Messages { get; set; }
 
         public Save(string outputresults, bool istext)
-        {  // where is the registration for the event
+        {  
             Messages = new();
             OutputResult = outputresults; 
             IsText = istext;
@@ -57,6 +57,7 @@ namespace BenfordSet.Common
                 SaveAsPdf();
                 SaveSuccessful?.Invoke(this, new EventArgs());
             }
+
             else
                 SaveNotSuccessful?.Invoke(this, new EventArgs());
         }

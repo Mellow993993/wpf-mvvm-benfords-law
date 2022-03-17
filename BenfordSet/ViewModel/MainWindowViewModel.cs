@@ -83,6 +83,7 @@ namespace BenfordSet.ViewModel
         public DelegateCommand CancelCommand { get => _cancelCommand; }
         public Clean Clean { get; set; }
         internal Messages? Messages { get; set; }
+        internal Validation? Validation { get; set; }
         #endregion
 
         public event EventHandler? FileSelected;
@@ -114,8 +115,9 @@ namespace BenfordSet.ViewModel
 
         private void CreateObjects()
         {
-            Clean = new Clean();
-            Messages = new Messages();
+            Clean = new ();
+            Messages = new ();
+            Validation = new Validation();    
         }
 
         private void RegisterEvents()
@@ -149,25 +151,19 @@ namespace BenfordSet.ViewModel
             RaisePropertyChanged();
             await ReadPdf.GetFileContent();
 
-            if(ReadPdf != null)
-            {
+            if (Validation.IsObjectNull(ReadPdf))
                 StartAnalyseProcess(ReadPdf);
-            }
         }
 
         private void StartAnalyseProcess(ReadPdf ReadPdf)
         {
-            Filename = ReadPdf.OnlyFileName;
-            NumberOfPages = ReadPdf.NumberOfPages;
+            CountNumbers Countnumbers = new(ReadPdf);
+            Countnumbers.SumUpAllNumbers();
 
-            CountNumbers countnumbers = new(ReadPdf);
-            Clean.DisposeReadObject(ref readPdf);
-            countnumbers.SumUpAllNumbers();
+            Calculation Calculation = new Calculation(Countnumbers, Threshold);
+            Calculation.StartCalculation();
 
-            Calculation calculate = new Calculation(countnumbers, Threshold);
-            calculate.StartCalculation();
-
-            Results result = new Results(calculate, Filename, NumberOfPages); // pass ReadPdf object instead of properties
+            Results result = new Results(ReadPdf, Countnumbers, Calculation);
             CalculationResults = result.BuildResultString();
             RaisePropertyChanged();
         }

@@ -5,6 +5,11 @@ namespace BenfordSet.Common
 {
     public class Messages
     {
+        public void Validation_ObjectIsNull(object sender, EventArgs e)
+        {
+            MessageBox.Show("The object is null", "Error",
+            MessageBoxButton.OK, MessageBoxImage.Error);
+        }
         public void CancelProcess(object sender, EventArgs e)
         {
             MessageBox.Show("The process has been cancled", "Info",
