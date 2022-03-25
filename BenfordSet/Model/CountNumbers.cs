@@ -18,7 +18,6 @@ namespace BenfordSet.Model
             Regex regex = new Regex(@"[1-9]*[1-9]"); 
             foreach (Match match in regex.Matches(ReadPdf.Content))
                 AssignNumbers(match);
-            MessageBox.Show(NumbersInFile.ToString());
         }
 
         private void AssignNumbers(Match match)

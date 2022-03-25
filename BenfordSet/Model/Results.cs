@@ -15,7 +15,7 @@ namespace BenfordSet.Model
             Calculation = calculationObject;
         }
 
-        public string BuildResultString()
+        public string BuildResultHeader()
             => PrintHeadLine() + PrintMetaInfos() + Calculation.CalculationResult;
 
 

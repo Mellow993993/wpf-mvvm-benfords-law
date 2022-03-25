@@ -1,6 +1,7 @@
 ﻿using BenfordSet.Common;
 using BenfordSet.Model;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -17,16 +18,15 @@ namespace BenfordSet.ViewModel
         private string _calculationResults = string.Empty;
         private double _threshold = 5;
         private string _filepath = string.Empty;
-        private string _fileName = string.Empty;
         private int _numberOfPages = 0;
-        private Results ?_results;
-        private ReadPdf readPdf;
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
         private DelegateCommand _quitCommand;
         private DelegateCommand _infoCommand;
         private DelegateCommand _cancelCommand;
+
+        public delegate void Destroy(object obj);
 
         public bool IsText
         {
@@ -73,7 +73,7 @@ namespace BenfordSet.ViewModel
                     _filepath = value;
             }
         }
-        public string Filename { get => _fileName; set => _fileName = value; }
+        public string Filename { get; set; }
         public int NumberOfPages { get => _numberOfPages; set => _numberOfPages = value; }
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
@@ -84,6 +84,7 @@ namespace BenfordSet.ViewModel
         public Clean Clean { get; set; }
         internal Messages? Messages { get; set; }
         internal Validation? Validation { get; set; }
+        private ReadPdf readPdf;
         #endregion
 
         public event EventHandler? FileSelected;
@@ -115,9 +116,8 @@ namespace BenfordSet.ViewModel
 
         private void CreateObjects()
         {
-            Clean = new ();
-            Messages = new ();
-            Validation = new Validation();    
+            Messages = new();
+            Validation = new();
         }
 
         private void RegisterEvents()
@@ -134,39 +134,41 @@ namespace BenfordSet.ViewModel
             Filepath = selectfile.OpenDialog();
 
             if (!string.IsNullOrEmpty(Filepath))
-            {
                 FileSelected?.Invoke(this, EventArgs.Empty);
-                RaisePropertyChanged();
-            }
             else
-            {
                 NoFileSelected?.Invoke(this, EventArgs.Empty);
-                RaisePropertyChanged();
-            }
+            RaisePropertyChanged();
         }
 
         private async void Analyse()
         {
-            ReadPdf ReadPdf = new(Filepath);
+            ReadPdf readPdf = new(Filepath);
             RaisePropertyChanged();
-            await ReadPdf.GetFileContent();
+            await readPdf.GetFileContent();
 
-            if (Validation.IsObjectNull(ReadPdf))
-                StartAnalyseProcess(ReadPdf);
+            if (Validation.IsObjectNull(readPdf))
+                StartAnalyseProcess(readPdf);
         }
 
-        private void StartAnalyseProcess(ReadPdf ReadPdf)
+        private void StartAnalyseProcess(ReadPdf readPdf)
         {
-            CountNumbers Countnumbers = new(ReadPdf);
+            var Countnumbers = new CountNumbers(readPdf);
             Countnumbers.SumUpAllNumbers();
 
-            Calculation Calculation = new Calculation(Countnumbers, Threshold);
+            var Calculation = new Calculation(Countnumbers, Threshold);
             Calculation.StartCalculation();
 
-            Results result = new Results(ReadPdf, Countnumbers, Calculation);
-            CalculationResults = result.BuildResultString();
+            var Result = new Results(readPdf, Countnumbers, Calculation);
+            CalculationResults = Result.BuildResultHeader();
+
+            var Output = new Output(Calculation, Threshold);
+            var mainInformations  = Output.BuildResultOfAnalysis();
+
+            //Clean Clean = new Clean(ref readPdf, ref Countnumbers, ref Calculation, ref Result);
+            CalculationResults = CalculationResults + mainInformations;
             RaisePropertyChanged();
         }
+
 
         private void SaveFile()
         {
@@ -178,9 +180,9 @@ namespace BenfordSet.ViewModel
         private void Cancel()
         {
             readPdf.CancelReading = true;
+            RaisePropertyChanged();
             Clean.DisposeReadObject(ref readPdf);
             IsCanceld?.Invoke(this, EventArgs.Empty);
-            RaisePropertyChanged();
         }
 
         private void Info()

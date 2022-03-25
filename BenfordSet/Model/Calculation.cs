@@ -5,7 +5,7 @@ using BenfordSet.Common;
 
 namespace BenfordSet.Model
 {
-    internal class Calculation //: FileAttributes
+    internal class Calculation 
     {
         public event EventHandler? CheckRequired;
         public event EventHandler? NoCheckRequired;
@@ -23,7 +23,6 @@ namespace BenfordSet.Model
         internal Messages Messages { get; set; }
         public int[] CountedNumbers { get; private set; }
 
-        //public object CountedNumbers { get; private set; }
 
         public Calculation() { }
         public Calculation(CountNumbers countObj, double threshold)
@@ -44,12 +43,11 @@ namespace BenfordSet.Model
             CalculateDistribution();
             Deviation();
             ClassifyResults();
-            //SGetOutput();
         }
 
         private void CalculateDistribution()
         {
-            for (var k = 0; k <= Digits.Length - 1; k++)
+            for (var k = 0; k <= Digits.Length - 1;  k++)
                 Digits[k] = Math.Round(ConvertTypes(CounterObject.FoundNumbers[k]) / CounterObject.NumbersInFile * 100, 1);
         }
 
@@ -73,16 +71,10 @@ namespace BenfordSet.Model
         private void InterpretResults()
         {
             if (_countDeviations > 3)
-                this.CheckRequired?.Invoke(this, EventArgs.Empty);
+                CheckRequired?.Invoke(this, EventArgs.Empty);
 
             else
-                this.NoCheckRequired?.Invoke(this, EventArgs.Empty);
+                NoCheckRequired?.Invoke(this, EventArgs.Empty);
         }
-
-        //private void GetOutput()
-        //{
-        //    Output output = new Output(CountedNumbers, Digits, Difference, _threshold);
-        //    CalculationResult = output.BuildAnalyseResult();
-        //}
     }
 }
