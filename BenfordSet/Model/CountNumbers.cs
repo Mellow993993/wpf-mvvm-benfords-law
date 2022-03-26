@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using System.Windows;
 
 namespace BenfordSet.Model
 {
     internal class CountNumbers 
     {
-        private int _numberInFile;
-
         public int[] FoundNumbers = new int[9];
-        public int NumbersInFile { get => _numberInFile; set => _numberInFile = value; }
-        public ReadPdf ReadPdf { get; set; }
+        public int NumbersInFile { get; private set; }
+        public ReadPdf ReadPdf { get; private set; }
         public CountNumbers(ReadPdf readPdf) => ReadPdf = readPdf; 
 
         public void SumUpAllNumbers()

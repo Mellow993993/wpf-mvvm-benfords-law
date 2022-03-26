@@ -16,8 +16,7 @@ namespace BenfordSet.Model
         }
 
         public string BuildResultHeader()
-            => PrintHeadLine() + PrintMetaInfos() + Calculation.CalculationResult;
-
+            => PrintHeadLine() + PrintMetaInfos();
 
         private string PrintHeadLine()
         {

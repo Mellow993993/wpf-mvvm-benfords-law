@@ -3,7 +3,6 @@ using UglyToad.PdfPig.Content;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Windows;
 using System;
 using BenfordSet.Common;
 

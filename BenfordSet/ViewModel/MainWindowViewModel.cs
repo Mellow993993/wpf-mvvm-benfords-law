@@ -1,12 +1,9 @@
 ﻿using BenfordSet.Common;
 using BenfordSet.Model;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Input;
 
 namespace BenfordSet.ViewModel
 {
@@ -18,7 +15,6 @@ namespace BenfordSet.ViewModel
         private string _calculationResults = string.Empty;
         private double _threshold = 5;
         private string _filepath = string.Empty;
-        private int _numberOfPages = 0;
         private DelegateCommand _analyseCommand;
         private DelegateCommand _saveCommand;
         private DelegateCommand _selectCommand;
@@ -74,7 +70,6 @@ namespace BenfordSet.ViewModel
             }
         }
         public string Filename { get; set; }
-        public int NumberOfPages { get => _numberOfPages; set => _numberOfPages = value; }
         public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
         public DelegateCommand SaveCommand { get => _saveCommand; }
         public DelegateCommand SelectCommand { get => _selectCommand; } 
@@ -142,7 +137,7 @@ namespace BenfordSet.ViewModel
 
         private async void Analyse()
         {
-            ReadPdf readPdf = new(Filepath);
+            var readPdf = new ReadPdf(Filepath);
             RaisePropertyChanged();
             await readPdf.GetFileContent();
 

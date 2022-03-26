@@ -9,7 +9,6 @@ namespace BenfordSet.Model
 
         public Output(Calculation calculation, double threshold)
         {
-            //CountNumbers = countnumbers;
             Calculation = calculation;
             Threshold = threshold;
         }

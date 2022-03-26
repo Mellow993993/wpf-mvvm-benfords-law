@@ -1,9 +1,5 @@
 ﻿using BenfordSet.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BenfordSet.ViewModel
 {
@@ -31,7 +27,5 @@ namespace BenfordSet.ViewModel
                 GC.Collect();
             }
         }
-
-
     }
 }

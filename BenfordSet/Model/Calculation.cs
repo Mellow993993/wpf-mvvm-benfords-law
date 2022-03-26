@@ -11,24 +11,22 @@ namespace BenfordSet.Model
         public event EventHandler? NoCheckRequired;
 
         private int _countDeviations;
-        private double _threshold;
         internal readonly double[] _BenfordNumbers = { 30.1, 17.6, 12.5, 9.7, 7.9, 6.7, 5.8, 5.1, 4.6 };
         internal double[] Digits = new double[9];
         internal double[] Difference = new double[9];
-        //public Dictionary<int, int> CountedNumbers { get; protected set; }
-        internal double Threshold { get; set; }
-        public int CountDeviations { get; set; }
-        public string CalculationResult { get; set; } = String.Empty;
+        internal double Threshold { get; private set; }
+        public int CountDeviations { get; private set; }
+        public string CalculationResult { get; private set; } = String.Empty;
         public CountNumbers CounterObject { get; private set; }
-        internal Messages Messages { get; set; }
-        public int[] CountedNumbers { get; private set; }
+        internal Messages Messages { get; private set; }
+        //public int[] CountedNumbers { get; private set; }
 
 
         public Calculation() { }
         public Calculation(CountNumbers countObj, double threshold)
         {
             CounterObject = countObj;
-            _threshold = threshold;
+            Threshold = threshold;
         }
 
         private void RegisterEvents()
@@ -62,15 +60,15 @@ namespace BenfordSet.Model
         private void ClassifyResults()
         {
             for (int i = 0; i <= _BenfordNumbers.Length - 1; i++)
-                if (Difference[i] > _threshold)
-                    _countDeviations += 1;
+                if (Difference[i] > Threshold)
+                    CountDeviations += 1;
 
             InterpretResults();
         }
 
         private void InterpretResults()
         {
-            if (_countDeviations > 3)
+            if (CountDeviations > 3)
                 CheckRequired?.Invoke(this, EventArgs.Empty);
 
             else
