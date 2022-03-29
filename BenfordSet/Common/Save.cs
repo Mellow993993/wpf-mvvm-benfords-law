@@ -24,11 +24,10 @@ namespace BenfordSet.Common
         public bool IsText { get; set; }
         public string Destination { get; set; }
         public string OutputResult { get; set; }
-        public Messages Messages { get; set; }
+        public Messages Messages { get => new Messages(); }
 
         public Save(string outputresults, bool istext)
         {  
-            Messages = new();
             OutputResult = outputresults; 
             IsText = istext;
             SaveSuccessful += Messages.FileHasBeenSaved;

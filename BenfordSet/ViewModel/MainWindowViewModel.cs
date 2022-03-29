@@ -9,20 +9,12 @@ namespace BenfordSet.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        #region Fields and properties
-        private bool _isText;
+        private bool _isText = true;
         private string _savePath = string.Empty;
         private string _calculationResults = string.Empty;
         private double _threshold = 5;
         private string _filepath = string.Empty;
-        private DelegateCommand _analyseCommand;
-        private DelegateCommand _saveCommand;
-        private DelegateCommand _selectCommand;
-        private DelegateCommand _quitCommand;
-        private DelegateCommand _infoCommand;
-        private DelegateCommand _cancelCommand;
-
-        public delegate void Destroy(object obj);
+        private ReadPdf readPdf;
 
         public bool IsText
         {
@@ -70,17 +62,17 @@ namespace BenfordSet.ViewModel
             }
         }
         public string Filename { get; set; }
-        public DelegateCommand AnalyseCommand { get => _analyseCommand; }  
-        public DelegateCommand SaveCommand { get => _saveCommand; }
-        public DelegateCommand SelectCommand { get => _selectCommand; } 
-        public DelegateCommand QuitCommand { get => _quitCommand; } 
-        public DelegateCommand InfoCommand { get => _infoCommand; }
-        public DelegateCommand CancelCommand { get => _cancelCommand; }
+        public DelegateCommand AnalyseCommand { get; }
+        public DelegateCommand SaveCommand { get; }
+        public DelegateCommand SelectCommand { get; }
+        public DelegateCommand QuitCommand { get; }
+        public DelegateCommand InfoCommand { get => InfoCommand1; }
+        public DelegateCommand CancelCommand { get; }
         public Clean Clean { get; set; }
-        internal Messages? Messages { get; set; }
-        internal Validation? Validation { get; set; }
-        private ReadPdf readPdf;
-        #endregion
+        internal Messages? Messages { get => new Messages(); }
+        internal Validation? Validation { get => new Validation(); }
+
+        internal DelegateCommand InfoCommand1 { get; }
 
         public event EventHandler? FileSelected;
         public event EventHandler? NoFileSelected;
@@ -88,40 +80,16 @@ namespace BenfordSet.ViewModel
 
         public MainWindowViewModel()
         {
-            InitializeFields();
-            DecleareDelegateCommands();
-            CreateObjects();
-            RegisterEvents();
-        }
-
-        private void InitializeFields()
-        {
-            _isText = true;
-        }
-
-        private void DecleareDelegateCommands()
-        {
-            _selectCommand = new DelegateCommand(SelectFile);
-            _analyseCommand = new DelegateCommand(Analyse, CanAnalyse);
-            _saveCommand = new DelegateCommand(SaveFile, CanSave);
-            _cancelCommand = new DelegateCommand(Cancel, CanCancel);
-            _infoCommand = new DelegateCommand(Info);
-            _quitCommand = new DelegateCommand(Quit);
-        }
-
-        private void CreateObjects()
-        {
-            Messages = new();
-            Validation = new();
-        }
-
-        private void RegisterEvents()
-        {
+            SelectCommand = new DelegateCommand(SelectFile);
+            AnalyseCommand = new DelegateCommand(Analyse, CanAnalyse);
+            SaveCommand = new DelegateCommand(SaveFile, CanSave);
+            CancelCommand = new DelegateCommand(Cancel, CanCancel);
+            InfoCommand1 = new DelegateCommand(Info);
+            QuitCommand = new DelegateCommand(Quit);
             NoFileSelected += Messages.FileHasNotBeenSelected;
             FileSelected += Messages.FileHasBeenSelected;
             IsCanceld += Messages.CancelProcess;
         }
-
 
         private void SelectFile()
         {
@@ -164,7 +132,6 @@ namespace BenfordSet.ViewModel
             RaisePropertyChanged();
         }
 
-
         private void SaveFile()
         {
             Save save = new Save(CalculationResults, IsText);
@@ -188,7 +155,6 @@ namespace BenfordSet.ViewModel
                 UseShellExecute = true
             });
         }
-
 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
         {
