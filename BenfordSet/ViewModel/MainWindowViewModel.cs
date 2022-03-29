@@ -66,13 +66,11 @@ namespace BenfordSet.ViewModel
         public DelegateCommand SaveCommand { get; }
         public DelegateCommand SelectCommand { get; }
         public DelegateCommand QuitCommand { get; }
-        public DelegateCommand InfoCommand { get => InfoCommand1; }
+        public DelegateCommand InfoCommand { get; }
         public DelegateCommand CancelCommand { get; }
-        public Clean Clean { get; set; }
-        internal Messages? Messages { get => new Messages(); }
-        internal Validation? Validation { get => new Validation(); }
-
-        internal DelegateCommand InfoCommand1 { get; }
+        public Clean? Clean { get; private set; }
+        internal Messages? Messages { get => new(); }
+        internal Validation? Validation { get => new (); }
 
         public event EventHandler? FileSelected;
         public event EventHandler? NoFileSelected;
@@ -84,7 +82,7 @@ namespace BenfordSet.ViewModel
             AnalyseCommand = new DelegateCommand(Analyse, CanAnalyse);
             SaveCommand = new DelegateCommand(SaveFile, CanSave);
             CancelCommand = new DelegateCommand(Cancel, CanCancel);
-            InfoCommand1 = new DelegateCommand(Info);
+            InfoCommand = new DelegateCommand(Info);
             QuitCommand = new DelegateCommand(Quit);
             NoFileSelected += Messages.FileHasNotBeenSelected;
             FileSelected += Messages.FileHasBeenSelected;

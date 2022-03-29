@@ -7,7 +7,7 @@ namespace BenfordSet.Common
         public event EventHandler? ObjectIsNull;
 
         internal object Object { get; private set; }
-        internal Messages Messages { get => new Messages(); }
+        internal Messages? Messages { get => new(); }
         internal Validation() 
         {
             ObjectIsNull += Messages.Validation_ObjectIsNull;
