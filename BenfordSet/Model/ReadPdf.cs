@@ -26,6 +26,9 @@ namespace BenfordSet.Model
             _filename = filename;
             Messages = new();
             ReadingAborted += Messages.CancelReading;
+
+            //alternativ 
+            //ReadingAborted += new Messages(CancelReading);
         }
 
         public async Task GetFileContent()

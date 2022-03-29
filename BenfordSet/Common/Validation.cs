@@ -5,13 +5,11 @@ namespace BenfordSet.Common
     internal class Validation
     {
         public event EventHandler? ObjectIsNull;
-        public event EventHandler? IsCanceld;
 
         internal object Object { get; private set; }
-        internal Messages Messages { get; set; }
+        internal Messages Messages { get => new Messages(); }
         internal Validation() 
         {
-            Messages Messages = new();
             ObjectIsNull += Messages.Validation_ObjectIsNull;
         }
 

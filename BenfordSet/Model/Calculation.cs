@@ -18,7 +18,7 @@ namespace BenfordSet.Model
         public int CountDeviations { get; private set; }
         public string CalculationResult { get; private set; } = String.Empty;
         public CountNumbers CounterObject { get; private set; }
-        internal Messages Messages { get; private set; }
+        internal Messages Messages { get => new Messages();}
         //public int[] CountedNumbers { get; private set; }
 
 
@@ -27,11 +27,6 @@ namespace BenfordSet.Model
         {
             CounterObject = countObj;
             Threshold = threshold;
-        }
-
-        private void RegisterEvents()
-        {
-            Messages = new();
             CheckRequired += Messages.CheckFileRequired;
             NoCheckRequired += Messages.NoCheckFileRequred;
         }
