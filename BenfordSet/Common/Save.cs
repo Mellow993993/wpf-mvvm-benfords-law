@@ -17,7 +17,6 @@ namespace BenfordSet.Common
         public event EventHandler? SaveSuccessful;
         public event EventHandler? SaveNotSuccessful;
 
-        // whats the difference?
         private readonly string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private const string _allowedFiles = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 

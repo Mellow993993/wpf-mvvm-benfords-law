@@ -49,7 +49,7 @@ namespace BenfordSet.ViewModel
             set
             {
                 if (_threshold != value)
-                    _threshold = value; OnPropertyChanged(nameof(Threshold)); CanAnalyse();
+                    _threshold = value; OnPropertyChanged(nameof(Threshold)); CanAnalyse(); 
             }
         }
         public string Filepath
@@ -103,7 +103,7 @@ namespace BenfordSet.ViewModel
 
         private async void Analyse()
         {
-            var readPdf = new ReadPdf(Filepath);
+            readPdf = new ReadPdf(Filepath);
             RaisePropertyChanged();
             await readPdf.GetFileContent();
 
