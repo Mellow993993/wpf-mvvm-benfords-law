@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
+
 namespace BenfordSet.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
@@ -14,6 +15,7 @@ namespace BenfordSet.ViewModel
         private string _calculationResults = string.Empty;
         private double _threshold = 5;
         private string _filepath = string.Empty;
+        private string _totalTime = string.Empty;
         private ReadPdf readPdf;
 
         public bool IsText
@@ -50,6 +52,15 @@ namespace BenfordSet.ViewModel
             {
                 if (_threshold != value)
                     _threshold = value; OnPropertyChanged(nameof(Threshold)); CanAnalyse(); 
+            }
+        }
+        public string TotalTime
+        {
+            get => _totalTime;
+            private set 
+            { 
+                if(_totalTime != null)
+                    _totalTime = value; OnPropertyChanged(nameof(TotalTime));
             }
         }
         public string Filepath
@@ -103,9 +114,12 @@ namespace BenfordSet.ViewModel
 
         private async void Analyse()
         {
+            Timing timing = new Timing(new Stopwatch());
+            timing.StartTimeMeasurement();
             readPdf = new ReadPdf(Filepath);
             RaisePropertyChanged();
             await readPdf.GetFileContent();
+            TotalTime = timing.StopTimeMeasurement();
 
             if (Validation.IsObjectNull(readPdf))
                 StartAnalyseProcess(readPdf);
@@ -119,13 +133,12 @@ namespace BenfordSet.ViewModel
             var Calculation = new Calculation(Countnumbers, Threshold);
             Calculation.StartCalculation();
 
-            var Result = new Results(readPdf, Countnumbers, Calculation);
+            var Result = new Results(readPdf, Countnumbers, Calculation, TotalTime);
             CalculationResults = Result.BuildResultHeader();
 
             var Output = new Output(Calculation, Threshold);
             var mainInformations  = Output.BuildResultOfAnalysis();
 
-            //Clean Clean = new Clean(ref readPdf, ref Countnumbers, ref Calculation, ref Result);
             CalculationResults = CalculationResults + mainInformations;
             RaisePropertyChanged();
         }

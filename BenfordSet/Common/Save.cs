@@ -65,7 +65,7 @@ namespace BenfordSet.Common
         private void SaveAsPdf() 
         {
             Document doc = new();
-            Page page = new Page(PageSize.A4, PageOrientation.Landscape);
+            Page page = new Page(PageSize.A4, PageOrientation.Portrait);
             doc.Pages.Add(page);
 
             ceTe.DynamicPDF.PageElements.Label label = new

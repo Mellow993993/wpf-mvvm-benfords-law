@@ -4,8 +4,8 @@ namespace BenfordSet.Model
 {
     class Output : Calculation
     {
-        public Calculation Calculation { get; private set; }
         public double Threshold { get; private set; }
+        public Calculation Calculation { get; private set; }
 
         public Output(Calculation calculation, double threshold)
         {
