@@ -10,12 +10,8 @@ namespace BenfordSet.Model
         public CountNumbers CountNumbers { get; private set; } 
 
         public Results(ReadPdf readObject, CountNumbers countObject, Calculation calculationObject, string totaltime) 
-        {
-            ReadPdf = readObject;
-            CountNumbers = countObject;
-            Calculation = calculationObject;
-            TotalTime = totaltime;
-        }
+            => (ReadPdf, CountNumbers, Calculation, TotalTime) = (readObject, countObject, calculationObject, totaltime);
+        
 
         public string BuildResultHeader()
             => PrintHeadLine() + PrintMetaInfos();

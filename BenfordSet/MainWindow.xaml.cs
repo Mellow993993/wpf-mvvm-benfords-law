@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BenfordSet.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,8 +25,16 @@ namespace BenfordSet
         public MainWindow()
         {
             Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline),
-               new FrameworkPropertyMetadata { DefaultValue = 40 });
+               new FrameworkPropertyMetadata { DefaultValue = 60 });
             InitializeComponent();
+            ((MainWindowViewModel)DataContext).InProgress += OpenProgressWindow;
         }
+
+        public void OpenProgressWindow(object sender, EventArgs e)
+        {
+            Progressbar dw = new Progressbar();
+            dw.ShowDialog();
+        }
+
     }
 }

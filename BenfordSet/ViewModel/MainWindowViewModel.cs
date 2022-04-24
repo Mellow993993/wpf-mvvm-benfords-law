@@ -1,10 +1,12 @@
 ﻿using BenfordSet.Common;
+using BenfordSet.Logging;
 using BenfordSet.Model;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
-
+using BenfordSet;
+using System.Threading.Tasks;
 
 namespace BenfordSet.ViewModel
 {
@@ -86,6 +88,7 @@ namespace BenfordSet.ViewModel
         public event EventHandler? FileSelected;
         public event EventHandler? NoFileSelected;
         public event EventHandler? IsCanceld;
+        public event EventHandler? InProgress; 
 
         public MainWindowViewModel()
         {
@@ -114,9 +117,10 @@ namespace BenfordSet.ViewModel
 
         private async void Analyse()
         {
+            //InProgress?.Invoke(this, EventArgs.Empty);
             Timing timing = new Timing(new Stopwatch());
             timing.StartTimeMeasurement();
-            readPdf = new ReadPdf(Filepath);
+            readPdf = new ReadPdf(Filepath, new FileLogger());
             RaisePropertyChanged();
             await readPdf.GetFileContent();
             TotalTime = timing.StopTimeMeasurement();

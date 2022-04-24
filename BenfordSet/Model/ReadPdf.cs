@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using BenfordSet.Common;
+using BenfordSet.Logging;
 
 namespace BenfordSet.Model
 {
@@ -12,35 +13,39 @@ namespace BenfordSet.Model
     {
         private string _filename;
         private int _endReadingProcess = 1000 * 240; // abort reading process after 240 seconds
+        private readonly ILog _readLogger;
 
         public int NumberOfPages { get; private set; }
-        public string OnlyFileName { get => Path.GetFileName(_filename); }
+        public string OnlyFileName { get => Path.GetFileName(Filename); }
         internal bool CancelReading { get; set; }
         public string? Content { get; private set; }
+        public string Filename { get; private set; }
         private Messages Messages { get; set; }
 
         public event EventHandler? ReadingAborted;
 
-        public ReadPdf(string filename) 
+        public ReadPdf(string filename, ILog logger) 
         {
-            _filename = filename;
+            (Filename, _readLogger) = (filename, logger);
             Messages = new();
             ReadingAborted += Messages.CancelReading;
 
-            //alternativ 
-            //ReadingAborted += new Messages(CancelReading);
         }
-
         public async Task GetFileContent()
         {
             CancellationTokenSource src = new CancellationTokenSource();
             CancellationToken ct = src.Token;
-
             ct.Register(() => ReadingAborted?.Invoke(this, EventArgs.Empty));
+
+            Task modalWindow = Task.Factory.StartNew(() =>
+            {
+                Progressbar dw = new Progressbar();
+                dw.ShowDialog();
+            });
 
             Task readfile = Task.Factory.StartNew(() =>
             {
-                using PdfDocument document = PdfDocument.Open(_filename);
+                using PdfDocument document = PdfDocument.Open(Filename);
                 {
                     foreach (var page in document.GetPages())
                     {
@@ -56,6 +61,8 @@ namespace BenfordSet.Model
                 }
             }, ct);
             await readfile;
+            _readLogger.Log("Reading completed");
+            _readLogger.WriteToFile();
             ReadingAborted -= Messages.CancelReading;
         }
 

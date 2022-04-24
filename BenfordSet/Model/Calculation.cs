@@ -25,8 +25,7 @@ namespace BenfordSet.Model
         public Calculation() { }
         public Calculation(CountNumbers countObj, double threshold)
         {
-            CounterObject = countObj;
-            Threshold = threshold;
+            (CounterObject, Threshold) = (countObj, threshold);
             CheckRequired += Messages.CheckFileRequired;
             NoCheckRequired += Messages.NoCheckFileRequred;
         }

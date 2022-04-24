@@ -27,8 +27,7 @@ namespace BenfordSet.Common
 
         public Save(string outputresults, bool istext)
         {  
-            OutputResult = outputresults; 
-            IsText = istext;
+            (OutputResult, IsText) = (outputresults, istext);
             SaveSuccessful += Messages.FileHasBeenSaved;
             SaveNotSuccessful += Messages.FileHasNotBeenSaved;
         }       
@@ -67,10 +66,8 @@ namespace BenfordSet.Common
             Document doc = new();
             Page page = new Page(PageSize.A4, PageOrientation.Portrait);
             doc.Pages.Add(page);
-
             ceTe.DynamicPDF.PageElements.Label label = new
             ceTe.DynamicPDF.PageElements.Label(OutputResult, 0, 0, 504, 100, Font.Helvetica, 10, TextAlign.Left);
-
             page.Elements.Add(label);
             doc.Draw(Destination);
         }
