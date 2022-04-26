@@ -123,13 +123,13 @@ namespace BenfordSet.ViewModel
             readPdf = new ReadPdf(Filepath, new FileLogger());
             RaisePropertyChanged();
             await readPdf.GetFileContent();
-            TotalTime = timing.StopTimeMeasurement();
 
             if (Validation.IsObjectNull(readPdf))
                 StartAnalyseProcess(readPdf);
+            TotalTime = timing.StopTimeMeasurement();
         }
 
-        private void StartAnalyseProcess(ReadPdf readPdf)
+        private async void StartAnalyseProcess(ReadPdf readPdf)
         {
             var Countnumbers = new CountNumbers(readPdf);
             Countnumbers.SumUpAllNumbers();
