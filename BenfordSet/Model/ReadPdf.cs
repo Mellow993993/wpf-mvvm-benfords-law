@@ -37,12 +37,6 @@ namespace BenfordSet.Model
             CancellationToken ct = src.Token;
             ct.Register(() => ReadingAborted?.Invoke(this, EventArgs.Empty));
 
-            Task modalWindow = Task.Factory.StartNew(() =>
-            {
-                Progressbar dw = new Progressbar();
-                dw.ShowDialog();
-            });
-
             Task readfile = Task.Factory.StartNew(() =>
             {
                 using PdfDocument document = PdfDocument.Open(Filename);
