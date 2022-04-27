@@ -3,7 +3,7 @@ using System.Text;
 
 namespace BenfordSet.Model
 {
-    class Output : IFormattable
+    class Output 
     {
         public double Threshold { get; private set; }
         public Calculation Calculation { get; private set; }
@@ -27,10 +27,5 @@ namespace BenfordSet.Model
         }
         private string CombineOutput(int i)
             => (Calculation._BenfordNumbers[i] + " %\t\t\t" + Calculation.Digits[i] + " %\t\t\t" + Calculation.Difference[i] + " %").ToString();
-
-        public string ToString(string? format, IFormatProvider? formatProvider)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

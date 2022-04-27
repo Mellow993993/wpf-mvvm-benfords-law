@@ -26,13 +26,16 @@ namespace BenfordSet.Model
         private string PrintMetaInfos()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Filename:\t\t" + ReadPdf.OnlyFileName);
-            sb.AppendLine("Number of pages:\t" + ReadPdf.NumberOfPages);
-            sb.AppendLine("All numbers in file:\t" + CountNumbers.NumbersInFile);
-            sb.AppendLine("Number of issues:\t" + Calculation.CountDeviations);
-            sb.AppendLine("Threshold:\t\t" + Calculation.Threshold + " %");
-            sb.AppendLine("Time of the analysis: \t" + TotalTime + " ms\n");
-            sb.AppendLine("Benford Distribution\tYour Distribution\t\tDifference");
+            sb.AppendLine("Filename:   " + ReadPdf.OnlyFileName);
+            sb.AppendLine("Pages:      " + ReadPdf.NumberOfPages);
+            sb.AppendLine("Nnumbers:   " + CountNumbers.NumbersInFile);
+            sb.AppendLine("Issues:     " + Calculation.CountDeviations);
+            sb.AppendLine("Threshold:  " + Calculation.Threshold + " %");
+            sb.AppendLine("Time:       " + TotalTime + " ms");
+            sb.AppendLine("--------------------------------");
+            sb.AppendLine("Distribution");
+
+            sb.AppendLine("Benford\t\tYours\t\t\tDifference");
             return sb.ToString();
         }
     }

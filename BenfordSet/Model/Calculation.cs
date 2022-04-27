@@ -7,23 +7,19 @@ namespace BenfordSet.Model
 {
     internal class Calculation 
     {
-        public event EventHandler? CheckRequired;
-        public event EventHandler? NoCheckRequired;
-
-        private int _countDeviations;
-        internal readonly double[]? _BenfordNumbers = { 30.1, 17.6, 12.5, 9.7, 7.9, 6.7, 5.8, 5.1, 4.6 };
+        internal readonly double[] _BenfordNumbers = { 30.1, 17.6, 12.5, 9.7, 7.9, 6.7, 5.8, 5.1, 4.6 };
         internal double[]? Digits = new double[9];
         internal double[]? Difference = new double[9];
         internal double Threshold { get; private set; }
-        public int CountDeviations { get; private set; }
-        public string CalculationResult { get; private set; } = String.Empty;
-        public CountNumbers CounterObject { get; private set; }
+        internal int CountDeviations { get; private set; }
+        internal string CalculationResult { get; private set; } = String.Empty;
+        internal CountNumbers CounterObject { get; private set; }
         internal Messages Messages { get => new Messages();}
-        //public int[] CountedNumbers { get; private set; }
 
-
-        public Calculation() { }
-        public Calculation(CountNumbers countObj, double threshold)
+        public event EventHandler? CheckRequired;
+        public event EventHandler? NoCheckRequired;
+        internal Calculation() { }
+        internal Calculation(CountNumbers countObj, double threshold)
         {
             (CounterObject, Threshold) = (countObj, threshold);
             CheckRequired += Messages.CheckFileRequired;
@@ -56,7 +52,6 @@ namespace BenfordSet.Model
             for (int i = 0; i <= _BenfordNumbers.Length - 1; i++)
                 if (Difference[i] > Threshold)
                     CountDeviations += 1;
-
             InterpretResults();
         }
 
