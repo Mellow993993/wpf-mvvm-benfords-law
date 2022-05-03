@@ -11,7 +11,7 @@
     <Window.DataContext>
         <ViewModel:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid Margin="0,-3,0,3">
+    <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="135" MinHeight="135"></RowDefinition>
             <RowDefinition Height="500" MinHeight="492"></RowDefinition>

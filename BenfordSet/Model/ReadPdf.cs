@@ -11,7 +11,6 @@ namespace BenfordSet.Model
 {
     internal class ReadPdf 
     {
-        private string _filename;
         private int _endReadingProcess = 1000 * 240; // abort reading process after 240 seconds
         private readonly ILog _readLogger;
 
