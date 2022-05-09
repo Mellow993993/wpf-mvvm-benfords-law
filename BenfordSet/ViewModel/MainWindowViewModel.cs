@@ -13,6 +13,7 @@ namespace BenfordSet.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
         private bool _isText = true;
+        private bool _isLoading = false;
         private string _savePath = string.Empty;
         private string _calculationResults = string.Empty;
         private double _threshold = 5;
@@ -27,6 +28,18 @@ namespace BenfordSet.ViewModel
             {
                 if(_isText != value)
                     _isText = value; OnPropertyChanged(nameof(IsText)); 
+            }
+        }
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                if(_isLoading != value)
+                {
+                    _isLoading = value; 
+                    OnPropertyChanged(nameof(IsLoading));
+                }
             }
         }
         public string SavePath 
@@ -117,15 +130,18 @@ namespace BenfordSet.ViewModel
 
         private async void Analyse()
         {
-            //InProgress?.Invoke(this, EventArgs.Empty);
+            IsLoading = true;
+
             Timing timing = new Timing(new Stopwatch());
             timing.StartTimeMeasurement();
+
             readPdf = new ReadPdf(Filepath, new FileLogger());
             RaisePropertyChanged();
             await readPdf.GetFileContent();
 
             if (Validation.IsObjectNull(readPdf))
                 StartAnalyseProcess(readPdf, timing);
+            IsLoading = false;
         }
 
         private async void StartAnalyseProcess(ReadPdf readPdf, Timing timing)
