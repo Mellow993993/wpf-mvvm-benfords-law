@@ -9,7 +9,7 @@ using BenfordSet.Logging;
 
 namespace BenfordSet.Model
 {
-    internal class ReadPdf 
+    internal class ReadPdf
     {
         private int _endReadingProcess = 1000 * 240; // abort reading process after 240 seconds
         private readonly ILog _readLogger;
@@ -64,5 +64,7 @@ namespace BenfordSet.Model
             Content += page.Text;
             NumberOfPages = page.Number;
         }
+
+
     }
 }

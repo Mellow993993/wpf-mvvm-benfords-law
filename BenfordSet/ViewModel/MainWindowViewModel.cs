@@ -94,7 +94,7 @@ namespace BenfordSet.ViewModel
         public DelegateCommand QuitCommand { get; }
         public DelegateCommand InfoCommand { get; }
         public DelegateCommand CancelCommand { get; }
-        public Clean? Clean { get; private set; }
+        //public Clean? Clean { get => new Clean(); }
         internal Messages? Messages { get => new(); }
         internal Validation? Validation { get => new (); }
 
@@ -140,7 +140,9 @@ namespace BenfordSet.ViewModel
             await readPdf.GetFileContent();
 
             if (Validation.IsObjectNull(readPdf))
+            {
                 StartAnalyseProcess(readPdf, timing);
+            }
             IsLoading = false;
         }
 
@@ -174,7 +176,11 @@ namespace BenfordSet.ViewModel
         {
             readPdf.CancelReading = true;
             RaisePropertyChanged();
-            Clean.DisposeReadObject(ref readPdf);
+            //internal Clean(ref ReadPdf read, ref CountNumbers count, ref Calculation calc, ref Results result)
+
+            Clean Clean = new Clean();// (ref readPdf); //, ref  Calculation, ref Results);
+            Clean.DisposeReadObject(ref readPdf); // (ref readPdf);
+            IsLoading = false;
             IsCanceld?.Invoke(this, EventArgs.Empty);
         }
 
