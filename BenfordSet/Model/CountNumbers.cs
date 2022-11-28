@@ -11,23 +11,6 @@ namespace BenfordSet.Model
         public ReadPdf ReadPdf { get; private set; }
         public CountNumbers(ReadPdf readPdf) => ReadPdf = readPdf;
 
-        // causes wrong calculation
-        //public async Task SumUpAllNumbers()
-        //{
-        //    Task count = Task.Factory.StartNew(() =>
-        //    {
-        //        Regex regex = new Regex(@"[1-9]*[1-9]");
-        //        foreach (Match match in regex.Matches(ReadPdf.Content))
-        //        {
-        //            lock(match)
-        //            {
-        //                AssignNumbers(match);
-        //            }
-        //        }
-        //    });
-        //    await count;
-        //}
-
         public void SumUpAllNumbers()
         {
             Regex regex = new Regex(@"[1-9]*[1-9]");
