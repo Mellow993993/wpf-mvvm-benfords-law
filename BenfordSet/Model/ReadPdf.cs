@@ -5,14 +5,12 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using BenfordSet.Common;
-using BenfordSet.Logging;
 
 namespace BenfordSet.Model
 {
     internal class ReadPdf
     {
         private int _endReadingProcess = 1000 * 240; // abort reading process after 240 seconds
-        private readonly ILog _readLogger;
 
         public int NumberOfPages { get; private set; }
         public string OnlyFileName { get => Path.GetFileName(Filename); }
@@ -23,9 +21,9 @@ namespace BenfordSet.Model
 
         public event EventHandler? ReadingAborted;
 
-        public ReadPdf(string filename, ILog logger) 
+        public ReadPdf(string filename) 
         {
-            (Filename, _readLogger) = (filename, logger);
+            (Filename) = (filename);
             Messages = new();
             ReadingAborted += Messages.CancelReading;
 
@@ -54,8 +52,6 @@ namespace BenfordSet.Model
                 }
             }, ct);
             await readfile;
-            _readLogger.Log("Reading completed");
-            _readLogger.WriteToFile();
             ReadingAborted -= Messages.CancelReading;
         }
 

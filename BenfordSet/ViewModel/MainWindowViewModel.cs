@@ -1,5 +1,4 @@
 ﻿using BenfordSet.Common;
-using BenfordSet.Logging;
 using BenfordSet.Model;
 using System;
 using System.Diagnostics;
@@ -135,7 +134,7 @@ namespace BenfordSet.ViewModel
             Timing timing = new Timing(new Stopwatch());
             timing.StartTimeMeasurement();
 
-            readPdf = new ReadPdf(Filepath, new FileLogger());
+            readPdf = new ReadPdf(Filepath);
             RaisePropertyChanged();
             await readPdf.GetFileContent();
 
