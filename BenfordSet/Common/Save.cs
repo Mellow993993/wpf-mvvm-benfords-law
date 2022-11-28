@@ -1,14 +1,7 @@
-﻿using BenfordSet.Model;
-using System;
+﻿using System;
 using System.IO;
-using System.Text;
-using System.Windows;
 using System.Windows.Forms;
 using ceTe.DynamicPDF;
-using ceTe.DynamicPDF.Text;
-using ceTe.DynamicPDF.Forms;
-using ceTe.DynamicPDF.PageElements;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace BenfordSet.Common
