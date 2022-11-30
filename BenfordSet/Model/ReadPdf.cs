@@ -10,8 +10,7 @@ namespace BenfordSet.Model
 {
     internal class ReadPdf
     {
-        private int _endReadingProcess = 1000 * 240; // abort reading process after 240 seconds
-
+        private readonly int _endReadingProcess = 1000 * 300; // abort reading process after 5 minutes
         public int NumberOfPages { get; private set; }
         public string OnlyFileName { get => Path.GetFileName(Filename); }
         internal bool CancelReading { get; set; }
