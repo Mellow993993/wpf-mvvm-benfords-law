@@ -9,6 +9,7 @@ namespace BenfordSet.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+        #region Fields
         private bool _isText = true;
         private bool _isLoading = false;
         private string _savePath = string.Empty;
@@ -17,7 +18,9 @@ namespace BenfordSet.ViewModel
         private string _filepath = string.Empty;
         private string _totalTime = string.Empty;
         private ReadPdf readPdf;
+        #endregion
 
+        #region Properties
         public bool IsText
         {
             get => _isText;
@@ -85,20 +88,26 @@ namespace BenfordSet.ViewModel
             }
         }
         public string Filename { get; set; }
+        #endregion
+
+        #region DelegateCommands
         public DelegateCommand AnalyseCommand { get; }
         public DelegateCommand SaveCommand { get; }
         public DelegateCommand SelectCommand { get; }
         public DelegateCommand QuitCommand { get; }
         public DelegateCommand InfoCommand { get; }
         public DelegateCommand CancelCommand { get; }
-        //public Clean? Clean { get => new Clean(); }
         internal Messages? Messages { get => new(); }
         internal Validation? Validation { get => new (); }
+        #endregion
 
+        #region Events
         public event EventHandler? FileSelected;
         public event EventHandler? NoFileSelected;
         public event EventHandler? IsCanceld;
+        #endregion
 
+        #region Constructor
         public MainWindowViewModel()
         {
             SelectCommand = new DelegateCommand(SelectFile);
@@ -110,6 +119,25 @@ namespace BenfordSet.ViewModel
             NoFileSelected += Messages.FileHasNotBeenSelected;
             FileSelected += Messages.FileHasBeenSelected;
             IsCanceld += Messages.CancelProcess;
+        }
+        #endregion
+
+        #region Methods
+        private async void Analyse()
+        {
+            IsLoading = true;
+            Timing timing = new Timing(new Stopwatch());
+            timing.StartTimeMeasurement();
+
+            readPdf = new ReadPdf(Filepath);
+            await readPdf.GetFileContent();
+
+            if (readPdf != null)
+            {
+                AnalyseController controller = new(readPdf, timing, Threshold);
+                CalculationResults = controller.StartAnalyse();
+            }
+            IsLoading = false;
         }
 
         private void SelectFile()
@@ -123,53 +151,12 @@ namespace BenfordSet.ViewModel
                 NoFileSelected?.Invoke(this, EventArgs.Empty);
             RaisePropertyChanged();
         }
-
-        private async void Analyse()
-        {
-            IsLoading = true;
-
-            Timing timing = new Timing(new Stopwatch());
-            timing.StartTimeMeasurement();
-
-            readPdf = new ReadPdf(Filepath);
-            //RaisePropertyChanged();
-            await readPdf.GetFileContent();
-
-            if (Validation.IsObjectNull(readPdf))
-            {
-                StartAnalyseProcess(readPdf, timing);
-                //AnalyseController controller = new(readPdf, timing, 5);
-                //controller.StartAnalyse();
-            }
-            IsLoading = false;
-        }
-
-        private void StartAnalyseProcess(ReadPdf readPdf, Timing timing)
-        {
-            var Countnumbers = new CountNumbers(readPdf);
-            Countnumbers.SumUpAllNumbers();
-
-            var Calculation = new Calculation(Countnumbers, Threshold);
-            Calculation.StartCalculation();
-
-            TotalTime = timing.StopTimeMeasurement();
-            var Result = new Results(readPdf, Countnumbers, Calculation, TotalTime);
-            CalculationResults = Result.BuildResultHeader();
-
-            var Output = new Output(Calculation, Threshold);
-            var mainInformations = Output.BuildResultOfAnalysis();
-
-            CalculationResults = CalculationResults + mainInformations;
-            RaisePropertyChanged();
-        }
-
         private void SaveFile()
         {
             Save save = new Save(CalculationResults, IsText);
             save.OpenSaveDialog();
             save.SaveFile();
         }
-
         private void Cancel()
         {
             readPdf.CancelReading = true;
@@ -199,10 +186,13 @@ namespace BenfordSet.ViewModel
             CancelCommand.OnExecuteChanged();
             QuitCommand.OnExecuteChanged();
         }
+        #endregion
 
+        #region IsExecutable
         private void Quit() => Application.Current.Shutdown();
         private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
         private bool CanSave() => !string.IsNullOrEmpty(CalculationResults);
         private bool CanCancel() => readPdf != null;
+        #endregion
     }
 }

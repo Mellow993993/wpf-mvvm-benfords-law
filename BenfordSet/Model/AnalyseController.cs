@@ -23,23 +23,42 @@ namespace BenfordSet.Model
             _threshold = threshold;
         }
 
-        internal void StartAnalyse()
+        private CountNumbers _countNumbers;
+        private Calculation _calculation;
+        private Output _output;
+        private Results _result;
+        internal string StartAnalyse()
         {
-            var Countnumbers = new CountNumbers(_readPdf);
-            Countnumbers.SumUpAllNumbers();
+            CountNumbers();
+            CalculateDistribution();
 
-            var Calculation = new Calculation(Countnumbers, _threshold);
-            Calculation.StartCalculation();
+            return SetUpResult() + SetUpOutput();
+        }
 
-            var TotalTime = _timing.StopTimeMeasurement();
-            var Result = new Results(_readPdf, Countnumbers, Calculation, TotalTime);
-            var CalculationResults = Result.BuildResultHeader();
+        private string SetUpOutput()
+        {
+            _output = new Output(_calculation, _threshold);
+            return _output.BuildResultOfAnalysis();
+        }
 
-            var Output = new Output(Calculation, _threshold);
-            var mainInformations = Output.BuildResultOfAnalysis();
+        private string SetUpResult()
+        {
+            var TotalTime = "10"; //= _timing.StopTimeMeasurement();
+            _result = new Results(_readPdf, _countNumbers, _calculation, TotalTime);
+            return _result.BuildResultHeader();
 
-            CalculationResults = CalculationResults + mainInformations;
-            
+        }
+
+        private void CalculateDistribution()
+        {
+            _calculation = new Calculation(_countNumbers, _threshold);
+            _calculation.StartCalculation();
+        }
+
+        private void CountNumbers()
+        {
+            _countNumbers = new CountNumbers(_readPdf);
+            _countNumbers.SumUpAllNumbers();
         }
     }
 }
