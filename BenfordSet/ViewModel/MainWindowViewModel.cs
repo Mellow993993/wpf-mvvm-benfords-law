@@ -91,12 +91,12 @@ namespace BenfordSet.ViewModel
         #endregion
 
         #region DelegateCommands
-        public DelegateCommand AnalyseCommand { get; }
-        public DelegateCommand SaveCommand { get; }
-        public DelegateCommand SelectCommand { get; }
-        public DelegateCommand QuitCommand { get; }
-        public DelegateCommand InfoCommand { get; }
-        public DelegateCommand CancelCommand { get; }
+        public DelegateCommand AnalyseCommand { get; init; }
+        public DelegateCommand SaveCommand { get; init; }
+        public DelegateCommand SelectCommand { get; init; }
+        public DelegateCommand QuitCommand { get; init; }
+        public DelegateCommand InfoCommand { get; init; }
+        public DelegateCommand CancelCommand { get; init; }
         internal Messages? Messages { get => new(); }
         #endregion
 
