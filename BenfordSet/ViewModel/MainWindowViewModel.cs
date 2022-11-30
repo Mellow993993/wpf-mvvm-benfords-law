@@ -133,17 +133,19 @@ namespace BenfordSet.ViewModel
             timing.StartTimeMeasurement();
 
             readPdf = new ReadPdf(Filepath);
-            RaisePropertyChanged();
+            //RaisePropertyChanged();
             await readPdf.GetFileContent();
 
             if (Validation.IsObjectNull(readPdf))
             {
-                StartAnalyseProcess(readPdf, timing);
+                //StartAnalyseProcess(readPdf, timing);
+                AnalyseController controller = new(readPdf, timing, 5, MainWindowViewModel);
+                controller.StartAnalyse();
             }
             IsLoading = false;
         }
 
-        private async void StartAnalyseProcess(ReadPdf readPdf, Timing timing)
+        private void StartAnalyseProcess(ReadPdf readPdf, Timing timing)
         {
             var Countnumbers = new CountNumbers(readPdf);
             Countnumbers.SumUpAllNumbers();
@@ -156,7 +158,7 @@ namespace BenfordSet.ViewModel
             CalculationResults = Result.BuildResultHeader();
 
             var Output = new Output(Calculation, Threshold);
-            var mainInformations  = Output.BuildResultOfAnalysis();
+            var mainInformations = Output.BuildResultOfAnalysis();
 
             CalculationResults = CalculationResults + mainInformations;
             RaisePropertyChanged();
