@@ -7,7 +7,7 @@ namespace BenfordSet.ViewModel
     {
         internal void DisposeReadObject(ref ReadPdf? readpdf)
         {
-            if (readpdf != null)
+            if(readpdf != null)
             {
                 readpdf = null;
                 GC.Collect();

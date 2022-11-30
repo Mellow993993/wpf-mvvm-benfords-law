@@ -7,6 +7,8 @@ namespace BenfordSet.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propname = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
+        {
+            PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(propname));
+        }
     }
 }

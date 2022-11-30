@@ -6,10 +6,15 @@ namespace BenfordSet.Common
     {
         public Stopwatch Stopwatch { get; private set; }
         public Timing(Stopwatch sw)
-            => Stopwatch = sw;
+        {
+            Stopwatch = sw;
+        }
+
         public void StartTimeMeasurement()
-            => Stopwatch.Start();
-        
+        {
+            Stopwatch.Start();
+        }
+
         public string StopTimeMeasurement()
         {
             Stopwatch.Stop();

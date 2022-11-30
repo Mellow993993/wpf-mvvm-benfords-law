@@ -1,10 +1,10 @@
-﻿using UglyToad.PdfPig;
-using UglyToad.PdfPig.Content;
-using System.IO;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using BenfordSet.Common;
 using System;
-using BenfordSet.Common;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using UglyToad.PdfPig;
+using UglyToad.PdfPig.Content;
 
 namespace BenfordSet.Model
 {
@@ -12,7 +12,7 @@ namespace BenfordSet.Model
     {
         private readonly int _endReadingProcess = 1000 * 300; // abort reading process after 5 minutes
         public int NumberOfPages { get; private set; }
-        public string OnlyFileName { get => Path.GetFileName(Filename); }
+        public string OnlyFileName => Path.GetFileName(Filename);
         internal bool CancelReading { get; set; }
         public string? Content { get; private set; }
         public string Filename { get; private set; }
@@ -20,36 +20,39 @@ namespace BenfordSet.Model
 
         public event EventHandler? ReadingAborted;
 
-        public ReadPdf(string filename) 
+        public ReadPdf(string filename)
         {
-            (Filename) = (filename);
+            Filename = filename;
             Messages = new();
             ReadingAborted += Messages.CancelReading;
 
         }
         public async Task GetFileContent()
         {
-            CancellationTokenSource src = new CancellationTokenSource();
+            CancellationTokenSource src = new();
             CancellationToken ct = src.Token;
-            ct.Register(() => ReadingAborted?.Invoke(this, EventArgs.Empty));
+            _ = ct.Register(() => ReadingAborted?.Invoke(this,EventArgs.Empty));
 
             Task readfile = Task.Factory.StartNew(() =>
             {
                 using PdfDocument document = PdfDocument.Open(Filename);
                 {
-                    foreach (var page in document.GetPages())
+                    foreach(Page? page in document.GetPages())
                     {
                         src.CancelAfter(_endReadingProcess);
                         FetchSinglePage(page);
 
-                        if (ct.IsCancellationRequested)
+                        if(ct.IsCancellationRequested)
+                        {
                             return;
-
-                        else if (CancelReading)
+                        }
+                        else if(CancelReading)
+                        {
                             return;
+                        }
                     }
                 }
-            }, ct);
+            },ct);
             await readfile;
             ReadingAborted -= Messages.CancelReading;
         }
@@ -59,7 +62,6 @@ namespace BenfordSet.Model
             Content += page.Text;
             NumberOfPages = page.Number;
         }
-
 
     }
 }

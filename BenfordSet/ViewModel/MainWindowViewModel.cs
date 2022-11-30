@@ -27,7 +27,11 @@ namespace BenfordSet.ViewModel
             set
             {
                 if(_isText != value)
-                    _isText = value; OnPropertyChanged(nameof(IsText)); 
+                {
+                    _isText = value;
+                }
+
+                OnPropertyChanged(nameof(IsText));
             }
         }
         public bool IsLoading
@@ -37,45 +41,61 @@ namespace BenfordSet.ViewModel
             {
                 if(_isLoading != value)
                 {
-                    _isLoading = value; 
+                    _isLoading = value;
                     OnPropertyChanged(nameof(IsLoading));
                 }
             }
         }
-        public string SavePath 
-        { 
+        public string SavePath
+        {
             get => _savePath;
             set
             {
                 if(_savePath != value)
+                {
                     _savePath = value;
+                }
             }
         }
         public string CalculationResults
         {
             get => _calculationResults;
-            set 
-            { 
+            set
+            {
                 if(_calculationResults != value)
-                    _calculationResults = value; OnPropertyChanged(nameof(CalculationResults)); CanSave();
+                {
+                    _calculationResults = value;
+                }
+
+                OnPropertyChanged(nameof(CalculationResults));
+                _ = CanSave();
             }
         }
-        public double Threshold 
-        { 
+        public double Threshold
+        {
             get => _threshold;
             set
             {
-                if (_threshold != value)
-                    _threshold = value; OnPropertyChanged(nameof(Threshold)); CanAnalyse(); 
+                if(_threshold != value)
+                {
+                    _threshold = value;
+                }
+
+                OnPropertyChanged(nameof(Threshold));
+                _ = CanAnalyse();
             }
         }
         public string TotalTime
         {
             get => _totalTime;
-            private set 
-            { 
+            private set
+            {
                 if(_totalTime != null)
-                    _totalTime = value; OnPropertyChanged(nameof(TotalTime));
+                {
+                    _totalTime = value;
+                }
+
+                OnPropertyChanged(nameof(TotalTime));
             }
         }
         public string Filepath
@@ -83,8 +103,10 @@ namespace BenfordSet.ViewModel
             get => _filepath;
             set
             {
-                if (_filepath != value)
+                if(_filepath != value)
+                {
                     _filepath = value;
+                }
             }
         }
         public string Filename { get; set; }
@@ -97,7 +119,7 @@ namespace BenfordSet.ViewModel
         public DelegateCommand QuitCommand { get; init; }
         public DelegateCommand InfoCommand { get; init; }
         public DelegateCommand CancelCommand { get; init; }
-        internal Messages? Messages { get => new(); }
+        internal Messages? Messages => new();
         #endregion
 
         #region Events
@@ -110,9 +132,9 @@ namespace BenfordSet.ViewModel
         public MainWindowViewModel()
         {
             SelectCommand = new DelegateCommand(SelectFile);
-            AnalyseCommand = new DelegateCommand(Analyse, CanAnalyse);
-            SaveCommand = new DelegateCommand(SaveFile, CanSave);
-            CancelCommand = new DelegateCommand(Cancel, CanCancel);
+            AnalyseCommand = new DelegateCommand(Analyse,CanAnalyse);
+            SaveCommand = new DelegateCommand(SaveFile,CanSave);
+            CancelCommand = new DelegateCommand(Cancel,CanCancel);
             InfoCommand = new DelegateCommand(Info);
             QuitCommand = new DelegateCommand(Quit);
             NoFileSelected += Messages.FileHasNotBeenSelected;
@@ -125,15 +147,15 @@ namespace BenfordSet.ViewModel
         private async void Analyse()
         {
             IsLoading = true;
-            Timing timing = new Timing(new Stopwatch());
+            Timing timing = new(new Stopwatch());
             timing.StartTimeMeasurement();
 
             readPdf = new ReadPdf(Filepath);
             await readPdf.GetFileContent();
 
-            if (readPdf != null)
+            if(readPdf != null)
             {
-                AnalyseController controller = new(readPdf, timing, Threshold);
+                AnalyseController controller = new(readPdf,timing,Threshold);
                 CalculationResults = controller.StartAnalyse();
             }
             IsLoading = false;
@@ -141,18 +163,23 @@ namespace BenfordSet.ViewModel
 
         private void SelectFile()
         {
-            Select selectfile = new Select();
+            Select selectfile = new();
             Filepath = selectfile.OpenDialog();
 
-            if (!string.IsNullOrEmpty(Filepath))
-                FileSelected?.Invoke(this, EventArgs.Empty);
+            if(!string.IsNullOrEmpty(Filepath))
+            {
+                FileSelected?.Invoke(this,EventArgs.Empty);
+            }
             else
-                NoFileSelected?.Invoke(this, EventArgs.Empty);
+            {
+                NoFileSelected?.Invoke(this,EventArgs.Empty);
+            }
+
             RaisePropertyChanged();
         }
         private void SaveFile()
         {
-            Save save = new Save(CalculationResults, IsText);
+            Save save = new(CalculationResults,IsText);
             save.OpenSaveDialog();
             save.SaveFile();
         }
@@ -162,15 +189,15 @@ namespace BenfordSet.ViewModel
             RaisePropertyChanged();
             //internal Clean(ref ReadPdf read, ref CountNumbers count, ref Calculation calc, ref Results result)
 
-            Clean Clean = new Clean();// (ref readPdf); //, ref  Calculation, ref Results);
+            Clean Clean = new();// (ref readPdf); //, ref  Calculation, ref Results);
             Clean.DisposeReadObject(ref readPdf); // (ref readPdf);
             IsLoading = false;
-            IsCanceld?.Invoke(this, EventArgs.Empty);
+            IsCanceld?.Invoke(this,EventArgs.Empty);
         }
 
         private void Info()
         {
-            Process.Start(new ProcessStartInfo
+            _ = Process.Start(new ProcessStartInfo
             {
                 FileName = "https://en.wikipedia.org/wiki/Benford%27s_law",
                 UseShellExecute = true
@@ -188,10 +215,25 @@ namespace BenfordSet.ViewModel
         #endregion
 
         #region IsExecutable
-        private void Quit() => Application.Current.Shutdown();
-        private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
-        private bool CanSave() => !string.IsNullOrEmpty(CalculationResults);
-        private bool CanCancel() => readPdf != null;
+        private void Quit()
+        {
+            Application.Current.Shutdown();
+        }
+
+        private bool CanAnalyse()
+        {
+            return !string.IsNullOrWhiteSpace(Filepath);
+        }
+
+        private bool CanSave()
+        {
+            return !string.IsNullOrEmpty(CalculationResults);
+        }
+
+        private bool CanCancel()
+        {
+            return readPdf != null;
+        }
         #endregion
     }
 }
