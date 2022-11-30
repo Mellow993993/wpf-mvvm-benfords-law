@@ -27,14 +27,6 @@ namespace BenfordSet
             Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline),
                new FrameworkPropertyMetadata { DefaultValue = 60 });
             InitializeComponent();
-            ((MainWindowViewModel)DataContext).InProgress += OpenProgressWindow;
         }
-
-        public void OpenProgressWindow(object sender, EventArgs e)
-        {
-            Progressbar dw = new Progressbar();
-            dw.ShowDialog();
-        }
-
     }
 }

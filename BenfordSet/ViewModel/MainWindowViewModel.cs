@@ -98,7 +98,6 @@ namespace BenfordSet.ViewModel
         public event EventHandler? FileSelected;
         public event EventHandler? NoFileSelected;
         public event EventHandler? IsCanceld;
-        public event EventHandler? InProgress; 
 
         public MainWindowViewModel()
         {
