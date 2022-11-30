@@ -9,13 +9,6 @@
 
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="View\**" />
-    <EmbeddedResource Remove="View\**" />
-    <None Remove="View\**" />
-    <Page Remove="View\**" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="ceTe.DynamicPDF.CoreSuite.NET" Version="11.25.0" />
