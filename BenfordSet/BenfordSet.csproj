@@ -10,15 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="AnalyseIcon.png" />
-    <None Remove="CancelIcon.png" />
-    <None Remove="ExitIcon.png" />
-    <None Remove="QuestionIcon.png" />
-    <None Remove="SaveIcon.png" />
-    <None Remove="SelectIcon.png" />
-    <None Remove="WindowIcon.png" />
-    <None Remove="WindowIcon.svg" />
+    <Compile Remove="View\**" />
+    <EmbeddedResource Remove="View\**" />
+    <None Remove="View\**" />
+    <Page Remove="View\**" />
   </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="ceTe.DynamicPDF.CoreSuite.NET" Version="11.25.0" />
@@ -49,10 +46,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>
