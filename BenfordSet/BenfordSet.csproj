@@ -26,14 +26,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="AnalyseIcon.png" />
-    <Resource Include="CancelIcon.png" />
-    <Resource Include="ExitIcon.png" />
-    <Resource Include="QuestionIcon.png" />
-    <Resource Include="SaveIcon.png" />
-    <Resource Include="SelectIcon.png" />
-    <Resource Include="WindowIcon.png" />
-    <Resource Include="WindowIcon.svg" />
+    <Resource Include="Icons\AnalyseIcon.png" />
+    <Resource Include="Icons\CancelIcon.png" />
+    <Resource Include="Icons\ExitIcon.png" />
+    <Resource Include="Icons\QuestionIcon.png" />
+    <Resource Include="Icons\SaveIcon.png" />
+    <Resource Include="Icons\SelectIcon.png" />
+    <Resource Include="Icons\WindowIcon.png" />
+    <Resource Include="Icons\WindowIcon.svg" />
   </ItemGroup>
 
   <ItemGroup>

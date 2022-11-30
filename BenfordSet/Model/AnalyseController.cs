@@ -16,12 +16,11 @@ namespace BenfordSet.Model
         private readonly MainWindowViewModel _mainWindowViewModel;
         private double _threshold;
 
-        internal AnalyseController(ReadPdf readPdf, Timing timing, double threshold, MainWindowViewModel meinmodel)
+        internal AnalyseController(ReadPdf readPdf, Timing timing, double threshold)
         {
             _readPdf = readPdf;
             _timing = _timing;
             _threshold = threshold;
-            _mainWindowViewModel = meinmodel ;
         }
 
         internal void StartAnalyse()

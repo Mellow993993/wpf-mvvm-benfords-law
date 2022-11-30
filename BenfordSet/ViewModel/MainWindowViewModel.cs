@@ -139,7 +139,7 @@ namespace BenfordSet.ViewModel
             if (Validation.IsObjectNull(readPdf))
             {
                 //StartAnalyseProcess(readPdf, timing);
-                AnalyseController controller = new(readPdf, timing, 5, MainWindowViewModel);
+                AnalyseController controller = new(readPdf, timing, 5);
                 controller.StartAnalyse();
             }
             IsLoading = false;
