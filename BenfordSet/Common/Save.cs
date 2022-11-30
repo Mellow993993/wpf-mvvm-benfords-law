@@ -8,9 +8,6 @@ namespace BenfordSet.Common
 {
     internal class Save
     {
-        public event EventHandler? SaveSuccessful;
-        public event EventHandler? SaveNotSuccessful;
-
         private readonly string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private const string _allowedFilesText = "txt files (*.txt)|*.txt";
         private const string _allowedFilesPdf = "Pdf Documents|*.pdf";
@@ -19,6 +16,9 @@ namespace BenfordSet.Common
         public string Destination { get; set; } = null!;
         public string OutputResult { get; set; }
         public Messages Messages { get => new Messages(); }
+
+        public event EventHandler? SaveSuccessful;
+        public event EventHandler? SaveNotSuccessful;
 
         public Save(string outputresults, bool istext)
         {  
