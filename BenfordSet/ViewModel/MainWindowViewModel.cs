@@ -98,7 +98,6 @@ namespace BenfordSet.ViewModel
         public DelegateCommand InfoCommand { get; }
         public DelegateCommand CancelCommand { get; }
         internal Messages? Messages { get => new(); }
-        internal Validation? Validation { get => new (); }
         #endregion
 
         #region Events
