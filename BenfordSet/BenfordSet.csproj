@@ -16,10 +16,6 @@
     <Page Remove="View\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="CancelIcon.png" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="ceTe.DynamicPDF.CoreSuite.NET" Version="11.25.0" />
@@ -27,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="CancelIcon.png" />
     <Resource Include="Icons\AnalyseIcon.png" />
     <Resource Include="Icons\CancelIcon.png" />
     <Resource Include="Icons\ExitIcon.png" />
