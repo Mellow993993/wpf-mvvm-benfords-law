@@ -5,23 +5,25 @@ namespace BenfordSet.Common
 {
     internal class Select
     {
-        private string _filepath = string.Empty;
+        private string _filepath = String.Empty;
         public string OpenDialog()
         {
             InitializeWindow();
-            if (!string.IsNullOrWhiteSpace(_filepath))
+            if (!String.IsNullOrWhiteSpace(_filepath))
                 return _filepath;
             else
-                return string.Empty;
+                return String.Empty;
         }
 
         private void InitializeWindow()
         {
-            using System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            openFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
-            openFileDialog.Title = "Select a file";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            ShowDialog(openFileDialog);
+            using (System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog())
+            {
+                openFileDialog.Filter = "pdf files (*.pdf)|*.pdf";
+                openFileDialog.Title = "Select a file";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+                ShowDialog(openFileDialog);
+            }
         }
 
         private void ShowDialog(System.Windows.Forms.OpenFileDialog openfiledialog)
