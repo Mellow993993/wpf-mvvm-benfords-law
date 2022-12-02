@@ -174,7 +174,6 @@ namespace BenfordSet.ViewModel
             {
                 NoFileSelected?.Invoke(this,EventArgs.Empty);
             }
-
             RaisePropertyChanged();
         }
         private void SaveFile()
