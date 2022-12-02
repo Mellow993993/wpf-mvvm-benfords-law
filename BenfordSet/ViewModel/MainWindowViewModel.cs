@@ -137,8 +137,6 @@ namespace BenfordSet.ViewModel
             CancelCommand = new DelegateCommand(Cancel,CanCancel);
             InfoCommand = new DelegateCommand(Info);
             QuitCommand = new DelegateCommand(Quit);
-            NoFileSelected += Messages.FileHasNotBeenSelected;
-            FileSelected += Messages.FileHasBeenSelected;
             IsCanceld += Messages.CancelProcess;
         }
         #endregion
@@ -164,17 +162,7 @@ namespace BenfordSet.ViewModel
         private void SelectFile()
         {
             Select selectfile = new();
-            Filepath = selectfile.OpenDialog();
-
-            if(!string.IsNullOrEmpty(Filepath))
-            {
-                FileSelected?.Invoke(this,EventArgs.Empty);
-            }
-            else
-            {
-                NoFileSelected?.Invoke(this,EventArgs.Empty);
-            }
-            RaisePropertyChanged();
+            Filepath = selectfile.OpenSelectDialog();
         }
         private void SaveFile()
         {
@@ -227,7 +215,7 @@ namespace BenfordSet.ViewModel
 
         private bool CanCancel()
         {
-            return true; //return readPdf != null;
+            return readPdf != null;
         }
         #endregion
     }

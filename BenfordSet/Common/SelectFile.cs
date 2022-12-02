@@ -6,10 +6,30 @@ namespace BenfordSet.Common
     internal class Select
     {
         private string _filepath = string.Empty;
-        public string OpenDialog()
+        internal Messages? Messages => new();
+        public event EventHandler FileSelected;
+        public event EventHandler NoFileSelected;
+
+        public Select()
+        {
+            NoFileSelected += Messages.FileHasNotBeenSelected;
+            FileSelected += Messages.FileHasBeenSelected;
+        }
+
+        public string OpenSelectDialog()
         {
             InitializeWindow();
-            return !string.IsNullOrWhiteSpace(_filepath) ? _filepath : string.Empty;
+
+            if(!string.IsNullOrEmpty(_filepath))
+            {
+                FileSelected?.Invoke(this,EventArgs.Empty);
+                return _filepath;
+            }
+            else
+            {
+                NoFileSelected?.Invoke(this,EventArgs.Empty);
+                return String.Empty;
+            }
         }
 
         private void InitializeWindow()

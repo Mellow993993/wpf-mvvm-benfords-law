@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BenfordSet.Common;
+using System.Windows;
 using System.Windows.Media.Animation;
 
 namespace BenfordSet
@@ -12,6 +13,7 @@ namespace BenfordSet
         {
             Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline),
                new FrameworkPropertyMetadata { DefaultValue = 60 });
+            Messages meassages = new Messages();
             InitializeComponent();
         }
     }

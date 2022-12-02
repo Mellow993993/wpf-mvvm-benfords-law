@@ -25,6 +25,7 @@ namespace BenfordSet.Model
         private void AssignNumbers(Match match)
         {
             NumbersInFile += 1;
+
             if(match.Value.StartsWith("1"))
             {
                 FoundNumbers[0] += 1;

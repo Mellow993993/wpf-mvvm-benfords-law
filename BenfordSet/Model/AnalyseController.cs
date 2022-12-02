@@ -7,7 +7,6 @@ namespace BenfordSet.Model
     {
         private readonly ReadPdf _readPdf;
         private readonly Timing _timing;
-        private readonly MainWindowViewModel _mainWindowViewModel;
         private readonly double _threshold;
 
         internal AnalyseController(ReadPdf readPdf,Timing timing,double threshold)
