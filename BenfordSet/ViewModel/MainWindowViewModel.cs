@@ -187,21 +187,17 @@ namespace BenfordSet.ViewModel
         {
             readPdf.CancelReading = true;
             RaisePropertyChanged();
-            //internal Clean(ref ReadPdf read, ref CountNumbers count, ref Calculation calc, ref Results result)
 
-            Clean Clean = new();// (ref readPdf); //, ref  Calculation, ref Results);
-            Clean.DisposeReadObject(ref readPdf); // (ref readPdf);
+            Clean Clean = new();
+            Clean.DisposeReadObject(ref readPdf); 
             IsLoading = false;
             IsCanceld?.Invoke(this,EventArgs.Empty);
         }
 
         private void Info()
         {
-            _ = Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://en.wikipedia.org/wiki/Benford%27s_law",
-                UseShellExecute = true
-            });
+            Web web = new Web();
+            web.OpenWebsite();
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
@@ -232,7 +228,7 @@ namespace BenfordSet.ViewModel
 
         private bool CanCancel()
         {
-            return readPdf != null;
+            return true; //return readPdf != null;
         }
         #endregion
     }
