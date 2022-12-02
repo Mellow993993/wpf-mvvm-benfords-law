@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="ceTe.DynamicPDF.CoreSuite.NET" Version="11.25.0" />
+    <PackageReference Include="log4net" Version="2.0.15" />
     <PackageReference Include="PdfPig" Version="0.1.5" />
   </ItemGroup>
 

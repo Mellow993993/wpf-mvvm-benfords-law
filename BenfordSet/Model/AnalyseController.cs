@@ -12,7 +12,7 @@ namespace BenfordSet.Model
         internal AnalyseController(ReadPdf readPdf,Timing timing,double threshold)
         {
             _readPdf = readPdf;
-            _timing = _timing;
+            _timing = timing;
             _threshold = threshold;
         }
 
@@ -36,7 +36,7 @@ namespace BenfordSet.Model
 
         private string SetUpResult()
         {
-            string TotalTime = "10"; //= _timing.StopTimeMeasurement();
+            string TotalTime = "10"; //= _timing.StopTimeMeasurement(); // BUG-FIX REQUIRED
             _result = new Results(_readPdf,_countNumbers,_calculation,TotalTime);
             return _result.BuildResultHeader();
 

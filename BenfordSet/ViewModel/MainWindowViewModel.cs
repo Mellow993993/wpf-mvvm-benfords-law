@@ -67,8 +67,8 @@ namespace BenfordSet.ViewModel
                     _calculationResults = value;
                 }
 
-                OnPropertyChanged(nameof(CalculationResults));
-                _ = CanSave();
+                RaisePropertyChanged(nameof(CalculationResults));
+                OnPropertyChanged(TotalTime);
             }
         }
         public double Threshold
@@ -80,7 +80,6 @@ namespace BenfordSet.ViewModel
                 {
                     _threshold = value;
                 }
-
                 OnPropertyChanged(nameof(Threshold));
                 _ = CanAnalyse();
             }
@@ -94,7 +93,6 @@ namespace BenfordSet.ViewModel
                 {
                     _totalTime = value;
                 }
-
                 OnPropertyChanged(nameof(TotalTime));
             }
         }
@@ -106,6 +104,8 @@ namespace BenfordSet.ViewModel
                 if(_filepath != value)
                 {
                     _filepath = value;
+                    OnPropertyChanged(nameof(Filepath));
+                    RaisePropertyChanged();
                 }
             }
         }

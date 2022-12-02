@@ -6,11 +6,8 @@
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" 
         x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser" Height="600" Width="680" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="650" MinHeight="450" Icon="../Icons/WindowIcon.png" UseLayoutRounding="False" ResizeMode="CanMinimize" >
+        Title="Pdf analyser" Height="600" Width="680" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="650" MinHeight="450" Icon="../Icons/WindowIcon.png" UseLayoutRounding="False" ResizeMode="NoResize" >
 
-    <Window.DataContext>
-        <ViewModel:MainWindowViewModel/>
-    </Window.DataContext>
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="135" MinHeight="135"></RowDefinition>
