@@ -70,15 +70,15 @@
             </Button>
         </StackPanel>
 
-        <StackPanel Grid.Row="0" Grid.Column="1" >
-            <Label Content="Save as" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="72" Height="32" FontSize="16" FontWeight="Bold"/>
-            <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Threshold" Width="90" Height="32" FontSize="16" FontWeight="Bold"/>
-            <Slider VerticalAlignment="Top" HorizontalAlignment="Right" Value="{Binding Threshold}" Width="160" SelectionStart="1" SelectionEnd="10" Minimum="1" SmallChange="1" AutomationProperties.HelpText="Chose the precession of the analyse process" Height="24"/>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Label Content="Threshold" Width="90" Height="32" FontSize="16" FontWeight="Bold" Margin="7,7,215,39"/>
+            <Slider VerticalAlignment="Top" HorizontalAlignment="Right" Value="{Binding Threshold}" Width="160" SelectionStart="1" SelectionEnd="10" Minimum="1" SmallChange="1" AutomationProperties.HelpText="Chose the precession of the analyse process" Height="24" Margin="0,15,40,0"/>
 
-            <RadioButton HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="{Binding IsText}" Content="Textfile" ToolTip="Save file as textfile" FontSize="14" Height="23" Width="267"/>
-            <RadioButton IsChecked="False" Content="Pdf" ToolTip="Save file as PDF" FontSize="14"/>
+            <Label Content="Save as" Width="72" Height="32" FontSize="16" FontWeight="Bold" Margin="7,39,228,7"/>
+            <RadioButton HorizontalAlignment="Center" VerticalAlignment="Top" IsChecked="{Binding IsText}" Content="Textfile" ToolTip="Save file as textfile" FontSize="14" Height="18" Width="90" Margin="0,46,0,0"/>
+            <RadioButton IsChecked="False" Content="Pdf" ToolTip="Save file as PDF" FontSize="14" Margin="209,47,30,9" />
+        </Grid>
 
-        </StackPanel>
         <StackPanel Grid.Row="1" Margin="5" Grid.ColumnSpan="2">
             <Border BorderThickness="2" BorderBrush="Black">
                 <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" 
