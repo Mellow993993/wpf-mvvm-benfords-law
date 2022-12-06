@@ -9,10 +9,10 @@ namespace BenfordSet.Model
         private readonly ReadPdf _readPdf;
         private readonly Timing _timing;
         private readonly double _threshold;
-        private CountNumbers _countNumbers;
-        private Calculation _calculation;
-        private Output _output;
-        private Results _result;
+        private readonly CountNumbers _countNumbers;
+        private readonly Calculation _calculation;
+        private readonly Output _output;
+        private readonly Results _result;
         #endregion
 
         #region Constructor
