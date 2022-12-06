@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*"></ColumnDefinition>
+            <ColumnDefinition Width="60*"></ColumnDefinition>
             <ColumnDefinition Width="33*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
@@ -51,7 +51,11 @@
             </Button>
 
             <Separator Width="5" Background="Transparent"/>
+            <Button Command="{Binding SaveCommand}" Width="Auto" ToolTip="Save your results as PDF or textfile" Height="Auto">
+                <Image HorizontalAlignment="Left" Source="/Icons/SaveIcon.png" Height="Auto" Width="Auto" RenderTransformOrigin="0.589,0.529" />
 
+            </Button>
+            <Separator Width="5" Background="Transparent"/>
             <Button Command="{Binding InfoCommand}" 
                     Width="Auto" 
                     Cursor="AppStarting" 
@@ -71,12 +75,12 @@
         </StackPanel>
 
         <Grid Grid.Row="0" Grid.Column="1">
-            <Label Content="Threshold" Width="90" Height="32" FontSize="16" FontWeight="Bold" Margin="7,7,215,39"/>
-            <Slider VerticalAlignment="Top" HorizontalAlignment="Right" Value="{Binding Threshold}" Width="160" SelectionStart="1" SelectionEnd="10" Minimum="1" SmallChange="1" AutomationProperties.HelpText="Chose the precession of the analyse process" Height="24" Margin="0,15,40,0"/>
+            <Label Content="Threshold" Height="32" FontSize="16" FontWeight="Bold" Margin="0,7,142,39"/>
+            <Slider VerticalAlignment="Top" HorizontalAlignment="Left" Value="{Binding Threshold}" Width="116" SelectionStart="1" SelectionEnd="10" Minimum="1" SmallChange="1" AutomationProperties.HelpText="Chose the precession of the analyse process" Height="24" Margin="90,14,0,0"/>
 
-            <Label Content="Save as" Width="72" Height="32" FontSize="16" FontWeight="Bold" Margin="7,39,228,7"/>
-            <RadioButton HorizontalAlignment="Center" VerticalAlignment="Top" IsChecked="{Binding IsText}" Content="Textfile" ToolTip="Save file as textfile" FontSize="14" Height="18" Width="90" Margin="0,46,0,0"/>
-            <RadioButton IsChecked="False" Content="Pdf" ToolTip="Save file as PDF" FontSize="14" Margin="209,47,30,9" />
+            <Label Content="Save as" Height="32" FontSize="16" FontWeight="Bold" Margin="0,39,167,7"/>
+            <RadioButton HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding IsText}" Content="Textfile" ToolTip="Save file as textfile" FontSize="14" Height="18" Width="71" Margin="90,46,0,0"/>
+            <RadioButton IsChecked="False" Content="Pdf" ToolTip="Save file as PDF" FontSize="14" Margin="161,47,30,9" />
         </Grid>
 
         <StackPanel Grid.Row="1" Margin="5" Grid.ColumnSpan="2">
