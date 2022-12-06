@@ -5,21 +5,26 @@ namespace BenfordSet.Model
 {
     internal class AnalyseController
     {
+        #region Fields
         private readonly ReadPdf _readPdf;
         private readonly Timing _timing;
         private readonly double _threshold;
+        private CountNumbers _countNumbers;
+        private Calculation _calculation;
+        private Output _output;
+        private Results _result;
+        #endregion
 
+        #region Constructor
         internal AnalyseController(ReadPdf readPdf,Timing timing,double threshold)
         {
             _readPdf = readPdf;
             _timing = timing;
             _threshold = threshold;
         }
+        #endregion
 
-        private CountNumbers _countNumbers;
-        private Calculation _calculation;
-        private Output _output;
-        private Results _result;
+        #region Methods
         internal string StartAnalyse()
         {
             CountNumbers();
@@ -36,7 +41,7 @@ namespace BenfordSet.Model
 
         private string SetUpResult()
         {
-            string TotalTime = "10"; //= _timing.StopTimeMeasurement(); // BUG-FIX REQUIRED
+            string TotalTime = _timing.StopTimeMeasurement(); // BUG-FIX REQUIRED
             _result = new Results(_readPdf,_countNumbers,_calculation,TotalTime);
             return _result.BuildResultHeader();
 
@@ -53,5 +58,6 @@ namespace BenfordSet.Model
             _countNumbers = new CountNumbers(_readPdf);
             _countNumbers.SumUpAllNumbers();
         }
+        #endregion
     }
 }
