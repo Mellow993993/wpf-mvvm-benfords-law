@@ -7,18 +7,25 @@ namespace BenfordSet.Common
 {
     internal class Save
     {
+        #region Fields
         private readonly string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private const string _allowedFilesText = "txt files (*.txt)|*.txt";
         private const string _allowedFilesPdf = "Pdf Documents|*.pdf";
+        #endregion
 
+        #region Properties
         public bool IsText { get; set; }
         public string Destination { get; set; } = null!;
         public string OutputResult { get; set; }
         public Messages Messages => new();
+        #endregion
 
+        #region Events
         public event EventHandler? SaveSuccessful;
         public event EventHandler? SaveNotSuccessful;
+        #endregion
 
+        #region Constructor
         public Save(string outputresults,bool istext)
         {
             (OutputResult, IsText) = (outputresults, istext);
@@ -27,8 +34,11 @@ namespace BenfordSet.Common
             OpenSaveDialog();
             SaveFile();       
         }
+        #endregion
 
-        public void OpenSaveDialog()
+        #region Methods
+
+        private void OpenSaveDialog()
         {
             SaveFileDialog saveFileDialog = new()
             {
@@ -47,7 +57,7 @@ namespace BenfordSet.Common
             return IsText ? _allowedFilesText : _allowedFilesPdf;
         }
 
-        public void SaveFile()
+        private void SaveFile()
         {
             if(IsText && CheckDestination())
             {
@@ -78,7 +88,7 @@ namespace BenfordSet.Common
             Page page = new(PageSize.A4,PageOrientation.Portrait);
             _ = doc.Pages.Add(page);
             ceTe.DynamicPDF.PageElements.Label label = new
-(OutputResult,0,0,504,800,Font.Helvetica,14,TextAlign.Left);
+            (OutputResult,0,0,504,800,Font.Helvetica,14,TextAlign.Left);
             page.Elements.Add(label);
             doc.Draw(Destination);
         }
@@ -88,5 +98,7 @@ namespace BenfordSet.Common
             using StreamWriter fs = new(Destination);
             fs.Write(OutputResult);
         }
+        #endregion
+
     }
 }

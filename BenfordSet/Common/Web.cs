@@ -9,12 +9,15 @@ namespace BenfordSet.Common
 {
     internal class Web
     {
+        #region Constructor
         public Web()
         {
             OpenWebsite();
         }
-           
-        internal void OpenWebsite()
+        #endregion
+
+        #region Methods
+        private void OpenWebsite()
         {
             _ = Process.Start(new ProcessStartInfo
             {
@@ -22,5 +25,6 @@ namespace BenfordSet.Common
                 UseShellExecute = true
             });
         }
+        #endregion
     }
 }
