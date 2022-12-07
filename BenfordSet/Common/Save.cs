@@ -24,6 +24,11 @@ namespace BenfordSet.Common
             (OutputResult, IsText) = (outputresults, istext);
             SaveSuccessful += Messages.FileHasBeenSaved;
             SaveNotSuccessful += Messages.FileHasNotBeenSaved;
+            OpenSaveDialog();
+            SaveFile();       
+            
+            //save.OpenSaveDialog();
+            //save.SaveFile();
         }
 
         public void OpenSaveDialog()

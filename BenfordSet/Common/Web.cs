@@ -9,6 +9,11 @@ namespace BenfordSet.Common
 {
     internal class Web
     {
+        public Web()
+        {
+            OpenWebsite();
+        }
+           
         internal void OpenWebsite()
         {
             _ = Process.Start(new ProcessStartInfo

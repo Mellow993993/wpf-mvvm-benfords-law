@@ -155,7 +155,6 @@ namespace BenfordSet.ViewModel
                 IsLoading = false;
                 CalculationResults = controller.StartAnalyse();
             }
-            IsLoading = false;
         }
 
         private void SelectFile()
@@ -166,8 +165,7 @@ namespace BenfordSet.ViewModel
         private void SaveFile()
         {
             Save save = new(CalculationResults,IsText);
-            save.OpenSaveDialog();
-            save.SaveFile();
+
         }
         private void Cancel()
         {
@@ -183,7 +181,6 @@ namespace BenfordSet.ViewModel
         private void Info()
         {
             Web web = new Web();
-            web.OpenWebsite();
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
