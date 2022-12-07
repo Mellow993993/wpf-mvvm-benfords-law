@@ -6,8 +6,8 @@ namespace BenfordSet.Model
     internal class Calculation
     {
         internal readonly double[] _BenfordNumbers = { 30.1,17.6,12.5,9.7,7.9,6.7,5.8,5.1,4.6 };
-        internal double[]? Digits = new double[9];
-        internal double[]? Difference = new double[9];
+        internal double[] Digits = new double[9];
+        internal double[] Difference = new double[9];
         internal double Threshold { get; private set; }
         internal int CountDeviations { get; private set; }
         internal string CalculationResult { get; private set; } = string.Empty;
@@ -16,7 +16,6 @@ namespace BenfordSet.Model
 
         public event EventHandler? CheckRequired;
         public event EventHandler? NoCheckRequired;
-        internal Calculation() { }
         internal Calculation(CountNumbers countObj,double threshold)
         {
             (CounterObject, Threshold) = (countObj, threshold);
