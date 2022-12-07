@@ -123,8 +123,6 @@ namespace BenfordSet.ViewModel
         #endregion
 
         #region Events
-        public event EventHandler? FileSelected;
-        public event EventHandler? NoFileSelected;
         public event EventHandler? IsCanceld;
         #endregion
 
@@ -154,6 +152,7 @@ namespace BenfordSet.ViewModel
             if(readPdf != null)
             {
                 AnalyseController controller = new(readPdf,timing,Threshold);
+                IsLoading = false;
                 CalculationResults = controller.StartAnalyse();
             }
             IsLoading = false;
