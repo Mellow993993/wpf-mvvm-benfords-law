@@ -26,9 +26,6 @@ namespace BenfordSet.Common
             SaveNotSuccessful += Messages.FileHasNotBeenSaved;
             OpenSaveDialog();
             SaveFile();       
-            
-            //save.OpenSaveDialog();
-            //save.SaveFile();
         }
 
         public void OpenSaveDialog()
