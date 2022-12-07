@@ -6,13 +6,13 @@
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" 
         x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser" Height="640" Width="680" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="680" MinHeight="640" Icon="../Icons/WindowIcon.png" UseLayoutRounding="True" >
+        Title="Pdf analyser" Height="600" Width="680" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="680" MinHeight="600" Icon="../Icons/WindowIcon.png" UseLayoutRounding="True" >
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -83,12 +83,11 @@
             <RadioButton IsChecked="False" Content="Pdf" ToolTip="Save file as PDF" FontSize="14" Margin="161,47,30,9" />
         </Grid>
 
-        <StackPanel Grid.Row="1" Margin="5" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="1" Margin="5,0,5,0" Grid.ColumnSpan="2">
             <Border BorderThickness="2" BorderBrush="Black">
                 <TextBlock Text="{Binding CalculationResults, Mode=OneWay}" 
                     Width="Auto"
-                    Margin="10,10,10,10"
-                    Height="400"
+                    Height="364"
                     Foreground="Black" 
                     FontSize="16" 
                     FontFamily="Courier New" ToolTip="Result view"/>
