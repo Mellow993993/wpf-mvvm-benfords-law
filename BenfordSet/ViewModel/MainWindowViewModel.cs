@@ -14,7 +14,7 @@ namespace BenfordSet.ViewModel
         private bool _isLoading = false;
         private string _savePath = string.Empty;
         private string _calculationResults = string.Empty;
-        private int _threshold = 5;
+        private int _threshold = 1;
         private string _filepath = string.Empty;
         private string _totalTime = string.Empty;
         private ReadPdf readPdf;
