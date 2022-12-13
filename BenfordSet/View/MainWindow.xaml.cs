@@ -17,20 +17,16 @@ namespace BenfordSet
             Mutex mutex = new Mutex(true,"benford-analyse",out bool aquiredNew);
             if(aquiredNew)
             {
-
                 Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline),
                    new FrameworkPropertyMetadata { DefaultValue = 60 });
-                Messages meassages = new Messages();
-                //Log.Error("Start of Debuggin");
-
                 MainWindowViewModel mainwindowviewmodel = new MainWindowViewModel();
-
                 DataContext = mainwindowviewmodel;
-
                 InitializeComponent();
             }
             else
-                MessageBox.Show("App läuft bereits");
+            {
+                MessageBox.Show("Die App ist bereits gestartet worden.", "Hinweis", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
             mutex.ReleaseMutex();
         }
     }
