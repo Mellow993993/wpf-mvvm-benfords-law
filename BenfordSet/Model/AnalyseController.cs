@@ -1,5 +1,6 @@
 ﻿using BenfordSet.Common;
 using BenfordSet.ViewModel;
+using System.Diagnostics;
 
 namespace BenfordSet.Model
 {
@@ -7,19 +8,20 @@ namespace BenfordSet.Model
     {
         #region Fields
         private readonly ReadPdf _readPdf;
-        private readonly Timing _timing;
+        private readonly Stopwatch _stopwatch;
         private readonly double _threshold;
         private CountNumbers _countNumbers;
         private Calculation _calculation;
         private Output _output;
         private Results _result;
         #endregion
+        public string TotalTime { get; private set; }
 
         #region Constructor
-        internal AnalyseController(ReadPdf readPdf,Timing timing,double threshold)
+        internal AnalyseController(ReadPdf readPdf,Stopwatch stopwatch,double threshold)
         {
             _readPdf = readPdf;
-            _timing = timing;
+            _stopwatch = stopwatch;
             _threshold = threshold;
         }
         #endregion
@@ -29,7 +31,6 @@ namespace BenfordSet.Model
         {
             CountNumbers();
             CalculateDistribution();
-
             return SetUpResult() + SetUpOutput();
         }
 
@@ -41,10 +42,8 @@ namespace BenfordSet.Model
 
         private string SetUpResult()
         {
-            string TotalTime = _timing.StopTimeMeasurement(); // BUG-FIX REQUIRED
             _result = new Results(_readPdf,_countNumbers,_calculation,TotalTime);
             return _result.BuildResultHeader();
-
         }
 
         private void CalculateDistribution()
@@ -56,6 +55,8 @@ namespace BenfordSet.Model
         private void CountNumbers()
         {
             _countNumbers = new CountNumbers(_readPdf);
+            _stopwatch.Stop();
+            TotalTime = _stopwatch.ElapsedMilliseconds.ToString();
             _countNumbers.SumUpAllNumbers();
         }
         #endregion

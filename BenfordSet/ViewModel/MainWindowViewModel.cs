@@ -18,7 +18,7 @@ namespace BenfordSet.ViewModel
         private int _threshold = 1;
         private string _filepath = string.Empty;
         private string _totalTime = string.Empty;
-        private ReadPdf readPdf;
+        private ReadPdf _readPdf;
         #endregion
 
         #region Properties
@@ -159,15 +159,15 @@ namespace BenfordSet.ViewModel
         private async void Analyse()
         {
             IsLoading = true;
-            Timing timing = new(new Stopwatch());
-            timing.StartTimeMeasurement();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
 
-            readPdf = new ReadPdf(Filepath);
-            await readPdf.GetFileContent();
+            _readPdf = new ReadPdf(Filepath);
+            await _readPdf.GetFileContent();
 
-            if(readPdf != null)
+            if(_readPdf != null)
             {
-                AnalyseController controller = new(readPdf,timing,Threshold);
+                AnalyseController controller = new(_readPdf,stopwatch,Threshold);
                 IsLoading = false;
                 CalculationResults = controller.StartAnalyse();
             }
@@ -185,11 +185,10 @@ namespace BenfordSet.ViewModel
         }
         private void Cancel()
         {
-            readPdf.CancelReading = true;
+            _readPdf.CancelReading = true;
             RaisePropertyChanged();
-
             Clean Clean = new();
-            Clean.DisposeReadObject(ref readPdf); 
+            Clean.DisposeReadObject(ref _readPdf); 
             IsLoading = false;
             IsCanceld?.Invoke(this,EventArgs.Empty);
         }
@@ -232,7 +231,7 @@ namespace BenfordSet.ViewModel
 
         private bool CanCancel()
         {
-            return readPdf != null;
+            return _readPdf != null;
         }
         #endregion
     }
