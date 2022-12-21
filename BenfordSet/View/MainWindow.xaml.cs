@@ -25,7 +25,7 @@ namespace BenfordSet
             }
             else
             {
-                MessageBox.Show("Die App ist bereits gestartet worden.", "Hinweis", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("The app is already running.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             mutex.ReleaseMutex();
         }
