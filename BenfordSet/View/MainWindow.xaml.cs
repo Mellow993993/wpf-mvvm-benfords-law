@@ -21,6 +21,10 @@ namespace BenfordSet
                    new FrameworkPropertyMetadata { DefaultValue = 60 });
                 MainWindowViewModel mainwindowviewmodel = new MainWindowViewModel();
                 DataContext = mainwindowviewmodel;
+                mainwindowviewmodel.OpenMessageBox = (title,text) =>
+                {
+                    return MessageBox.Show(title,text,MessageBoxButton.YesNo,MessageBoxImage.Question);
+                };
                 InitializeComponent();
             }
             else

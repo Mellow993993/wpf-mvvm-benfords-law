@@ -135,7 +135,10 @@ namespace BenfordSet.ViewModel
         internal Messages? Messages => new();
         #endregion
 
+
         #region Events
+        public delegate MessageBoxResult OpenMessageboxHandler(string title,string text);
+        public OpenMessageboxHandler OpenMessageBox { get; set; }
         public event EventHandler? IsCanceld;
         #endregion
 
@@ -209,7 +212,12 @@ namespace BenfordSet.ViewModel
         #region IsExecutable
         private void Quit()
         {
-            Application.Current.Shutdown();
+            if(OpenMessageBox("Do you want to quit the application","Question") == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+            else
+                return;
         }
 
         private bool CanAnalyse()
