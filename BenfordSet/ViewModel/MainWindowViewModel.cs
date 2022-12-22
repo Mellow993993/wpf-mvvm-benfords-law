@@ -67,10 +67,9 @@ namespace BenfordSet.ViewModel
                 if(_calculationResults != value)
                 {
                     _calculationResults = value;
+                    RaisePropertyChanged(nameof(CalculationResults));
+                    OnPropertyChanged(TotalTime);
                 }
-
-                RaisePropertyChanged(nameof(CalculationResults));
-                OnPropertyChanged(TotalTime);
             }
         }
         public int Threshold
@@ -91,7 +90,7 @@ namespace BenfordSet.ViewModel
             get => _totalTime;
             private set
             {
-                if(_totalTime != null)
+                if(_totalTime != value)
                 {
                     _totalTime = value;
                     OnPropertyChanged(nameof(TotalTime));
