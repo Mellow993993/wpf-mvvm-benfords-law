@@ -16,7 +16,7 @@ namespace BenfordSet.Model
             if(readObject != null && countObject != null && calculationObject != null)
                 (ReadPdf, CountNumbers, Calculation, TotalTime) = (readObject, countObject, calculationObject, totaltime);
             else
-                throw new BenfordException() { Information = "ups" };
+                throw new BenfordException() { Information = "At least one of the ctor objects is null" };
         }
 
         public string BuildResultHeader()
