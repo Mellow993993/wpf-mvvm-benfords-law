@@ -78,10 +78,10 @@ namespace BenfordSet.ViewModel
                 if(_threshold != value)
                 {
                     _threshold = value;
-                OnPropertyChanged(nameof(Threshold));
-                _ = CanAnalyse();
+                    OnPropertyChanged(nameof(Threshold));
+                    _ = CanAnalyse();
+                }
             }
-        }
         }
         public string Filepath
         {
