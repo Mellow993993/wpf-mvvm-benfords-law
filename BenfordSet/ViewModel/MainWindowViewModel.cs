@@ -28,7 +28,8 @@ namespace BenfordSet.ViewModel
                 if(_readPdf != value)
                 {
                     _readPdf = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(ReadPdf));
+                    _ = CanCancel();
                 }
             }
         }
@@ -171,11 +172,12 @@ namespace BenfordSet.ViewModel
         private void Cancel()
         {
             ReadPdf.CancelReading = true;
-            RaisePropertyChanged();
             Clean Clean = new();
-            Clean.DisposeReadObject(ref _readPdf); 
+            Clean.DisposeReadObject(ref _readPdf);
             IsLoading = false;
             IsCanceld?.Invoke(this,EventArgs.Empty);
+            DisposeObjects();
+            RaisePropertyChanged();
         }
 
         private void Info()
@@ -187,6 +189,15 @@ namespace BenfordSet.ViewModel
         {
             ReadPdf = null;
             Filepath = String.Empty;
+        }
+        private void Quit()
+        {
+            if(OpenMessageBox("Do you want to quit the application","Question") == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+            else
+                return;
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
@@ -200,16 +211,6 @@ namespace BenfordSet.ViewModel
         #endregion
 
         #region IsExecutable
-        private void Quit()
-        {
-            if(OpenMessageBox("Do you want to quit the application","Question") == MessageBoxResult.Yes)
-            {
-                Application.Current.Shutdown();
-            }
-            else
-                return;
-        }
-
         private bool CanAnalyse()
         {
             return !string.IsNullOrWhiteSpace(Filepath);
