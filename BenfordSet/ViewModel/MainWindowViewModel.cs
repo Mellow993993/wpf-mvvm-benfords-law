@@ -78,10 +78,10 @@ namespace BenfordSet.ViewModel
                 if(_threshold != value)
                 {
                     _threshold = value;
-                }
                 OnPropertyChanged(nameof(Threshold));
                 _ = CanAnalyse();
             }
+        }
         }
         public string Filepath
         {
@@ -166,7 +166,7 @@ namespace BenfordSet.ViewModel
 
         private void Info()
         {
-            Web web = new Web();
+            _ = new Web();
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
