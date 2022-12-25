@@ -24,7 +24,7 @@ namespace BenfordSet.ViewModel
         #region Constructor
         internal SettingsViewModel()
         {
-            OkCommand = new DelegateCommand(Ok);
+            OkCommand = new DelegateCommand(Ok, CanOk);
             ExitCommand = new DelegateCommand(Exit);
         }
         #endregion
@@ -42,7 +42,7 @@ namespace BenfordSet.ViewModel
         #endregion
 
         #region CanExecute Methods
-
-        #endregion
+        private bool CanOk() => true;
+       #endregion
     }
 }
