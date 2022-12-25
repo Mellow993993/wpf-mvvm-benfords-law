@@ -14,7 +14,6 @@ namespace BenfordSet.ViewModel
         private bool _isLoading = false;
         private string _savePath = string.Empty;
         private string _calculationResults = string.Empty;
-        private string _filename = string.Empty;
         private int _threshold = 5;
         private string _filepath = string.Empty;
         private ReadPdf _readPdf;
@@ -97,18 +96,7 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
-        public string Filename
-        {
-            get => _filename;
-            set
-            {
-                if(_filename != value)
-                {
-                    _filename = value;
-                    OnPropertyChanged(nameof(Filename));
-                }
-            }
-        }
+
         #endregion
 
         #region DelegateCommands
