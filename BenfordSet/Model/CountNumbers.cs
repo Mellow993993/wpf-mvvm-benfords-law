@@ -9,12 +9,30 @@ namespace BenfordSet.Model
         public int[] FoundNumbers = new int[9];
         public int NumbersInFile { get; private set; }
         public ReadPdf ReadPdf { get; private set; }
+
+        public delegate void InformUserEventHandler(object source,EventArgs args);
+        public event InformUserEventHandler InformUser;
+
         public CountNumbers(ReadPdf readPdf)
         {
+            Messages message = new Messages();
+            readPdf = null;
+            message.
             if(readPdf != null)
                 ReadPdf = readPdf;
             else
+            {
+                OnInformUser();
                 throw new ArgumentNullException("Argument Null Exception.","Object readpdf is null");
+            }
+        }
+
+        private void OnInformUser()
+        {
+            if(InformUser != null)
+            {
+                InformUser(this,EventArgs.Empty);
+            }
         }
 
         public void SumUpAllNumbers()

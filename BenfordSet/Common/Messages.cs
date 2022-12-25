@@ -5,9 +5,14 @@ namespace BenfordSet.Common
 {
     public class Messages
     {
-        public void CancelProcess(object sender,EventArgs e)
+        public void message(object sender, EventArgs e)
         {
             _ = MessageBox.Show("The process has been cancled","Info",
+            MessageBoxButton.OK,MessageBoxImage.Stop);
+        }
+        public void CancelProcess(object sender,EventArgs e)
+        {
+            _ = MessageBox.Show("The process has been canceled","Info",
             MessageBoxButton.OK,MessageBoxImage.Stop);
         }
         public void NoCheckFileRequred(object sender,EventArgs e)

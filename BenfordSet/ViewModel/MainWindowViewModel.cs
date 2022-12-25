@@ -33,7 +33,6 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
-
         public bool IsText
         {
             get => _isText;
@@ -110,7 +109,6 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
-
         #endregion
 
         #region DelegateCommands
@@ -122,7 +120,6 @@ namespace BenfordSet.ViewModel
         public DelegateCommand CancelCommand { get; init; }
         internal Messages? Messages => new();
         #endregion
-
 
         #region Events
         public delegate MessageBoxResult OpenMessageboxHandler(string title,string text);
