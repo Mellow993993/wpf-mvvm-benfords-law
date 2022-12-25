@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using BenfordSet.Common;
+using Microsoft.VisualBasic;
+using System.Text;
 
 namespace BenfordSet.Model
 {
@@ -11,7 +13,10 @@ namespace BenfordSet.Model
 
         public Results(ReadPdf readObject,CountNumbers countObject,Calculation calculationObject,string totaltime)
         {
-            (ReadPdf, CountNumbers, Calculation, TotalTime) = (readObject, countObject, calculationObject, totaltime);
+            if(readObject != null && countObject != null && calculationObject != null)
+                (ReadPdf, CountNumbers, Calculation, TotalTime) = (readObject, countObject, calculationObject, totaltime);
+            else
+                throw new BenfordException() { Information = "ups" };
         }
 
         public string BuildResultHeader()
