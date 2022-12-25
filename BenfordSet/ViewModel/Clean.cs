@@ -5,7 +5,11 @@ namespace BenfordSet.ViewModel
 {
     internal class Clean : IDisposable
     {
+        #region Fields
         private bool disposed;
+        #endregion
+
+        #region Methods
         public void Dispose()
         {
             Dispose(true);
@@ -27,5 +31,6 @@ namespace BenfordSet.ViewModel
                 GC.Collect();
             }
         }
+        #endregion
     }
 }
