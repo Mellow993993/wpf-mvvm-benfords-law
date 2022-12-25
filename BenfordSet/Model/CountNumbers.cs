@@ -10,9 +10,10 @@ namespace BenfordSet.Model
         public ReadPdf ReadPdf { get; private set; }
         public CountNumbers(ReadPdf readPdf)
         {
-            if(readPdf == null)
+            if(readPdf != null)
+                ReadPdf = readPdf;
+            else
                 throw new ArgumentNullException("Argument Null Exception.","Object readpdf is null");
-            ReadPdf = readPdf;
         }
 
         public void SumUpAllNumbers()

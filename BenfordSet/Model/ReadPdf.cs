@@ -22,9 +22,14 @@ namespace BenfordSet.Model
 
         public ReadPdf(string filename)
         {
-            Filename = filename;
-            Messages = new();
-            ReadingAborted += Messages.CancelReading;
+            if(!string.IsNullOrWhiteSpace(filename))
+            {
+                Filename = filename;
+                Messages = new();
+                ReadingAborted += Messages.CancelReading;
+            }
+            else
+                throw new BenfordException() { Information = "The filename is empty or whitespace" };
 
         }
         public async Task GetFileContent()

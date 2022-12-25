@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using BenfordSet.Common;
+using System.Text;
 
 namespace BenfordSet.Model
 {
@@ -9,8 +10,13 @@ namespace BenfordSet.Model
 
         public Output(Calculation calculation,double threshold)
         {
-            Calculation = calculation;
-            Threshold = threshold;
+            if(calculation != null)
+            {
+                Calculation = calculation;
+                Threshold = threshold;
+            }
+            else
+                throw new BenfordException() { Information = "The calculation object is null" };
         }
         internal string BuildResultOfAnalysis()
         {

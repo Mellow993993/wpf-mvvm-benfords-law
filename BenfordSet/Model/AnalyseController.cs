@@ -1,5 +1,6 @@
 ﻿using BenfordSet.Common;
 using BenfordSet.ViewModel;
+using System;
 using System.Diagnostics;
 
 namespace BenfordSet.Model
@@ -20,9 +21,16 @@ namespace BenfordSet.Model
         #region Constructor
         internal AnalyseController(ReadPdf readPdf,Stopwatch stopwatch,double threshold)
         {
-            _readPdf = readPdf;
-            _stopwatch = stopwatch;
-            _threshold = threshold;
+            if(readPdf != null && stopwatch != null)
+            {
+                _readPdf = readPdf;
+                _stopwatch = stopwatch;
+                _threshold = threshold;
+            }
+            else
+            {
+                throw new BenfordException() { Information = "The object readpdf or stopwatch is null" };
+            }
         }
         #endregion
 

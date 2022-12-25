@@ -15,7 +15,7 @@ namespace BenfordSet.ViewModel
         private string _savePath = string.Empty;
         private string _calculationResults = string.Empty;
         private string _filename = string.Empty;
-        private int _threshold = 1;
+        private int _threshold = 5;
         private string _filepath = string.Empty;
         private string _totalTime = string.Empty;
         private ReadPdf _readPdf;
@@ -164,12 +164,9 @@ namespace BenfordSet.ViewModel
             _readPdf = new ReadPdf(Filepath);
             await _readPdf.GetFileContent();
 
-            if(_readPdf != null)
-            {
-                AnalyseController controller = new(_readPdf,stopwatch,Threshold);
-                IsLoading = false;
-                CalculationResults = controller.StartAnalyse();
-            }
+            AnalyseController controller = new(_readPdf,stopwatch,Threshold);
+            IsLoading = false;
+            CalculationResults = controller.StartAnalyse();
         }
 
         private void SelectFile()

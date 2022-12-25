@@ -16,11 +16,17 @@ namespace BenfordSet.Model
 
         public event EventHandler? CheckRequired;
         public event EventHandler? NoCheckRequired;
-        internal Calculation(CountNumbers countObj,double threshold)
+        internal Calculation(CountNumbers countObject,double threshold)
         {
-            (CounterObject, Threshold) = (countObj, threshold);
-            CheckRequired += Messages.CheckFileRequired;
-            NoCheckRequired += Messages.NoCheckFileRequred;
+            if(countObject != null)
+            {
+                (CounterObject, Threshold) = (countObject, threshold);
+                CheckRequired += Messages.CheckFileRequired;
+                NoCheckRequired += Messages.NoCheckFileRequred;
+
+            }
+            else
+                throw new BenfordException() { Information = "The counter object is null" };
         }
 
         public void StartCalculation()
