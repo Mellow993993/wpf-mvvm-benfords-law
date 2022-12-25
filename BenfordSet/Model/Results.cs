@@ -1,36 +1,56 @@
 ﻿using BenfordSet.Common;
 using Microsoft.VisualBasic;
+using System;
 using System.Text;
 
 namespace BenfordSet.Model
 {
     internal class Results
     {
+        #region Properties
         public string TotalTime { get; private set; }
         public ReadPdf ReadPdf { get; private set; }
         public Calculation Calculation { get; private set; }
         public CountNumbers CountNumbers { get; private set; }
+        public Messages Messages { get => new Messages(); }
+        #endregion
 
-        public Results(ReadPdf readObject,CountNumbers countObject,Calculation calculationObject,string totaltime)
+        #region Events
+        public delegate void InformUserEventHandler(object source,EventArgs args);
+        public event InformUserEventHandler InformUserOnError;
+        #endregion
+
+        #region Constructor 
+        internal Results(ReadPdf read,CountNumbers count,Calculation calculation,string totaltime)
         {
-            if(readObject != null && countObject != null && calculationObject != null)
-                (ReadPdf, CountNumbers, Calculation, TotalTime) = (readObject, countObject, calculationObject, totaltime);
+            InformUserOnError += Messages.OnInformUserOnError;
+            if(read != null && count != null && calculation != null)
+                (ReadPdf, CountNumbers, Calculation, TotalTime) = (read, count, calculation, totaltime);
             else
+            {
+                OnInformUserOnError();
                 throw new BenfordException() { Information = "At least one of the ctor objects is null" };
+            }
         }
+        #endregion
 
+        #region Public methods
         public string BuildResultHeader()
-        {
-            return PrintHeadLine() + PrintMetaInfos();
-        }
+            => PrintHeadLine() + PrintMetaInfos();
+        #endregion
 
+        #region Private methods "OnInformUserOnError", "PrintHeadLine", "PrintMetaInfos"
+        private void OnInformUserOnError()
+        {
+            if(InformUserOnError != null)
+                InformUserOnError(this,EventArgs.Empty);
+        }
         private string PrintHeadLine()
         {
             StringBuilder sb = new();
             _ = sb.AppendLine("Results of the Benford analysis.");
             return sb.ToString();
         }
-
         private string PrintMetaInfos()
         {
             StringBuilder sb = new();
@@ -46,5 +66,6 @@ namespace BenfordSet.Model
             _ = sb.AppendLine("Benford\t\tYours\t\t\tDifference");
             return sb.ToString();
         }
+        #endregion
     }
 }

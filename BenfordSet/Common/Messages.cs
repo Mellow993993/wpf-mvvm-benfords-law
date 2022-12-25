@@ -5,9 +5,11 @@ namespace BenfordSet.Common
 {
     public class Messages
     {
-        public void message(object sender, EventArgs e)
+        public void OnInformUserOnError(object sender, EventArgs e)
         {
-            _ = MessageBox.Show("The process has been cancled","Info",
+            _ = MessageBox.Show("An error has occured.\n" +
+                "The program will be terminated\nPlease send us an failure build to:" +
+                "\nstay.mellow.993@gmail.com","Warning",
             MessageBoxButton.OK,MessageBoxImage.Stop);
         }
         public void CancelProcess(object sender,EventArgs e)

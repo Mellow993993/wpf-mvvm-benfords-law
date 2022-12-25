@@ -16,11 +16,21 @@ namespace BenfordSet.Model
         private Output _output;
         private Results _result;
         #endregion
+
+        #region Properties
         public string TotalTime { get; private set; }
+        public Messages Messages { get => new Messages(); }
+        #endregion
+
+        #region Events
+        public delegate void InformUserEventHandler(object source,EventArgs args);
+        public event InformUserEventHandler InformUserOnError;
+        #endregion
 
         #region Constructor
         internal AnalyseController(ReadPdf readPdf,Stopwatch stopwatch,double threshold)
         {
+            InformUserOnError += Messages.OnInformUserOnError;
             if(readPdf != null && stopwatch != null)
             {
                 _readPdf = readPdf;
@@ -29,6 +39,7 @@ namespace BenfordSet.Model
             }
             else
             {
+                OnInformUserOnError();
                 throw new BenfordException() { Information = "The object readpdf or stopwatch is null" };
             }
         }
@@ -41,7 +52,14 @@ namespace BenfordSet.Model
             CalculateDistribution();
             return SetUpResult() + SetUpOutput();
         }
+        #endregion
 
+        #region Private methods
+        private void OnInformUserOnError()
+        {
+            if(InformUserOnError != null)
+                InformUserOnError(this,EventArgs.Empty);
+        }
         private string SetUpOutput()
         {
             _output = new Output(_calculation,_threshold);
