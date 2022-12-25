@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BenfordSet.Common;
+using System;
 using System.Text.RegularExpressions;
 
 namespace BenfordSet.Model
@@ -68,7 +69,7 @@ namespace BenfordSet.Model
             }
             else
             {
-                throw new ArgumentException("Could not parsed");
+                throw new BenfordException() { Information = "Numbers could not be added to FoundNumbers array" }; 
             }
         }
     }
