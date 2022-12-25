@@ -17,7 +17,6 @@ namespace BenfordSet.ViewModel
         private string _filename = string.Empty;
         private int _threshold = 5;
         private string _filepath = string.Empty;
-        private string _totalTime = string.Empty;
         private ReadPdf _readPdf;
         #endregion
 
@@ -68,7 +67,7 @@ namespace BenfordSet.ViewModel
                 {
                     _calculationResults = value;
                     RaisePropertyChanged(nameof(CalculationResults));
-                    OnPropertyChanged(TotalTime);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -83,18 +82,6 @@ namespace BenfordSet.ViewModel
                 }
                 OnPropertyChanged(nameof(Threshold));
                 _ = CanAnalyse();
-            }
-        }
-        public string TotalTime
-        {
-            get => _totalTime;
-            private set
-            {
-                if(_totalTime != value)
-                {
-                    _totalTime = value;
-                    OnPropertyChanged(nameof(TotalTime));
-                }
             }
         }
         public string Filepath
