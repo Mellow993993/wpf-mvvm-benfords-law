@@ -20,7 +20,7 @@ namespace BenfordSet.ViewModel
         #endregion
 
         #region Properties
-        public ReadPdf ReadPdf
+        public ReadPdf? ReadPdf
         {
             get => _readPdf;
             set 
@@ -155,6 +155,7 @@ namespace BenfordSet.ViewModel
             AnalyseController controller = new(ReadPdf,stopwatch,Threshold);
             IsLoading = false;
             CalculationResults = controller.StartAnalyse();
+            DisposeObjects();
         }
 
         private void SelectFile()
@@ -180,6 +181,12 @@ namespace BenfordSet.ViewModel
         private void Info()
         {
             _ = new Web();
+        }
+
+        private void DisposeObjects()
+        {
+            ReadPdf = null;
+            Filepath = String.Empty;
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
