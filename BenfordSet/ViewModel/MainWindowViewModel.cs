@@ -140,7 +140,7 @@ namespace BenfordSet.ViewModel
         }
         #endregion
 
-        #region Methods
+        #region Command methods (private)
         private async void Analyse()
         {
             IsLoading = true;

@@ -11,18 +11,10 @@ namespace BenfordSet.ViewModel
         public DelegateCommand(Action execute) { _execute = execute; }
         public DelegateCommand(Action execute,Func<bool> canexecute) { _execute = execute; _canExecute = canexecute; }
         public void OnExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this,new EventArgs());
-        }
-
+            => CanExecuteChanged?.Invoke(this,new EventArgs());
         public bool CanExecute(object? parameter)
-        {
-            return _canExecute == null || _canExecute();
-        }
-
+            => _canExecute == null || _canExecute();
         public void Execute(object? parameter)
-        {
-            _execute();
-        }
+            => _execute();
     }
 }

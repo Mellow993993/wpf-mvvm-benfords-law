@@ -14,9 +14,7 @@ namespace BenfordSet.ViewModel
         protected virtual void Dispose(bool disposing)
         {
             if(disposed)
-            {
                 return;
-            }
             else
                 disposed = true;
         }
