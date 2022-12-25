@@ -5,9 +5,12 @@ namespace BenfordSet.Model
 {
     internal class Calculation
     {
+        #region Auxiliary objects
         internal readonly double[] _BenfordNumbers = { 30.1,17.6,12.5,9.7,7.9,6.7,5.8,5.1,4.6 };
         internal double[] Digits = new double[9];
         internal double[] Difference = new double[9];
+        #endregion
+
         #region Properties
         internal double Threshold { get; private set; }
         internal int CountDeviations { get; private set; }
@@ -32,7 +35,6 @@ namespace BenfordSet.Model
                 (CounterObject, Threshold) = (countObject, threshold);
                 CheckRequired += Messages.CheckFileRequired;
                 NoCheckRequired += Messages.NoCheckFileRequred;
-
             }
             else
             {
@@ -77,7 +79,6 @@ namespace BenfordSet.Model
             for(int i = 0; i <= _BenfordNumbers.Length - 1; i++)
                 if(Difference[i] > Threshold)
                     CountDeviations += 1;
-
             InterpretResults();
         }
 

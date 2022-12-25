@@ -5,21 +5,31 @@ namespace BenfordSet.Common
 {
     internal class Select
     {
+        #region Fields
         private string _filepath = string.Empty;
+        #endregion
+
+        #region Properties
         internal Messages? Messages => new();
+        #endregion
+
+        #region Events
         public event EventHandler FileSelected;
         public event EventHandler NoFileSelected;
+        #endregion
 
-        public Select()
+        #region Constructor
+        internal Select()
         {
             NoFileSelected += Messages.FileHasNotBeenSelected;
             FileSelected += Messages.FileHasBeenSelected;
         }
+        #endregion
 
-        public string OpenSelectDialog()
+        #region Public methods
+        internal string OpenSelectDialog()
         {
             InitializeWindow();
-
             if(!string.IsNullOrEmpty(_filepath))
             {
                 FileSelected?.Invoke(this,EventArgs.Empty);
@@ -31,7 +41,9 @@ namespace BenfordSet.Common
                 return String.Empty;
             }
         }
+        #endregion
 
+        #region Private Methods
         private void InitializeWindow()
         {
             using System.Windows.Forms.OpenFileDialog openFileDialog = new();
@@ -44,9 +56,8 @@ namespace BenfordSet.Common
         private void ShowDialog(System.Windows.Forms.OpenFileDialog openfiledialog)
         {
             if(openfiledialog.ShowDialog() == DialogResult.OK)
-            {
                 _filepath = openfiledialog.FileName;
-            }
         }
+        #endregion
     }
 }

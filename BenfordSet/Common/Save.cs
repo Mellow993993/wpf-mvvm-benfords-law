@@ -26,7 +26,7 @@ namespace BenfordSet.Common
         #endregion
 
         #region Constructor
-        public Save(string outputresults,bool istext)
+        internal Save(string outputresults,bool istext)
         {
             (OutputResult, IsText) = (outputresults, istext);
             SaveSuccessful += Messages.FileHasBeenSaved;
@@ -36,51 +36,41 @@ namespace BenfordSet.Common
         }
         #endregion
 
-        #region Methods
-
+        #region Private methods
         private void OpenSaveDialog()
         {
             SaveFileDialog saveFileDialog = new()
             {
-                InitialDirectory = _initialDirectory,
-                Filter = SetFileExtension()
+                InitialDirectory = _initialDirectory, Filter = SetFileExtension()
             };
 
             if(saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
                 Destination = saveFileDialog.FileName;
-            }
         }
 
         private string SetFileExtension()
-        {
-            return IsText ? _allowedFilesText : _allowedFilesPdf;
-        }
+            => IsText ? _allowedFilesText : _allowedFilesPdf;
 
         private void SaveFile()
         {
             if(IsText && CheckDestination())
-            {
-                SaveAsText();
+            { 
+                SaveAsText(); 
                 SaveSuccessful?.Invoke(this,new EventArgs());
             }
 
             else if(!IsText && CheckDestination())
             {
-                SaveAsPdf();
+                SaveAsPdf(); 
                 SaveSuccessful?.Invoke(this,new EventArgs());
             }
 
             else
-            {
                 SaveNotSuccessful?.Invoke(this,new EventArgs());
-            }
         }
 
         private bool CheckDestination()
-        {
-            return !string.IsNullOrEmpty(Destination);
-        }
+            => !string.IsNullOrEmpty(Destination);
 
         private void SaveAsPdf()
         {

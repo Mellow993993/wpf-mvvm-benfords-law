@@ -8,6 +8,6 @@ namespace BenfordSet.Common
 {
     internal class BenfordException : Exception
     {
-        public string Information { get; set; }
+        internal string Information { get; set; }
     }
 }

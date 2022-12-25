@@ -11,15 +11,15 @@ namespace BenfordSet.Common
 {
     internal static class Log
     {
-        public static ILog Logger { get; } = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        public static string LogFilePath { get; private set; }
+        internal static ILog Logger { get; } = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        internal static string LogFilePath { get; private set; }
 
         static Log()
         {
             InitializeLogger("Benford-App");
         }
 
-        public static void InitializeLogger(string appname)
+        internal static void InitializeLogger(string appname)
         {
             LogFilePath = GetLogFilePath(appname);
             var entryAssembly = Assembly.GetEntryAssembly();
@@ -56,17 +56,17 @@ namespace BenfordSet.Common
 
         #region Methods
 
-        public static void Error(object message)
+        internal static void Error(object message)
         {
             Log.Error(message);
         }
 
-        public static void Debug(object message)
+        internal static void Debug(object message)
         {
             Log.Debug(message);
         }
 
-        public static void Info(object message)
+        internal static void Info(object message)
         {
             if(message == null)
             {
@@ -76,7 +76,7 @@ namespace BenfordSet.Common
             System.Diagnostics.Trace.WriteLine(message);
         }
 
-        public static void Info(object source, object message)
+        internal static void Info(object source, object message)
         {
             Log.Info(message);
         }
@@ -89,9 +89,7 @@ namespace BenfordSet.Common
         }
 
         public static void WriteException(Exception ex)
-        {
-            Logger.Info(ex.ToString());
-        }
+            => Logger.Info(ex.ToString());
 
         #endregion
     }
