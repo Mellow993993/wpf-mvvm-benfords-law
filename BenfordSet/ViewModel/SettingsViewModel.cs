@@ -9,11 +9,27 @@ namespace BenfordSet.ViewModel
     internal class SettingsViewModel : ViewModelBase
     {
         #region Fieleds
-
+        private bool _languageIsEnglish = true;
         #endregion
 
         #region Properties
-
+        enum Language
+        {
+            English,
+            Deutsch
+        }
+        public bool LanguageIsEnglish
+        {
+            get => _languageIsEnglish; 
+            set 
+            {
+                if(_languageIsEnglish != value)
+                {
+                    _languageIsEnglish = value; 
+                    OnPropertyChanged();
+                }
+            }
+        }
         #endregion
 
         #region Delegate Commands

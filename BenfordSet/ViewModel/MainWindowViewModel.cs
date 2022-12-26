@@ -118,6 +118,7 @@ namespace BenfordSet.ViewModel
         public DelegateCommand QuitCommand { get; init; }
         public DelegateCommand InfoCommand { get; init; }
         public DelegateCommand CancelCommand { get; init; }
+        public DelegateCommand SettingCommand { get; init; }
         internal Messages? Messages => new();
         #endregion
 
@@ -136,6 +137,7 @@ namespace BenfordSet.ViewModel
             CancelCommand = new DelegateCommand(Cancel,CanCancel);
             InfoCommand = new DelegateCommand(Info);
             QuitCommand = new DelegateCommand(Quit);
+            SettingCommand = new DelegateCommand(Setting);
             IsCanceld += Messages.CancelProcess;
         }
         #endregion
@@ -154,6 +156,11 @@ namespace BenfordSet.ViewModel
             IsLoading = false;
             CalculationResults = controller.StartAnalyse();
             DisposeObjects();
+        }
+
+        private void Setting()
+        {
+            throw new NotImplementedException();
         }
 
         private void SelectFile()

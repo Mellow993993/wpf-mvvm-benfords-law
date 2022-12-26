@@ -10,19 +10,23 @@
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="6*"></RowDefinition>
-            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="73*"></RowDefinition>
+            <RowDefinition Height="391*"></RowDefinition>
+            <RowDefinition Height="55"></RowDefinition>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60*"></ColumnDefinition>
-            <ColumnDefinition Width="33*"></ColumnDefinition>
+            <ColumnDefinition Width="41*"></ColumnDefinition>
+            <ColumnDefinition Width="27*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Separator Width="5" Background="Transparent"/>
+        <Separator Background="Transparent" Margin="217,2,193,2"/>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,5,0,5" Orientation="Horizontal" HorizontalAlignment="Left" Width="675">
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5,5,0,5" Orientation="Horizontal" HorizontalAlignment="Left" Width="675" Grid.ColumnSpan="2">
             <Button Command="{Binding QuitCommand}"
                     Padding="5"
                     Width="Auto" 
@@ -92,14 +96,16 @@
                     FontSize="16" 
                     FontFamily="Courier New" ToolTip="Result view"/>
             </Border>
+            <Button Content="Settings"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="5">
             <ProgressBar IsIndeterminate="{Binding IsLoading}"
                          Name="ProgressBarStatus" 
                          Margin="5,20,5,5"
                          Height="30" 
                          Width="Auto"/>
+            <Button Content="Button"/>
         </StackPanel>
 
     </Grid>
