@@ -8,17 +8,17 @@ namespace BenfordSet.Model
     sealed internal class AnalyseController
     {
         #region Fields
-        private readonly ReadPdf _readPdf;
         private readonly Stopwatch _stopwatch;
         private readonly double _threshold;
-        private CountNumbers _countNumbers;
-        private Calculation _calculation;
-        private Output _output;
-        private Results _result;
         #endregion
 
         #region Properties
         internal string TotalTime { get; private set; }
+        internal ReadPdf ReadPdf { get; init; }
+        internal CountNumbers CountedNumbers { get; private set; }
+        internal Calculation Calculation { get; private set; }
+        internal Output Output { get; private set; }
+        internal Results Results { get; private set; }
         internal Messages Messages { get => new Messages(); }
         #endregion
 
@@ -33,7 +33,7 @@ namespace BenfordSet.Model
             InformUserOnError += Messages.OnInformUserOnError;
             if(readPdf != null && stopwatch != null)
             {
-                _readPdf = readPdf;
+                ReadPdf = readPdf;
                 _stopwatch = stopwatch;
                 _threshold = threshold;
             }
@@ -62,28 +62,28 @@ namespace BenfordSet.Model
         }
         private string SetUpOutput()
         {
-            _output = new Output(_calculation,_threshold);
-            return _output.BuildResultOfAnalysis();
+            Output = new Output(Calculation, _threshold);
+            return Output.BuildResultOfAnalysis();
         }
 
         private string SetUpResult()
         {
-            _result = new Results(_readPdf,_countNumbers,_calculation,TotalTime);
-            return _result.BuildResultHeader();
+            Results = new Results(ReadPdf, CountedNumbers, Calculation, TotalTime);
+            return Results.BuildResultHeader();
         }
 
         private void CalculateDistribution()
         {
-            _calculation = new Calculation(_countNumbers,_threshold);
-            _calculation.StartCalculation();
+            Calculation = new Calculation(CountedNumbers, _threshold);
+            Calculation.StartCalculation();
         }
 
         private void CountNumbers()
         {
-            _countNumbers = new CountNumbers(_readPdf);
+            CountedNumbers = new CountNumbers(ReadPdf);
             _stopwatch.Stop();
             TotalTime = _stopwatch.ElapsedMilliseconds.ToString();
-            _countNumbers.SumUpAllNumbers();
+            CountedNumbers.SumUpAllNumbers();
         }
         #endregion
     }
