@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BenfordSet.ViewModel
 {
-    internal class SettingsViewModel : ViewModelBase
+    sealed internal class SettingsViewModel : ViewModelBase
     {
         #region Fieleds
         private bool _languageIsEnglish = true;

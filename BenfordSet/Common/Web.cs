@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BenfordSet.Common
 {
-    internal class Web
+    sealed internal class Web
     {
         #region Constructor
         internal Web() { OpenWebsite(); }

@@ -8,24 +8,25 @@ using UglyToad.PdfPig.Content;
 
 namespace BenfordSet.Model
 {
-    internal class ReadPdf
+    sealed internal class ReadPdf 
     {
         #region Fields
         private readonly int _endReadingProcess = 1000 * 300; // abort reading process after 5 minutes
         #endregion
 
         #region Properties
-        public int NumberOfPages { get; private set; }
-        public string OnlyFileName => Path.GetFileName(Filename);
+        internal int NumberOfPages { get; private set; }
+        internal string OnlyFileName => Path.GetFileName(Filename);
         internal bool CancelReading { get; set; }
-        public string? Content { get; private set; }
-        public string Filename { get; private set; }
-        public Messages Messages { get => new Messages(); }
+        internal string? Content { get; private set; }
+        internal string Filename { get; private set; }
+        internal Messages Messages { get => new Messages(); }
         #endregion
 
         #region Events
         public delegate void InformUserEventHandler(object source,EventArgs args);
         public event InformUserEventHandler InformUserOnError;
+        public event InformUserEventHandler InformUserOnTimeExpired;
         public event EventHandler? ReadingAborted;
         #endregion
 

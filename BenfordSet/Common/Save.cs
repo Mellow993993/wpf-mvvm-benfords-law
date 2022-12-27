@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace BenfordSet.Common
 {
-    internal class Save
+    sealed internal class Save
     {
         #region Fields
         private readonly string _initialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
@@ -14,10 +14,10 @@ namespace BenfordSet.Common
         #endregion
 
         #region Properties
-        public bool IsText { get; set; }
-        public string Destination { get; set; } = null!;
-        public string OutputResult { get; set; }
-        public Messages Messages => new();
+        internal bool IsText { get; set; }
+        internal string Destination { get; set; } = null!;
+        internal string OutputResult { get; set; }
+        internal Messages Messages => new();
         #endregion
 
         #region Events

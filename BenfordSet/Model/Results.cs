@@ -5,14 +5,14 @@ using System.Text;
 
 namespace BenfordSet.Model
 {
-    internal class Results
+    sealed internal class Results
     {
         #region Properties
-        public string TotalTime { get; private set; }
-        public ReadPdf ReadPdf { get; private set; }
-        public Calculation Calculation { get; private set; }
-        public CountNumbers CountNumbers { get; private set; }
-        public Messages Messages { get => new Messages(); }
+        internal string TotalTime { get; private set; }
+        internal ReadPdf ReadPdf { get; private set; }
+        internal Calculation Calculation { get; private set; }
+        internal CountNumbers CountNumbers { get; private set; }
+        internal Messages Messages { get => new Messages(); }
         #endregion
 
         #region Events
@@ -34,7 +34,7 @@ namespace BenfordSet.Model
         }
         #endregion
 
-        #region Public methods
+        #region Public methods "BuildResultHeader"
         public string BuildResultHeader()
             => PrintHeadLine() + PrintMetaInfos();
         #endregion

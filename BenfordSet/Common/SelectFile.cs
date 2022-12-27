@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace BenfordSet.Common
 {
-    internal class Select
+    sealed internal class Select
     {
         #region Fields
         private string _filepath = string.Empty;

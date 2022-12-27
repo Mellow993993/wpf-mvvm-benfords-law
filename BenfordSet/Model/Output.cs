@@ -4,12 +4,12 @@ using System.Text;
 
 namespace BenfordSet.Model
 {
-    internal class Output
+    sealed internal class Output
     {
         #region Properties
-        public double Threshold { get; private set; }
-        public Messages Messages { get => new Messages(); }
-        public Calculation Calculation { get; private set; }
+        internal double Threshold { get; private set; }
+        internal Messages Messages { get => new Messages(); }
+        internal Calculation Calculation { get; private set; }
         #endregion
 
         #region Events
@@ -34,6 +34,7 @@ namespace BenfordSet.Model
         }
         #endregion
 
+        #region Private Methods "OnInformUserOnError", "BuildResultOfAnalysis", "CombineOutput"
         private void OnInformUserOnError()
         {
             if(InformUserOnError != null)
@@ -50,5 +51,6 @@ namespace BenfordSet.Model
 
         private string CombineOutput(int i)
             => (Calculation._BenfordNumbers[i] + " %\t\t\t" + Calculation.Digits[i] + " %\t\t\t" + Calculation.Difference[i] + " %").ToString();
+        #endregion
     }
 }

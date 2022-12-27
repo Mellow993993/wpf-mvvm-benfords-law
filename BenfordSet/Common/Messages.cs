@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace BenfordSet.Common
 {
-    internal class Messages
+    sealed internal class Messages
     {
         internal void OnInformUserOnError(object sender, EventArgs e)
         {
@@ -11,6 +11,12 @@ namespace BenfordSet.Common
                 "The program will be terminated\nPlease send us an failure build to:" +
                 "\nstay.mellow.993@gmail.com","Warning",
             MessageBoxButton.OK,MessageBoxImage.Stop);
+        }
+
+        internal void OnInformUserTimeExpired(object sender, EventArgs e)
+        {
+            _ = MessageBox.Show("The time for reading has expired", "Warning",
+                MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
         internal void CancelProcess(object sender,EventArgs e)
         {

@@ -3,7 +3,7 @@ using System;
 
 namespace BenfordSet.Model
 {
-    internal class Calculation
+    sealed internal class Calculation
     {
         #region Auxiliary objects
         internal readonly double[] _BenfordNumbers = { 30.1,17.6,12.5,9.7,7.9,6.7,5.8,5.1,4.6 };
@@ -44,16 +44,16 @@ namespace BenfordSet.Model
         }
         #endregion
 
-        #region Public methods
+        #region Public methods "StartCalculation"
         public void StartCalculation()
         {
             CalculateDistribution();
-            Deviation();
+            CalculateDeviation();
             ClassifyResults();
         }
         #endregion
 
-        #region Private methods
+        #region Private methods "OnInformUserOnError", "CalculateDistribution", "ConvertTypes", "CalculateDeviation", "ClassifyResults", "InterpretResults"
         private void OnInformUserOnError()
         {
             if(InformUserOnError != null)
@@ -68,7 +68,7 @@ namespace BenfordSet.Model
         private double ConvertTypes(int numbers)
             => numbers;
 
-        private void Deviation()
+        private void CalculateDeviation()
         {
             for(int k = 0; k < _BenfordNumbers.Length; k++)
                 Difference[k] = Math.Round(Math.Abs(_BenfordNumbers[k] - Digits[k]),1);

@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace BenfordSet.Model
 {
-    internal class AnalyseController
+    sealed internal class AnalyseController
     {
         #region Fields
         private readonly ReadPdf _readPdf;
@@ -18,8 +18,8 @@ namespace BenfordSet.Model
         #endregion
 
         #region Properties
-        public string TotalTime { get; private set; }
-        public Messages Messages { get => new Messages(); }
+        internal string TotalTime { get; private set; }
+        internal Messages Messages { get => new Messages(); }
         #endregion
 
         #region Events

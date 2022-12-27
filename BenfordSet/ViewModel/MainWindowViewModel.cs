@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace BenfordSet.ViewModel
 {
-    internal class MainWindowViewModel : ViewModelBase
+    sealed internal class MainWindowViewModel : ViewModelBase
     {
         #region Fields
         private bool _isText = true;

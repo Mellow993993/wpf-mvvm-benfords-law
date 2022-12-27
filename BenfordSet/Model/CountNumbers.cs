@@ -4,13 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace BenfordSet.Model
 {
-    internal class CountNumbers
+    sealed internal class CountNumbers
     {
         #region Properties
-        public int[] FoundNumbers = new int[9];
-        public int NumbersInFile { get; private set; }
-        public ReadPdf ReadPdf { get; private set; }
-        public Messages Messages { get => new Messages(); }
+        internal int[] FoundNumbers = new int[9];
+        internal int NumbersInFile { get; private set; }
+        internal ReadPdf ReadPdf { get; private set; }
+        internal Messages Messages { get => new Messages(); }
         #endregion
 
         #region Events
@@ -41,7 +41,7 @@ namespace BenfordSet.Model
         }
         #endregion
 
-        #region Private methods
+        #region Private methods "AssignNumbers", "OnInformUserOnError"
         private void AssignNumbers(Match match)
         {
             NumbersInFile += 1;
