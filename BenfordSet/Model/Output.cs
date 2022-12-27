@@ -50,7 +50,7 @@ namespace BenfordSet.Model
         }
 
         private string CombineOutput(int i)
-            => (Calculation._BenfordNumbers[i] + " %\t\t\t" + Calculation.Digits[i] + " %\t\t\t" + Calculation.Difference[i] + " %").ToString();
+            => (Calculation.BenfordNumbers[i] + " %\t\t\t" + Calculation.Digits[i] + " %\t\t\t" + Calculation.Difference[i] + " %").ToString();
         #endregion
     }
 }

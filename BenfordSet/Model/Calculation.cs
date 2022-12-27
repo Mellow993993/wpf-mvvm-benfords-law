@@ -6,7 +6,7 @@ namespace BenfordSet.Model
     sealed internal class Calculation
     {
         #region Auxiliary objects
-        internal readonly double[] _BenfordNumbers = { 30.1,17.6,12.5,9.7,7.9,6.7,5.8,5.1,4.6 };
+        internal readonly double[] BenfordNumbers = { 30.1,17.6,12.5,9.7,7.9,6.7,5.8,5.1,4.6 };
         internal double[] Digits = new double[9];
         internal double[] Difference = new double[9];
         #endregion
@@ -70,13 +70,13 @@ namespace BenfordSet.Model
 
         private void CalculateDeviation()
         {
-            for(int k = 0; k < _BenfordNumbers.Length; k++)
-                Difference[k] = Math.Round(Math.Abs(_BenfordNumbers[k] - Digits[k]),1);
+            for(int k = 0; k < BenfordNumbers.Length; k++)
+                Difference[k] = Math.Round(Math.Abs(BenfordNumbers[k] - Digits[k]),1);
         }
 
         private void ClassifyResults()
         {
-            for(int i = 0; i <= _BenfordNumbers.Length - 1; i++)
+            for(int i = 0; i <= BenfordNumbers.Length - 1; i++)
                 if(Difference[i] > Threshold)
                     CountDeviations += 1;
             InterpretResults();

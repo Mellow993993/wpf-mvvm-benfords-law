@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace BenfordSet.Common
 {
-    sealed internal class BenfordException : Exception
+    internal class BenfordException : Exception
     {
         internal string Information { get; set; }
+    }
+
+    sealed internal class BenfordInformations : BenfordException
+    {
+        internal int NumberOfIssues { get; set; }
     }
 }
