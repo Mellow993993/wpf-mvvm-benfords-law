@@ -15,7 +15,7 @@ namespace BenfordSet.ViewModel
         private string _calculationResults = string.Empty;
         private int _threshold = 5;
         private string _filepath = string.Empty;
-        private ReadPdf _readPdf;
+        private ReadPdf? _readPdf;
         #endregion
 
         #region Properties
