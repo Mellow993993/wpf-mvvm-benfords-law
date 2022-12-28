@@ -12,7 +12,6 @@ namespace BenfordSet.ViewModel
         #region Fields
         private bool _isText = true;
         private bool _isLoading = false;
-        private string _savePath = string.Empty;
         private string _calculationResults = string.Empty;
         private int _threshold = 5;
         private string _filepath = string.Empty;
@@ -28,8 +27,7 @@ namespace BenfordSet.ViewModel
                 if(_readPdf != value)
                 {
                     _readPdf = value;
-                    OnPropertyChanged(nameof(ReadPdf));
-                    _ = CanCancel();
+                    RaisePropertyChanged(nameof(ReadPdf));
                 }
             }
         }
@@ -43,7 +41,6 @@ namespace BenfordSet.ViewModel
                     _isText = value;
                     OnPropertyChanged(nameof(IsText));
                 }
-
             }
         }
         public bool IsLoading
@@ -58,18 +55,6 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
-        public string SavePath
-        {
-            get => _savePath;
-            set
-            {
-                if(_savePath != value)
-                {
-                    _savePath = value;
-                    OnPropertyChanged(nameof(SavePath));   
-                }
-            }
-        }
         public string CalculationResults
         {
             get => _calculationResults;
@@ -78,8 +63,8 @@ namespace BenfordSet.ViewModel
                 if(_calculationResults != value)
                 {
                     _calculationResults = value;
+                    OnPropertyChanged(); // show if something in view has changed
                     RaisePropertyChanged(nameof(CalculationResults));
-                    OnPropertyChanged();
                 }
             }
         }
@@ -91,8 +76,7 @@ namespace BenfordSet.ViewModel
                 if(_threshold != value)
                 {
                     _threshold = value;
-                    OnPropertyChanged(nameof(Threshold));
-                    _ = CanAnalyse();
+                    RaisePropertyChanged(nameof(Threshold));
                 }
             }
         }
@@ -104,8 +88,7 @@ namespace BenfordSet.ViewModel
                 if(_filepath != value)
                 {
                     _filepath = value;
-                    OnPropertyChanged(nameof(Filepath));
-                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(Filepath));
                 }
             }
         }
@@ -155,7 +138,6 @@ namespace BenfordSet.ViewModel
             AnalyseController controller = new(ReadPdf,stopwatch,Threshold);
             IsLoading = false;
             CalculationResults = controller.StartAnalyse();
-            DisposeObjects();
         }
 
         private void Setting()
@@ -163,25 +145,33 @@ namespace BenfordSet.ViewModel
             throw new NotImplementedException();
         }
 
+        private void Cancel()
+        {
+            ReadPdf.CancelReading = true;
+            IsLoading = false;
+            IsCanceld?.Invoke(this,EventArgs.Empty);
+            ReadPdf = null;
+            Filepath = String.Empty;
+            RaisePropertyChanged();
+        }
+        private void RaisePropertyChanged([CallerMemberName] string propname = "")
+        {
+            SelectCommand.OnExecuteChanged();
+            AnalyseCommand.OnExecuteChanged();
+            SaveCommand.OnExecuteChanged();
+            CancelCommand.OnExecuteChanged();
+            SettingCommand.OnExecuteChanged();
+            QuitCommand.OnExecuteChanged();
+        }
         private void SelectFile()
         {
             Select selectfile = new();
             Filepath = selectfile.OpenSelectDialog();
         }
+
         private void SaveFile()
         {
             Save save = new(CalculationResults,IsText);
-
-        }
-        private void Cancel()
-        {
-            ReadPdf.CancelReading = true;
-            Clean Clean = new();
-            Clean.DisposeReadObject(ref _readPdf);
-            IsLoading = false;
-            IsCanceld?.Invoke(this,EventArgs.Empty);
-            DisposeObjects();
-            RaisePropertyChanged();
         }
 
         private void Info()
@@ -189,46 +179,24 @@ namespace BenfordSet.ViewModel
             _ = new Web();
         }
 
-        private void DisposeObjects()
-        {
-            ReadPdf = null;
-            Filepath = String.Empty;
-        }
         private void Quit()
         {
             if(OpenMessageBox("Do you want to quit the application","Question") == MessageBoxResult.Yes)
-            {
                 Application.Current.Shutdown();
-            }
             else
                 return;
-        }
-
-        private void RaisePropertyChanged([CallerMemberName] string propname = "")
-        {
-            SelectCommand.OnExecuteChanged();
-            AnalyseCommand.OnExecuteChanged();
-            SaveCommand.OnExecuteChanged();
-            CancelCommand.OnExecuteChanged();
-            QuitCommand.OnExecuteChanged();
         }
         #endregion
 
         #region IsExecutable
         private bool CanAnalyse()
-        {
-            return !string.IsNullOrWhiteSpace(Filepath);
-        }
+            => !string.IsNullOrWhiteSpace(Filepath);
 
         private bool CanSave()
-        {
-            return !string.IsNullOrEmpty(CalculationResults);
-        }
+            => !string.IsNullOrEmpty(CalculationResults);
 
         private bool CanCancel()
-        {
-            return ReadPdf != null;
-        }
+            => ReadPdf != null;
         #endregion
     }
 }
