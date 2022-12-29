@@ -1,4 +1,5 @@
 ﻿using BenfordSet.Common;
+using BenfordSet.View;
 using BenfordSet.ViewModel;
 using log4net.Repository.Hierarchy;
 using System.Threading;
@@ -12,6 +13,7 @@ namespace BenfordSet
     /// </summary>
     public partial class MainWindow : Window
     {
+        internal MainWindowViewModel mainwindowviewmodel;
         public MainWindow()
         {
             Mutex mutex = new Mutex(true,"benford-analyse",out bool aquiredNew);
@@ -19,7 +21,7 @@ namespace BenfordSet
             {
                 Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline),
                    new FrameworkPropertyMetadata { DefaultValue = 60 });
-                MainWindowViewModel mainwindowviewmodel = new MainWindowViewModel();
+                mainwindowviewmodel = new MainWindowViewModel();
                 DataContext = mainwindowviewmodel;
                 mainwindowviewmodel.OpenMessageBox = (title,text) =>
                 {
@@ -32,6 +34,15 @@ namespace BenfordSet
                 MessageBox.Show("The app is already running.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             mutex.ReleaseMutex();
+        }
+
+        private void Window_Loaded(object sender,RoutedEventArgs e)
+        {
+            mainwindowviewmodel.OpenSettingView += (s,ev) =>
+            {
+                Settings settings = new Settings();
+                settings.ShowDialog();
+            };
         }
     }
 }

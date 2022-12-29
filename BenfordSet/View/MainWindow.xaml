@@ -6,7 +6,7 @@
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" 
         x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser" Height="600" Width="680" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="680" MinHeight="600" Icon="../Icons/WindowIcon.png" UseLayoutRounding="True" >
+        Title="Pdf analyser" Height="600" Width="680" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="680" MinHeight="600" Icon="../Icons/WindowIcon.png" UseLayoutRounding="True" Loaded="Window_Loaded" >
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
@@ -96,7 +96,6 @@
                     FontSize="16" 
                     FontFamily="Courier New" ToolTip="Result view"/>
             </Border>
-            <Button Content="Settings"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="5">
@@ -105,7 +104,7 @@
                          Margin="5,20,5,5"
                          Height="30" 
                          Width="Auto"/>
-            <Button Content="Button"/>
+            <Button Command="{Binding SettingCommand}" Content="Settings"/>
         </StackPanel>
 
     </Grid>

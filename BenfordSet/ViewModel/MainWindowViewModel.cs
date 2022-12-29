@@ -1,5 +1,6 @@
 ﻿using BenfordSet.Common;
 using BenfordSet.Model;
+using BenfordSet.View;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -109,6 +110,7 @@ namespace BenfordSet.ViewModel
         public delegate MessageBoxResult OpenMessageboxHandler(string title,string text);
         public OpenMessageboxHandler OpenMessageBox { get; set; }
         public event EventHandler? IsCanceld;
+        public event EventHandler OpenSettingView;
         #endregion
 
         #region Constructor
@@ -142,7 +144,10 @@ namespace BenfordSet.ViewModel
 
         private void Setting()
         {
-            throw new NotImplementedException();
+            if(OpenSettingView != null)
+            {
+                OpenSettingView(this,EventArgs.Empty);
+            }
         }
 
         private void Cancel()

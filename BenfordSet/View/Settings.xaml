@@ -5,12 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BenfordSet.View"
         mc:Ignorable="d"
-        Title="Settings" Height="130" Width="230">
+        Title="Settings" Height="200" Width="400">
     <Grid>
-        <Button Content="Exit" HorizontalAlignment="Left" Margin="165,89,0,0" VerticalAlignment="Top" Width="57" RenderTransformOrigin="0.931,0.253"/>
+        <Button Command="{Binding ExitCommand}" Content="Exit" HorizontalAlignment="Left" Margin="165,89,0,0" VerticalAlignment="Top" Width="57" RenderTransformOrigin="0.931,0.253"/>
         <Button Content="Okay" HorizontalAlignment="Left" Margin="115,89,0,0" VerticalAlignment="Top" Width="45"/>
         <ComboBox HorizontalAlignment="Left" Margin="69,22,0,0" VerticalAlignment="Top" Width="154">
-            <ComboBoxItem>English</ComboBoxItem>
             <ComboBoxItem>Deutsch</ComboBoxItem>
             <ComboBoxItem IsSelected="True">Englisch</ComboBoxItem>
         </ComboBox>

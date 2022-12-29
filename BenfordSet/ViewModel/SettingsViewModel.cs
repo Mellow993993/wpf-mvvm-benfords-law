@@ -53,7 +53,7 @@ namespace BenfordSet.ViewModel
 
         private void Exit()
         {
-            throw new NotImplementedException();
+            System.Environment.Exit(0);
         }
         #endregion
 
