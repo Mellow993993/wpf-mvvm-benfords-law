@@ -2,6 +2,7 @@
 using BenfordSet.View;
 using BenfordSet.ViewModel;
 using log4net.Repository.Hierarchy;
+using System;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media.Animation;
@@ -13,8 +14,8 @@ namespace BenfordSet
     /// </summary>
     public partial class MainWindow : Window
     {
-        internal MainWindowViewModel mainwindowviewmodel;
-        public MainWindow()
+        internal MainWindowViewModel? mainwindowviewmodel;
+        internal MainWindow()
         {
             Mutex mutex = new Mutex(true,"benford-analyse",out bool aquiredNew);
             if(aquiredNew)
@@ -27,17 +28,19 @@ namespace BenfordSet
                 {
                     return MessageBox.Show(title,text,MessageBoxButton.YesNo,MessageBoxImage.Question);
                 };
+
                 InitializeComponent();
             }
             else
-            {
                 MessageBox.Show("The app is already running.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
             mutex.ReleaseMutex();
         }
 
         private void Window_Loaded(object sender,RoutedEventArgs e)
         {
+            if(mainwindowviewmodel == null)
+                throw new ArgumentNullException(nameof(mainwindowviewmodel));
+
             mainwindowviewmodel.OpenSettingView += (s,ev) =>
             {
                 Settings settings = new Settings();
