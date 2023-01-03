@@ -13,6 +13,7 @@ namespace BenfordSet.ViewModel
         #region Fields
         private bool _isText = true;
         private bool _isLoading = false;
+        private bool _languageIsEngish = true;
         private string _calculationResults = string.Empty;
         private int _threshold = 5;
         private string _filepath = string.Empty;
@@ -32,6 +33,22 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
+
+        public bool LanguageIsEnglish
+        {
+            get => _languageIsEngish; 
+            set 
+            { 
+                if(_languageIsEngish != value)
+                {
+                    _languageIsEngish = value;
+                    RaisePropertyChanged(nameof(LanguageIsEnglish));
+
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool IsText
         {
             get => _isText;
