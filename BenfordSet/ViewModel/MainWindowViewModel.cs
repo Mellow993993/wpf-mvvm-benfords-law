@@ -33,7 +33,6 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
-
         public bool LanguageIsEnglish
         {
             get => _languageIsEngish; 
@@ -48,7 +47,6 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
-
         public bool IsText
         {
             get => _isText;
@@ -148,8 +146,7 @@ namespace BenfordSet.ViewModel
         private async void Analyse()
         {
             IsLoading = true;
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            Stopwatch stopwatch = new Stopwatch(); stopwatch.Start();
 
             ReadPdf = new ReadPdf(Filepath);
             await ReadPdf.GetFileContent();
@@ -161,10 +158,7 @@ namespace BenfordSet.ViewModel
 
         private void Setting()
         {
-            if(OpenSettingView != null)
-            {
-                OpenSettingView(this,EventArgs.Empty);
-            }
+            OpenSettingView?.Invoke(this,EventArgs.Empty);
         }
 
         private void Cancel()
@@ -176,6 +170,7 @@ namespace BenfordSet.ViewModel
             Filepath = String.Empty;
             RaisePropertyChanged();
         }
+
         private void RaisePropertyChanged([CallerMemberName] string propname = "")
         {
             SelectCommand.OnExecuteChanged();
@@ -185,6 +180,7 @@ namespace BenfordSet.ViewModel
             SettingCommand.OnExecuteChanged();
             QuitCommand.OnExecuteChanged();
         }
+
         private void SelectFile()
         {
             Select selectfile = new();
@@ -197,9 +193,7 @@ namespace BenfordSet.ViewModel
         }
 
         private void Info()
-        {
-            _ = new Web();
-        }
+            => _ = new Web();
 
         private void Quit()
         {
