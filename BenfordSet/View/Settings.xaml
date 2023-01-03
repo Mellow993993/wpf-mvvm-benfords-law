@@ -11,7 +11,7 @@
         <ViewModel:SettingsViewModel/>
     </Window.DataContext>
     <Grid>
-        <Button Command="{Binding ExitCommand}" Content="Exit" HorizontalAlignment="Left" Margin="165,89,0,0" VerticalAlignment="Top" Width="57" RenderTransformOrigin="0.931,0.253"/>
+        <Button IsCancel="True" Content="Exit" HorizontalAlignment="Left" Margin="165,89,0,0" VerticalAlignment="Top" Width="57" RenderTransformOrigin="0.931,0.253"/>
         <Button Command="{Binding OkCommand}" Content="Okay" HorizontalAlignment="Left" Margin="115,89,0,0" VerticalAlignment="Top" Width="45"/>
         <ComboBox HorizontalAlignment="Left" Margin="69,22,0,0" VerticalAlignment="Top" Width="154">
             <ComboBoxItem Content="Deutsch"/>

@@ -8,6 +8,9 @@ namespace BenfordSet.ViewModel
 {
     sealed internal class SettingsViewModel : ViewModelBase
     {
+        public event EventHandler OkEvent;
+        public event EventHandler ExitEvent;
+
         #region Fieleds
         private bool _languageIsEnglish = true;
         #endregion
@@ -48,12 +51,15 @@ namespace BenfordSet.ViewModel
         #region Private Methods
         private void Ok()
         {
-            throw new NotImplementedException();
+            OkEvent?.Invoke(this,EventArgs.Empty);
         }
 
         private void Exit()
         {
-            System.Environment.Exit(0);
+            if(ExitEvent != null)
+            {
+                ExitEvent(this,EventArgs.Empty);   
+            }
         }
         #endregion
 

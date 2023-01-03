@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BenfordSet.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,9 @@ namespace BenfordSet.View
         public Settings()
         {
             InitializeComponent();
+            var settingsviewmodel = DataContext as SettingsViewModel;
+            settingsviewmodel.OkEvent += (o,e ) => DialogResult = true;
+            settingsviewmodel.ExitEvent += (o,e) => DialogResult = false;
         }
     }
 }

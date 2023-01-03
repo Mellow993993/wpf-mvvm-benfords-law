@@ -45,6 +45,7 @@ namespace BenfordSet
             {
                 Settings settings = new Settings();
                 settings.ShowDialog();
+                var settingsViewModel = ((SettingsViewModel)settings.DataContext);
             };
         }
     }
