@@ -156,7 +156,6 @@ namespace BenfordSet.ViewModel
             CalculationResults = controller.StartAnalyse();
         }
 
-
         private void Cancel()
         {
             ReadPdf.CancelReading = true;
@@ -166,8 +165,6 @@ namespace BenfordSet.ViewModel
             Filepath = string.Empty;
             RaisePropertyChanged();
         }
-
-
 
         private void SelectFile()
         {
