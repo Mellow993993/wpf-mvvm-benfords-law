@@ -135,7 +135,7 @@ namespace BenfordSet.ViewModel
             AnalyseCommand = new DelegateCommand(Analyse,CanAnalyse);
             SaveCommand = new DelegateCommand(SaveFile,CanSave);
             CancelCommand = new DelegateCommand(Cancel,CanCancel);
-            InfoCommand = new DelegateCommand(Info);
+            InfoCommand = new DelegateCommand(Info);          
             QuitCommand = new DelegateCommand(Quit);
             SettingCommand = new DelegateCommand(Setting);
             IsCanceld += Messages.CancelProcess;
@@ -156,10 +156,6 @@ namespace BenfordSet.ViewModel
             CalculationResults = controller.StartAnalyse();
         }
 
-        private void Setting()
-        {
-            OpenSettingView?.Invoke(this,EventArgs.Empty);
-        }
 
         private void Cancel()
         {
@@ -167,34 +163,20 @@ namespace BenfordSet.ViewModel
             IsLoading = false;
             IsCanceld?.Invoke(this,EventArgs.Empty);
             ReadPdf = null;
-            Filepath = String.Empty;
+            Filepath = string.Empty;
             RaisePropertyChanged();
         }
 
-        private void RaisePropertyChanged([CallerMemberName] string propname = "")
-        {
-            SelectCommand.OnExecuteChanged();
-            AnalyseCommand.OnExecuteChanged();
-            SaveCommand.OnExecuteChanged();
-            CancelCommand.OnExecuteChanged();
-            SettingCommand.OnExecuteChanged();
-            QuitCommand.OnExecuteChanged();
-        }
+
 
         private void SelectFile()
         {
             Select selectfile = new();
             Filepath = selectfile.OpenSelectDialog();
         }
-
-        private void SaveFile()
-        {
-            Save save = new(CalculationResults,IsText);
-        }
-
-        private void Info()
-            => _ = new Web();
-
+        private void Setting() => OpenSettingView?.Invoke(this,EventArgs.Empty);
+        private void SaveFile() => _ = new Save(CalculationResults,IsText);
+        private void Info() => _ = new Web();
         private void Quit()
         {
             if(OpenMessageBox("Do you want to quit the application","Question") == MessageBoxResult.Yes)
@@ -205,14 +187,21 @@ namespace BenfordSet.ViewModel
         #endregion
 
         #region IsExecutable
-        private bool CanAnalyse()
-            => !string.IsNullOrWhiteSpace(Filepath);
+        private bool CanAnalyse() => !string.IsNullOrWhiteSpace(Filepath);
+        private bool CanSave() => !string.IsNullOrEmpty(CalculationResults);
+        private bool CanCancel() => ReadPdf != null;
+        #endregion
 
-        private bool CanSave()
-            => !string.IsNullOrEmpty(CalculationResults);
-
-        private bool CanCancel()
-            => ReadPdf != null;
+        #region RaisePropertyChanged
+        private void RaisePropertyChanged([CallerMemberName] string propname = "")
+        {
+            SelectCommand.OnExecuteChanged();
+            AnalyseCommand.OnExecuteChanged();
+            SaveCommand.OnExecuteChanged();
+            CancelCommand.OnExecuteChanged();
+            SettingCommand.OnExecuteChanged();
+            QuitCommand.OnExecuteChanged();
+        }
         #endregion
     }
 }
