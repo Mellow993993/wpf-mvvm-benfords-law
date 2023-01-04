@@ -20,7 +20,7 @@ namespace BenfordSet.ViewModel
         private ReadPdf? _readPdf;
         #endregion
 
-        #region Properties
+        #region Properties & DelegateCommands
         public ReadPdf? ReadPdf
         {
             get => _readPdf;
@@ -108,9 +108,8 @@ namespace BenfordSet.ViewModel
                 }
             }
         }
-        #endregion
 
-        #region DelegateCommands
+        #region DelegateProperties
         public DelegateCommand AnalyseCommand { get; init; }
         public DelegateCommand SaveCommand { get; init; }
         public DelegateCommand SelectCommand { get; init; }
@@ -119,6 +118,7 @@ namespace BenfordSet.ViewModel
         public DelegateCommand CancelCommand { get; init; }
         public DelegateCommand SettingCommand { get; init; }
         internal Messages? Messages => new();
+        #endregion
         #endregion
 
         #region Events
@@ -142,7 +142,7 @@ namespace BenfordSet.ViewModel
         }
         #endregion
 
-        #region Command methods (private)
+        #region Command methods
         private async void Analyse()
         {
             IsLoading = true;

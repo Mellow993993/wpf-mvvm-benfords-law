@@ -45,7 +45,7 @@ namespace BenfordSet.Model
         }
         #endregion
 
-        #region Methods
+        #region Methods "StartAnalyse"
         internal string StartAnalyse()
         {
             CountNumbers();
@@ -55,11 +55,20 @@ namespace BenfordSet.Model
         #endregion
 
         #region Private methods
-        private void OnInformUserOnError()
+        private void CountNumbers()
         {
-            if(InformUserOnError != null)
-                InformUserOnError(this,EventArgs.Empty);
+            CountedNumbers = new CountNumbers(ReadPdf);
+            _stopwatch.Stop();
+            TotalTime = _stopwatch.ElapsedMilliseconds.ToString();
+            CountedNumbers.SumUpAllNumbers();
         }
+
+        private void CalculateDistribution()
+        {
+            Calculation = new Calculation(CountedNumbers,_threshold);
+            Calculation.StartCalculation();
+        }
+
         private string SetUpOutput()
         {
             Output = new Output(Calculation, _threshold);
@@ -71,20 +80,11 @@ namespace BenfordSet.Model
             Results = new Results(ReadPdf, CountedNumbers, Calculation, TotalTime);
             return Results.BuildResultHeader();
         }
+        #endregion
 
-        private void CalculateDistribution()
-        {
-            Calculation = new Calculation(CountedNumbers, _threshold);
-            Calculation.StartCalculation();
-        }
-
-        private void CountNumbers()
-        {
-            CountedNumbers = new CountNumbers(ReadPdf);
-            _stopwatch.Stop();
-            TotalTime = _stopwatch.ElapsedMilliseconds.ToString();
-            CountedNumbers.SumUpAllNumbers();
-        }
+        #region Invoke Events
+        private void OnInformUserOnError()
+            => InformUserOnError?.Invoke(this,EventArgs.Empty);
         #endregion
     }
 }

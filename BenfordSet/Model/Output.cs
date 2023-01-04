@@ -34,13 +34,7 @@ namespace BenfordSet.Model
         }
         #endregion
 
-        #region Private Methods "OnInformUserOnError", "BuildResultOfAnalysis", "CombineOutput"
-        private void OnInformUserOnError()
-        {
-            if(InformUserOnError != null)
-                InformUserOnError(this,EventArgs.Empty);
-        }
-
+        #region Private Methods "BuildResultOfAnalysis", "CombineOutput"
         internal string BuildResultOfAnalysis()
         {
             StringBuilder sb = new();
@@ -51,6 +45,10 @@ namespace BenfordSet.Model
 
         private string CombineOutput(int i)
             => (Calculation.BenfordNumbers[i] + " %\t\t\t" + Calculation.Digits[i] + " %\t\t\t" + Calculation.Difference[i] + " %").ToString();
+        #endregion
+
+        #region Invoke Events
+        private void OnInformUserOnError() => InformUserOnError?.Invoke(this,EventArgs.Empty);
         #endregion
     }
 }

@@ -45,7 +45,6 @@ namespace BenfordSet.Model
         private void AssignNumbers(Match match)
         {
             NumbersInFile += 1;
-
             if(match.Value.StartsWith("1"))
                 FoundNumbers[0] += 1;
             else if(match.Value.StartsWith("2"))
@@ -67,11 +66,11 @@ namespace BenfordSet.Model
             else
                 throw new BenfordException() { Information = "Numbers could not be added to FoundNumbers array" }; 
         }
+        #endregion
+
+        #region Invoke Events
         private void OnInformUserOnError()
-        {
-            if(InformUserOnError != null)
-                InformUserOnError(this,EventArgs.Empty);
-        }
+            => InformUserOnError?.Invoke(this,EventArgs.Empty);
         #endregion
     }
 }

@@ -33,7 +33,7 @@ namespace BenfordSet.Model
             if(countObject != null)
             {
                 (CounterObject, Threshold) = (countObject, threshold);
-                CheckRequired += Messages.CheckFileRequired;
+                CheckRequired +=  Messages.CheckFileRequired;
                 NoCheckRequired += Messages.NoCheckFileRequred;
             }
             else
@@ -50,23 +50,18 @@ namespace BenfordSet.Model
             CalculateDistribution();
             CalculateDeviation();
             ClassifyResults();
+            InterpretResults();
         }
         #endregion
 
-        #region Private methods "OnInformUserOnError", "CalculateDistribution", "ConvertTypes", "CalculateDeviation", "ClassifyResults", "InterpretResults"
-        private void OnInformUserOnError()
-        {
-            if(InformUserOnError != null)
-                InformUserOnError(this,EventArgs.Empty);
-        }
+        #region Private methods "CalculateDistribution", "ConvertTypes", "CalculateDeviation", "ClassifyResults", "InterpretResults"
         private void CalculateDistribution()
         {
             for(int k = 0; k <= Digits.Length - 1; k++)
                 Digits[k] = Math.Round(ConvertTypes(CounterObject.FoundNumbers[k]) / CounterObject.NumbersInFile * 100,1);
         }
 
-        private double ConvertTypes(int numbers)
-            => numbers;
+        private double ConvertTypes(int numbers) => numbers;
 
         private void CalculateDeviation()
         {
@@ -79,7 +74,6 @@ namespace BenfordSet.Model
             for(int i = 0; i <= BenfordNumbers.Length - 1; i++)
                 if(Difference[i] > Threshold)
                     CountDeviations += 1;
-            InterpretResults();
         }
 
         private void InterpretResults()
@@ -89,6 +83,11 @@ namespace BenfordSet.Model
             else
                 NoCheckRequired?.Invoke(this,EventArgs.Empty);
         }
+        #endregion
+
+        #region Invoke Events
+        private void OnInformUserOnError()
+            => InformUserOnError?.Invoke(this,EventArgs.Empty);
         #endregion
     }
 }

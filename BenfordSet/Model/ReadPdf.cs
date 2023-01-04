@@ -78,17 +78,16 @@ namespace BenfordSet.Model
         }
         #endregion
 
-        #region Private methods "FetchSinglePage", "OnInformUserOnError"S
+        #region Private methods "FetchSinglePage"
         private void FetchSinglePage(Page page)
         {
             Content += page.Text;
             NumberOfPages = page.Number;
         }
-        private void OnInformUserOnError()
-        {
-            if(InformUserOnError != null)
-                InformUserOnError(this,EventArgs.Empty);
-        }
+        #endregion
+
+        #region Invoke Events
+        private void OnInformUserOnError() => InformUserOnError.Invoke(this,EventArgs.Empty);
         #endregion
     }
 }

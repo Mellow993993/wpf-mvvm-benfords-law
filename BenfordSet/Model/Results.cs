@@ -21,7 +21,7 @@ namespace BenfordSet.Model
         #endregion
 
         #region Constructor 
-        internal Results(ReadPdf read,CountNumbers count,Calculation calculation,string totaltime)
+        internal Results(ReadPdf read, CountNumbers count, Calculation calculation, string totaltime)
         {
             InformUserOnError += Messages.OnInformUserOnError;
             if(read != null && count != null && calculation != null)
@@ -35,22 +35,18 @@ namespace BenfordSet.Model
         #endregion
 
         #region Public methods "BuildResultHeader"
-        public string BuildResultHeader()
+        internal string BuildResultHeader()
             => PrintHeadLine() + PrintMetaInfos();
         #endregion
 
-        #region Private methods "OnInformUserOnError", "PrintHeadLine", "PrintMetaInfos"
-        private void OnInformUserOnError()
-        {
-            if(InformUserOnError != null)
-                InformUserOnError(this,EventArgs.Empty);
-        }
+        #region Private methods "PrintHeadLine", "PrintMetaInfos"
         private string PrintHeadLine()
         {
             StringBuilder sb = new();
             _ = sb.AppendLine("Results of the Benford analysis.");
             return sb.ToString();
         }
+
         private string PrintMetaInfos()
         {
             StringBuilder sb = new();
@@ -62,10 +58,13 @@ namespace BenfordSet.Model
             _ = sb.AppendLine($"Time:       {TotalTime} ms");
             _ = sb.AppendLine("------------------------------------------------------------");
             _ = sb.AppendLine("Distribution");
-
             _ = sb.AppendLine("Benford\t\tYours\t\t\tDifference");
             return sb.ToString();
         }
+        #endregion
+
+        #region Invoke Events
+        private void OnInformUserOnError() => InformUserOnError?.Invoke(this,EventArgs.Empty);
         #endregion
     }
 }
