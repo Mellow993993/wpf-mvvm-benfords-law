@@ -207,6 +207,7 @@
                 Width="Auto"/>
             <Button 
                 Command="{Binding SettingCommand}" 
+                Visibility="Hidden"
                 Content="Settings"
                 Margin="5,5,5,5"/>
         </StackPanel>
