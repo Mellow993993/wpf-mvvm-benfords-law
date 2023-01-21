@@ -8,14 +8,14 @@
         mc:Ignorable="d"
         Title="Pdf analyser" 
         Height="580" 
-    Width="680" 
-    WindowStartupLocation="CenterScreen" 
-    Cursor="Arrow" 
-    MinWidth="680" 
-    MinHeight="580" 
-    Icon="../Icons/WindowIcon.png" 
-    UseLayoutRounding="True" 
-    Loaded="Window_Loaded" >
+        Width="650" 
+        WindowStartupLocation="CenterScreen" 
+        Cursor="Arrow" 
+        MinWidth="650" 
+        MinHeight="580" 
+        Icon="../Icons/WindowIcon.png" 
+        UseLayoutRounding="True" 
+        Loaded="Window_Loaded" >
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
