@@ -6,13 +6,22 @@
         xmlns:ViewModel="clr-namespace:BenfordSet.ViewModel" 
         x:Class="BenfordSet.MainWindow"
         mc:Ignorable="d"
-        Title="Pdf analyser" Height="600" Width="680" WindowStartupLocation="CenterScreen" Cursor="Arrow" MinWidth="680" MinHeight="600" Icon="../Icons/WindowIcon.png" UseLayoutRounding="True" Loaded="Window_Loaded" >
+        Title="Pdf analyser" 
+        Height="580" 
+    Width="680" 
+    WindowStartupLocation="CenterScreen" 
+    Cursor="Arrow" 
+    MinWidth="680" 
+    MinHeight="580" 
+    Icon="../Icons/WindowIcon.png" 
+    UseLayoutRounding="True" 
+    Loaded="Window_Loaded" >
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="73*"></RowDefinition>
-            <RowDefinition Height="391*"></RowDefinition>
-            <RowDefinition Height="55"></RowDefinition>
+            <RowDefinition Height="73*"/>
+            <RowDefinition Height="391*"/>
+            <RowDefinition Height="55"/>
             <RowDefinition Height="0"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
@@ -20,8 +29,8 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="41*"></ColumnDefinition>
-            <ColumnDefinition Width="27*"></ColumnDefinition>
+            <ColumnDefinition Width="41*"/>
+            <ColumnDefinition Width="27*"/>
         </Grid.ColumnDefinitions>
 
         <Separator 
@@ -90,11 +99,12 @@
                     Height="Auto" 
                     Width="Auto" 
                     RenderTransformOrigin="0.589,0.529" />
-
             </Button>
+            
             <Separator 
                 Width="5" 
-                Background="Transparent"/>
+                Background="Transparent"
+            />
             
             <Button 
                 Command="{Binding InfoCommand}" 
@@ -173,11 +183,11 @@
                 Margin="161,47,30,9" />
         </Grid>
 
-        <StackPanel Grid.Row="1" Margin="5,0,5,0" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="1" Margin="5,5,5,0" Grid.ColumnSpan="2">
             <Border 
                 BorderThickness="2" 
                 BorderBrush="Black"
-                CornerRadius="5">
+                CornerRadius="10">
                 
                 <TextBlock
                     Text="{Binding CalculationResults, Mode=OneWay}" 
