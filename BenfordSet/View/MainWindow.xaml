@@ -176,9 +176,10 @@
         <StackPanel Grid.Row="1" Margin="5,0,5,0" Grid.ColumnSpan="2">
             <Border 
                 BorderThickness="2" 
-                BorderBrush="Black">
+                BorderBrush="Black"
+                CornerRadius="5">
                 
-                <TextBlock 
+                <TextBlock
                     Text="{Binding CalculationResults, Mode=OneWay}" 
                     Width="Auto"
                     Height="364"
