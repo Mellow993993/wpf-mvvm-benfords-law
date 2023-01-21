@@ -199,16 +199,17 @@
             </Border>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="5">
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="5" Margin="5">
             <ProgressBar 
                 IsIndeterminate="{Binding IsLoading}"
                 Name="ProgressBarStatus" 
-                Margin="5,20,5,5"
+                Margin="5,5,5,5"
                 Height="30" 
                 Width="Auto"/>
             <Button 
                 Command="{Binding SettingCommand}" 
-                Content="Settings"/>
+                Content="Settings"
+                Margin="5,5,5,5"/>
         </StackPanel>
     </Grid>
 </Window>
