@@ -17,6 +17,11 @@
     <PackageReference Include="PdfPig" Version="0.1.5" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Test.BenfordSet\Test.BenfordSet.csproj" />
+  </ItemGroup>
+
   <ItemGroup>
     <Resource Include="Icons\AnalyseIcon.png" />
     <Resource Include="Icons\CancelIcon.png" />
